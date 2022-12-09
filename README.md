@@ -1,3 +1,5 @@
+[![Python package](https://github.com/Hasenpfote/github_actions_testing3/actions/workflows/python-package.yml/badge.svg)](https://github.com/Hasenpfote/github_actions_testing3/actions/workflows/python-package.yml)
+
 # pyenv + poetry + tox + pytest 環境構築例
 
 最小限の事例を記す.
@@ -8,14 +10,14 @@
 
 - 任意の python 環境は [pyenv](https://github.com/pyenv/pyenv) で構築
 
-  Windows の場合は [pyenv-win](https://github.com/pyenv-win/pyenv-win) で代替  
+  Windows の場合は [pyenv-win](https://github.com/pyenv-win/pyenv-win) で代替
 
 - [poetry](https://github.com/python-poetry/poetry) で仮想環境を構築
 
 - 本例では python 3.7 / 3.8 を想定
 
-  3.8 は現行バージョン, 3.7 は後方互換の最小バージョンとしたアプリを開発している状況など.  
-  
+  3.8 は現行バージョン, 3.7 は後方互換の最小バージョンとしたアプリを開発している状況など.
+
 - テストは [tox](https://github.com/tox-dev/tox) + [pytest](https://github.com/pytest-dev/pytest)
 
 ```mermaid
@@ -36,7 +38,7 @@ flowchart TD
         id41(py37)
         id42(py38)
       end
-    end 
+    end
   end
 
   id12 .-> id11
@@ -64,7 +66,7 @@ flowchart TD
 
 Chocolatey 以外は環境変数の設定が必要になるので[詳細](https://github.com/pyenv-win/pyenv-win/blob/master/docs/installation.md)を参考に.
 
-### python 
+### python
 
 #### インストール
 
@@ -169,7 +171,7 @@ Python 3.8.10
 
 #### 特記事項
 
-動作確認を行った環境では, 
+動作確認を行った環境では,
 
 - `$ pyenv local 3.8.10 3.7.9` なら `python -V` で`3.8.10`
 - `$ pyenv local 3.7.9 3.8.10` なら `python -V` で `3.7.9`
@@ -306,9 +308,9 @@ commands =
     poetry run pytest -v
 ```
 
-`py37` や `py38` は `pyenv local` で指定されたバージョンを参照する `tox` 側のキーワード.  
+`py37` や `py38` は `pyenv local` で指定されたバージョンを参照する `tox` 側のキーワード.
 
-もしも 3.11.x が必要なら `py311` となる.  
+もしも 3.11.x が必要なら `py311` となる.
 
 
 
@@ -424,4 +426,3 @@ __pycache__/
 - [Poetry documentation (ver. 1.1.6 日本語訳)](https://cocoatomo.github.io/poetry-ja/)
 - [tox](https://github.com/tox-dev/tox)
 - [pytest](https://github.com/pytest-dev/pytest)
-
