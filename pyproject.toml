@@ -1,0 +1,30 @@
+[tool.poetry]
+name = "pyenv_poetry_tox_pytest_example"
+version = "0.1.0"
+description = ""
+authors = ["'Hasenpfote' <'Hasenpfote36@gmail.com'>"]
+readme = "README.md"
+packages = [{include = "pyenv_poetry_tox_pytest_example"}]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+
+[tool.poetry.dev-dependencies]
+black = "^22.10.0"
+isort = "^5.10.1"
+pytest = "^7.2.0"
+tox = "^3.27.1"
+
+[tool.black]
+line-length = 88
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
+line_length = 88
+multi_line_output = 3
+include_trailing_comma = true
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

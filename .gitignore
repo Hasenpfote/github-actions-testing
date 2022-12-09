@@ -1,0 +1,5 @@
+/.tox
+/.venv
+/poetry.lock
+
+__pycache__/
