@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["'Hasenpfote' <'Hasenpfote36@gmail.com'>"]
 readme = "README.md"
-packages = [{include = "pyenv_poetry_tox_pytest_example"}]
+packages = [{include = "pyenv_poetry_tox_pytest_example", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.7"
