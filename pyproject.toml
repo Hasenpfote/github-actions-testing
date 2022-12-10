@@ -15,6 +15,7 @@ optional = true
 [tool.poetry.group.dev.dependencies]
 black = "^22.10.0"
 isort = "^5.10.1"
+Flake8-pyproject = "^1.2.2"
 tox = "^3.27.1"
 
 [tool.poetry.group.test]
@@ -36,6 +37,12 @@ profile = "black"
 line_length = 88
 multi_line_output = 3
 include_trailing_comma = true
+
+[tool.flake8]
+max-line-length = 88
+extend-ignore = ["E203", "E266", "W503",]
+max-complexity = 10
+exclude = [".git", "__pycache__",".venv", ".tox",]
 
 [tool.pytest.ini_options]
 addopts = [
