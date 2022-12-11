@@ -2,7 +2,7 @@
 name = "pyenv_poetry_tox_pytest_example"
 version = "0.1.0"
 description = ""
-authors = ["'Hasenpfote' <'Hasenpfote36@gmail.com'>"]
+authors = ["Hasenpfote <Hasenpfote36@gmail.com>"]
 readme = "README.md"
 packages = [{include = "pyenv_poetry_tox_pytest_example", from = "src"}]
 
@@ -17,6 +17,7 @@ black = "^22.10.0"
 isort = "^5.10.1"
 Flake8-pyproject = "^1.2.2"
 mypy = "^0.991"
+pre-commit = "^2.20.0"
 tox = "^3.27.1"
 
 [tool.poetry.group.test]
