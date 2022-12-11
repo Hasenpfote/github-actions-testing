@@ -15,3 +15,11 @@ repos:
     hooks:
       - id: black
         language_version: python3
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+  - repo: https://github.com/john-hen/Flake8-pyproject
+    rev: 1.2.2
+    hooks:
+      - id: Flake8-pyproject
