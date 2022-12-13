@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyenv_poetry_tox_pytest_example"
-version = "0.1.0"
+version = "0.1.0.post1.dev0+14436b1"
 description = ""
 authors = ["Hasenpfote <Hasenpfote36@gmail.com>"]
 readme = "README.md"
@@ -42,7 +42,7 @@ requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry-dynamic-versioning]
-enable = true
+enable = false
 vcs = "git"
 style = "pep440"
 
