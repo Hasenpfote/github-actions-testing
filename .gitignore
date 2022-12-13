@@ -1,5 +1,9 @@
-/.tox
-/.venv
+/.tox/
+/.venv/
 /poetry.lock
+/.mypy_cache/
+/docs/
+!/docs/source/conf.py
+/dist/
 
 __pycache__/
