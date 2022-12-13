@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "pyenv_poetry_tox_pytest_example"
-version = "0.2.0"
+version = "0.0.0"
 description = ""
 authors = ["Hasenpfote <Hasenpfote36@gmail.com>"]
 readme = "README.md"
@@ -42,12 +42,14 @@ requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
 build-backend = "poetry_dynamic_versioning.backend"
 
 [tool.poetry-dynamic-versioning]
-enable = true
+enable = false
 vcs = "git"
 style = "pep440"
 
 [tool.poetry-dynamic-versioning.substitution]
-files = ["*.py", "*/__init__.py", "*/__version__.py", "*/_version.py"]
+folders = [
+  { path = "src" }
+]
 
 [tool.black]
 line-length = 88
@@ -78,6 +80,6 @@ ignore_errors = true
 
 [tool.pytest.ini_options]
 addopts = [
-    "--import-mode=importlib",
+  "--import-mode=importlib",
 ]
 pythonpath = "src"
