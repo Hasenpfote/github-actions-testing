@@ -39,7 +39,7 @@ jobs:
         TEST_MSG: ${{ secrets.TEST_MSG }}
       run: |
         echo ${{ secrets.TEST_MSG }}
-        echo encv.TEST_MSG
+        echo env.TEST_MSG
         #poetry config repositories.test-pypi https://test.pypi.org/legacy/
         #poetry config pypi-token.test-pypi ${{ secrets.TESTPYPI_API_TOKEN }}
         #poetry publish -r test-pypi
