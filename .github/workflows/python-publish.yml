@@ -37,10 +37,12 @@ jobs:
         TESTPYPI_PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
         TESTPYPI_API_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
         TEST_MSG: ${{ secrets.TEST_MSG }}
+        PUB_MSG: 'Hello, world!!!'
       run: |
         echo "The GitHub Action Secret will be masked:  "
         echo ${{ secrets.TEST_MSG }}
         echo env.TEST_MSG
+        echo $PUB_MSG
         echo "The GitHub Action Secret will be masked:  "
         #poetry config repositories.test-pypi https://test.pypi.org/legacy/
         #poetry config pypi-token.test-pypi ${{ secrets.TESTPYPI_API_TOKEN }}
