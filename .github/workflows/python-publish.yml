@@ -36,8 +36,11 @@ jobs:
         TESTPYPI_USERNAME: ${{ secrets.TESTPYPI_USERNAME }}
         TESTPYPI_PASSWORD: ${{ secrets.TESTPYPI_PASSWORD }}
         TESTPYPI_API_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
+        TEST_MSG: ${{ secrets.TEST_MSG }}
       run: |
-        poetry config repositories.test-pypi https://test.pypi.org/legacy/
-        poetry config pypi-token.test-pypi ${{ secrets.TESTPYPI_API_TOKEN }}
-        poetry publish -r test-pypi
+        echo ${{ secrets.TEST_MSG }}
+        echo encv.TEST_MSG
+        #poetry config repositories.test-pypi https://test.pypi.org/legacy/
+        #poetry config pypi-token.test-pypi ${{ secrets.TESTPYPI_API_TOKEN }}
+        #poetry publish -r test-pypi
         #poetry publish -r test-pypi --username env.TESTPYPI_USERNAME --password env.TESTPYPI_PASSWORD
