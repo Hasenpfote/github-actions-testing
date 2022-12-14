@@ -39,4 +39,4 @@ jobs:
       run: |
         poetry config repositories.test-pypi https://test.pypi.org/legacy/
         #poetry config pypi-token.test-pypi $TESTPYPI_API_TOKEN
-        poetry publish -r test-pypi --username $TESTPYPI_USERNAME --password $TESTPYPI_PASSWORD
+        poetry publish -r test-pypi --username Hasenpfote_Test --password R7jpE1H1L1ZBWpCv
