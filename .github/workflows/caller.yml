@@ -25,4 +25,4 @@ jobs:
           poetry run tox -e flake8
 
   Reuse:
-    uses: ./.github/workflows/docs.yml
+    uses: ./.github/workflows/callee.yml
