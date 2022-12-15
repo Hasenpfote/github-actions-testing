@@ -27,6 +27,7 @@ jobs:
   Reuse:
     needs: lint-local
     permissions:
+      contents: read
       pages: write
       id-token: write    
     uses: ./.github/workflows/callee.yml
