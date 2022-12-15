@@ -25,10 +25,7 @@ jobs:
           poetry install --with docs --no-interaction
       - name: Build
         run: |
-          #poetry run pdoc ./src/pyenv_poetry_tox_pytest_example -o ./docs -t ./docs/template
           poetry run python ./docs/make.py
-        env:
-          TEST_VER: "1.2.3"
       - uses: actions/upload-pages-artifact@v1
         with:
           path: docs/build/
