@@ -25,4 +25,5 @@ jobs:
           poetry run tox -e flake8
 
   Reuse:
+    needs: lint-local
     uses: ./.github/workflows/callee.yml
