@@ -7,7 +7,7 @@
 /_docs/
 # !/_docs/source/conf.py
 /docs/
-!/docs/template/
+!/docs/make.py
 
 /dist/
 
