@@ -3,9 +3,6 @@
 /.python-version
 /poetry.lock
 /.mypy_cache/
-
-/_docs/
-# !/_docs/source/conf.py
 /docs/build/
 
 /dist/
