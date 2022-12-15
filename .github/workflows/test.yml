@@ -1,5 +1,6 @@
 name: Python package
 
+# on: [ push, pull_request ]
 on:
   workflow_dispatch:
 
@@ -7,6 +8,13 @@ permissions:
   contents: read
 
 jobs:
+  lint-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: TrueBrain/actions-flake8@v2
+
   lint-local:
     # if: github.event_name == 'push'
     runs-on: ubuntu-latest
