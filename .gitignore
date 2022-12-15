@@ -6,6 +6,8 @@
 
 /_docs/
 # !/_docs/source/conf.py
+#/docs/
+# !/docs/template/
 
 /dist/
 
