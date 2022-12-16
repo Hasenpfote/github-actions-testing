@@ -21,16 +21,21 @@ if __name__ == '__main__':
         module = importlib.import_module(project)
         version = toml_dict['tool']['poetry']['version']
 
+    print(f'version={version}')
+
     if version == '0.0.0':
         repo_dir = project_root_dir / '.git'
         if os.path.isdir(repo_dir):
             repo = git.Repo(repo_dir)
+            print(repo.tags)
             if repo.tags:
                 tags = sorted(repo.tags, key=lambda t: t.commit.committed_datetime)
                 latest_tag = tags[-1]
                 version = str(latest_tag)
                 if version.startswith('v'):
                     version = version[1:]
+
+    print(f'version={version}')
 
     # Render docs
     pdoc.render.configure(
