@@ -29,3 +29,11 @@ jobs:
         poetry config repositories.test-pypi https://test.pypi.org/legacy/
         poetry config pypi-token.test-pypi $TESTPYPI_API_TOKEN
         poetry publish -r test-pypi
+
+  docs:
+    needs: deploy
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    uses: ./.github/workflows/docs.yml
