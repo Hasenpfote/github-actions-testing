@@ -13,6 +13,7 @@ except ModuleNotFoundError:
 if __name__ == '__main__':
     here = Path(__file__).parent
     project_root_dir = here / '..'
+    print(f'project_root_dir={project_root_dir}')
 
     toml_path = project_root_dir / 'pyproject.toml'
     with open(toml_path, mode='rb') as f:
