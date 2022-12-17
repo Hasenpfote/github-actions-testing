@@ -31,7 +31,8 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 pdoc = "^12.3.0"
-tomli = {version = "^2.0.1", python = "<3.11"}
+#tomli = {version = "^2.0.1", python = "<3.11"}
+tomli = "^2.0.1"
 GitPython = "^3.1.29"
 
 [build-system]
@@ -74,6 +75,7 @@ ignore_errors = true
 #warn_return_any = true
 #warn_unused_ignores = true
 #warn_redundant_casts = true
+#exclude = [".venv/", "dist/", "docs/"]
 
 [tool.pytest.ini_options]
 addopts = [
