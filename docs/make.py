@@ -34,6 +34,7 @@ if __name__ == '__main__':
 
     # Render docs
     pdoc.render.configure(
+        docformat='google',
         footer_text=f'{module.__name__} {version}',
     )
 
