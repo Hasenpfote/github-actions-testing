@@ -19,3 +19,17 @@ def test_print_python_version(capfd):
     out, err = capfd.readouterr()
     assert out != ''
     assert err == ''
+
+
+def test_print_with_delay(capfd, mocker):
+    m = mocker.patch(
+        'pyenv_poetry_tox_pytest_example.utils.time.sleep', return_value=None
+    )
+
+    text = 'Hello, world!'
+    utils.print_with_delay(text)
+
+    m.assert_called_once_with(len(text) / 100 + 1.0)
+    out, err = capfd.readouterr()
+    assert out == text + '\n'
+    assert err == ''
