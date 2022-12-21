@@ -33,4 +33,4 @@ jobs:
         run: poetry install --no-interaction --only-root
       - name: Lint with tox
         run: |
-          poetry run tox -e black,isort,flake8,mypy -p all
+          poetry run tox -e black,isort,flake8,mypy -p all -q
