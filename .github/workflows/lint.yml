@@ -25,7 +25,7 @@ jobs:
           python-version: ${{ steps.python-version.outputs.content }}
 
       - name: Echo file
-        run: echo ${{ steps.setup-python.outputs.python-version }}
+        run: echo '${{ steps.setup-python.outputs.python-version }}'
           
       - name: Load cached Poetry installation
         id: cached-poetry
