@@ -22,7 +22,7 @@ jobs:
           #python-version-file: .github/python-version.txt
           python-version: ${{ env.PYV }}
         env:
-          PYV: $(cat .github/python-version.txt)
+          PYV: "3.8"
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
