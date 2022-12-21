@@ -1,4 +1,4 @@
-name: Lint
+name: Lint1
 
 #on: [ push, pull_request ]
 on: workflow_dispatch
@@ -7,8 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  black:
-    if: true
+  formatter:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -35,10 +34,13 @@ jobs:
       - name: Lint with black
         run: |
           poetry run tox -e black
+      - name: Lint with isort
+        run: |
+          poetry run tox -e isort
 
-  isort:
-    if: true
+  linter:
     runs-on: ubuntu-latest
+    needs: formatter
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -61,6 +63,9 @@ jobs:
         run: poetry install --no-interaction --no-root
       - name: Install project
         run: poetry install --with dev --no-interaction
-      - name: Lint with isort
+      - name: Lint with flake8
         run: |
-          poetry run tox -e isort
+          poetry run tox -e flake8
+      - name: Lint with mypy
+        run: |
+          poetry run tox -e mypy
