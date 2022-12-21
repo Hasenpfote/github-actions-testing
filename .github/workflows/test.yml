@@ -29,7 +29,14 @@ jobs:
     - name: Configure Poetry
       run: |
         poetry config virtualenvs.in-project true
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: .venv
+        key: venv-${{ matrix.os }}-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
     - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       run: poetry install --no-interaction --only dev
     - name: Install project
       run: poetry install --no-interaction --only-root
