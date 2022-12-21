@@ -17,7 +17,8 @@ jobs:
         with:
           path: .github/python-version.txt
           trim: true
-      - id: setup-python
+      - name: Set up Python
+        id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ steps.python-version.outputs.content }}
