@@ -18,7 +18,6 @@ jobs:
       - name: Output version
         run: |
           echo ${{ steps.vars.outputs.py-version }}
-          echo ${{ format('"{0}"', ${{ steps.vars.outputs.py-version }}) }}
 
       - uses: actions/setup-python@v4
         with:
