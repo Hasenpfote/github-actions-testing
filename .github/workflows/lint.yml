@@ -11,18 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - name: Get version
-        id: vars
-        #run: echo 'python-version=$(cat .github/python-version.txt)' >> $GITHUB_OUTPUT
-        #run: echo "::set-output name=version::$(cat .github/python-version.txt)"
-        run: echo "::set-output name=version::3.8"
-
       - uses: actions/setup-python@v4
         with:
-          #python-version-file: .github/python-version.txt
-          python-version: ${{ env.PYV }}
-        env:
-          PYV: "$(cat .github/python-version.txt)"
+          python-version-file: .github/python-version.txt
+      - name: Get version
+        id: vars
+        run: echo 'python-version=$(cat .github/python-version.txt)' >> $GITHUB_OUTPUT
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
