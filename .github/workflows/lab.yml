@@ -35,7 +35,7 @@ jobs:
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
       - name: Echo
-        run: ~/.local/poetry --version
+        run: ~/.local/bin/poetry --version
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
