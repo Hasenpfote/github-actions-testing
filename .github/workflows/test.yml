@@ -28,7 +28,7 @@ jobs:
       id: cached-poetry
       uses: actions/cache@v3
       with:
-        path: ~/.local  # the path depends on the OS
+        path: ~/.local/bin  # the path depends on the OS
         key: poetry-${{ matrix.os }}-${{ matrix.python-version }}
     - name: Install Poetry
       if: steps.cached-poetry.outputs.cache-hit != 'true'
