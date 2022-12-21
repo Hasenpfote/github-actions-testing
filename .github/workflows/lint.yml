@@ -14,12 +14,6 @@ jobs:
       - uses: actions/setup-python@v4
         with:
           python-version-file: .github/python-version.txt
-      - name: Load cached Poetry cache installation
-        id: cached-poetry-cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/pypoetry # the path depends on the OS
-          key: poetry-cache-0 # increment to reset cache
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
