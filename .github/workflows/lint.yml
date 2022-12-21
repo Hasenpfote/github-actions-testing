@@ -18,10 +18,12 @@ jobs:
       - name: Output version
         run: |
           echo ${{ steps.vars.outputs.py-version }}
+          echo 'PYTHON_VERSION=$(cat .github/python-version.txt)' >> GITHUB_ENV
 
       - uses: actions/setup-python@v4
         with:
-          python-version: ${{ steps.vars.outputs.py-version }}
+          #python-version: ${{ steps.vars.outputs.py-version }}
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Load cached Poetry installation
         id: cached-poetry
