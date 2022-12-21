@@ -16,6 +16,7 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: .github/python-version.txt
+          trim: true
       - id: setup-python
         uses: actions/setup-python@v4
         with:
