@@ -16,12 +16,9 @@ jobs:
         uses: juliangruber/read-file-action@v1
         with:
           path: .github/python-version.txt
-      - name: Echo file
-        run: echo '${{ steps.python-version.outputs.content }}'
-      
-      - uses: actions/setup-python@v4
+      - id: setup-python
+        uses: actions/setup-python@v4
         with:
-          #python-version-file: .github/python-version.txt
           python-version: ${{ steps.python-version.outputs.content }}
 
       - name: Echo file
