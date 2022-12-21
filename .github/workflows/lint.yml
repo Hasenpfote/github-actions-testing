@@ -23,6 +23,10 @@ jobs:
         with:
           #python-version-file: .github/python-version.txt
           python-version: ${{ steps.python-version.outputs.content }}
+
+      - name: Echo file
+        run: echo ${{ steps.setup-python.outputs.python-version }}
+          
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
