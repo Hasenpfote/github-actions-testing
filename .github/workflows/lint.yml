@@ -11,29 +11,24 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-python@v4
-        with:
-          python-version-file: .github/python-version.txt
-      # Because setup-python does not evaluate variables.
-      - name: Get version
-        id: package
+      - name: Read version
+        id: python-version
         uses: juliangruber/read-file-action@v1
         with:
           path: .github/python-version.txt
       - name: Echo file
-        run: echo "${{ steps.package.outputs.content }}"
+        run: echo '${{ steps.python-version.outputs.content }}'
       
-      - name: Get version
-        id: vars
-        run: echo 'python-version=$(cat .github/python-version.txt)' >> $GITHUB_OUTPUT
+      - uses: actions/setup-python@v4
+        with:
+          #python-version-file: .github/python-version.txt
+          python-version: ${{ steps.python-version.outputs.content }}
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
         with:
           path: ~/.local # the path depends on the OS
-          #key: poetry-${{ runner.os }}-${{ steps.vars.outputs.python-version }}
-          key: poetry-${{ runner.os }}-${{ steps.package.outputs.content }}
-          
+          key: poetry-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
@@ -45,7 +40,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: venv-${{ runner.os }}-${{ steps.vars.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --only dev
