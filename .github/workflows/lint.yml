@@ -13,6 +13,8 @@ jobs:
       - name: Get version
         id: vars
         run: echo 'python-version=$(cat .github/python-version.txt)' >> $GITHUB_OUTPUT
+      - name: Outpu version
+        run: echo ${{ steps.vars.outputs.python-version }}
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
