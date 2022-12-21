@@ -7,7 +7,7 @@ permissions:
   contents: read
 
 jobs:
-  formatter:
+  black:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -34,13 +34,37 @@ jobs:
       - name: Lint with black
         run: |
           poetry run tox -e black
+
+  isort:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version-file: .github/python-version.txt
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+      - name: Install project
+        run: poetry install --with dev --no-interaction
       - name: Lint with isort
         run: |
           poetry run tox -e isort
 
-  linter:
+  flake8:
     runs-on: ubuntu-latest
-    needs: formatter
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
@@ -66,6 +90,31 @@ jobs:
       - name: Lint with flake8
         run: |
           poetry run tox -e flake8
+
+  mypy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version-file: .github/python-version.txt
+      - name: Install Poetry
+        uses: snok/install-poetry@v1
+        with:
+          virtualenvs-create: true
+          virtualenvs-in-project: true
+          installer-parallel: true
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: venv-${{ runner.os }}-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root
+      - name: Install project
+        run: poetry install --with dev --no-interaction
       - name: Lint with mypy
         run: |
           poetry run tox -e mypy
