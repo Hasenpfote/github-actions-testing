@@ -14,7 +14,8 @@ jobs:
       - name: Get version
         id: vars
         #run: echo 'python-version=$(cat .github/python-version.txt)' >> $GITHUB_OUTPUT
-        run: echo "::set-output name=version::$(cat .github/python-version.txt)"
+        #run: echo "::set-output name=version::$(cat .github/python-version.txt)"
+        run: echo "::set-output name=version::3.8"
 
       - uses: actions/setup-python@v4
         with:
