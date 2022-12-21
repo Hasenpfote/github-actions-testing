@@ -17,7 +17,8 @@ jobs:
 
       - name: Get version
         id: vars
-        run: echo ::set-output name=python-version::$(cat .github/python-version.txt)
+        #run: echo ::set-output name=python-version::$(cat .github/python-version.txt)
+        run: echo '{python-version}={$(cat .github/python-version.txt)}' >> $GITHUB_OUTPUT
       - name: Test output
         run: echo ${{ steps.vars.outputs.python-version }}
 
