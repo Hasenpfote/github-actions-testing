@@ -14,7 +14,7 @@ jobs:
 
       - name: Get version
         id: vars
-        run: echo 'py-version=format("{0}", $(cat .github/python-version.txt))' >> $GITHUB_OUTPUT
+        run: echo 'py-version=format(\"{0}\", $(cat .github/python-version.txt))' >> $GITHUB_OUTPUT
       - name: Output version
         run: |
           echo ${{ steps.vars.outputs.py-version }}
