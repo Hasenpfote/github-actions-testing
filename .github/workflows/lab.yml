@@ -48,7 +48,7 @@ jobs:
           #"$APPDATA\\pypoetry\\venv\\Scripts\\poetry.exe"  --version
           #"$APPDATA\\Python\\Scripts\\poetry.exe"  --version
           "$HOME/.local/bin/poetry.exe --version"
-          poetry --version
+          #poetry --version
 
       - name: Configure Poetry
         run: |
