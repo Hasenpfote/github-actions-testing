@@ -54,15 +54,15 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Display the path
+        id: pyv
         run: |
-          #import os
-          #with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-          #    str(${{ matrix.python-version }})
-          #    print(f'pyv={str(${{ matrix.python-version }})}', file=fh)
-          #ver = str(${{ matrix.python-version }})
-          #print(ver.replace('.', ''))
-          print(f'pyv={str(${{ matrix.python-version }})}')
+          import os
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+              value = str(${{ matrix.python-version }}).replace('.', '')
+              print(f'pyv={value}', file=fh)
         shell: python
+      - name: Display the path
+        run: echo ${{ steps.pyv.outputs.pyv }}
 
       - name: Test with pytest
         run: |
