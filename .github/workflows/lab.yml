@@ -40,7 +40,7 @@ jobs:
       - name: Debug
         run: |
           echo '(1)' ${{ steps.cached-poetry.outputs.cache-hit }}
-          echo '(2)' steps.cached-poetry.outputs.cache-hit == 'true'
+          echo '(2)' "${{ steps.cached-poetry.outputs.cache-hit }} == 'true'"
 
       - name: Restore PATH variable
         if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
