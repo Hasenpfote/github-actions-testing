@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: ${{ steps.python-version.outputs.content }}
       - name: Load cached Poetry installation
+        # On Windows, using poetry restored from the cache causes several problems.
         if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
@@ -37,7 +38,9 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Debug
-        run: echo ${{ steps.cached-poetry.outputs.cache-hit }}
+        run: |
+          echo (1) ${{ steps.cached-poetry.outputs.cache-hit }}
+          echo (2) steps.cached-poetry.outputs.cache-hit == 'true'
 
       - name: Restore PATH variable
         if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
