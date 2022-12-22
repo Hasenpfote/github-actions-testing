@@ -68,6 +68,11 @@ jobs:
               print(f'env=py{value}', file=fh)
         shell: python
 
+      - name: Debug
+        run: |
+          dir/w
+        shell: cmd
+
       - name: Test with pytest
         run: |
           ls -la "$HOME/.local/bin"
