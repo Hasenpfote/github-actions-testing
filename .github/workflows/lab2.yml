@@ -27,7 +27,7 @@ jobs:
 
       - name: Load cached Poetry installation
         # On Windows, using poetry restored from the cache causes several problems.
-        if: runner.os != 'Windows'
+        #if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
         with:
@@ -39,9 +39,15 @@ jobs:
         uses: snok/install-poetry@v1
 
       - name: Restore PATH variable
-        if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
+        #if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
+        if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os == 'macOS'
         run: |
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Add a path with pwsh
+        if: runner.os == 'Windows'
+        run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
+        shell: pwsh
 
       - name: Configure Poetry
         run: |
@@ -74,10 +80,10 @@ jobs:
       #  run: echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
       #  shell: cmd
 
-      - name: Add a path with pwsh
-        if: runner.os == 'Windows'
-        run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
-        shell: pwsh
+      #- name: Add a path with pwsh
+      #  if: runner.os == 'Windows'
+      #  run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
+      #  shell: pwsh
 
       - name: Test with pytest
         run: |
