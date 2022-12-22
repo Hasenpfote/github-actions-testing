@@ -85,7 +85,7 @@ jobs:
       #  shell: bash
       - name: Debug
         run: |
-          echo "$env:USERPROFILE\.local\bin" >> $GITHUB_PATH
+          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
         shell: pwsh
       - name: Debug
         run: |
