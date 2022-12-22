@@ -67,4 +67,4 @@ jobs:
       - name: Test with pytest
         run: |
           #run: poetry run tox -e py # This is not possible on Windows.
-          run: poetry run tox -e ${{ steps.vars.outputs.pyv }}
+          poetry run tox -e ${{ steps.vars.outputs.pyv }}
