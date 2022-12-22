@@ -36,7 +36,9 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Restore PATH variable
         if: steps.cached-poetry.outputs.cache-hit == 'true'
-        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+        run: |
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          export PATH="$HOME/.local/bin:$PATH"
 
       - name: Debug
         run: |
