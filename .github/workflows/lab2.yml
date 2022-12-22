@@ -68,34 +68,17 @@ jobs:
               print(f'env=py{value}', file=fh)
         shell: python
 
-      - name: Debug1
-        run: |
-          echo $HOME
-      - name: Debug2
-        run: |
-          echo %USERPROFILE%
-        shell: cmd
-      - name: Debug3
-        run: |
-          echo $env:USERPROFILE
+      #- name: Add a path with cmd
+      #  if: runner.os == 'Windows'
+      #  run: echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
+      #  shell: cmd
+
+      - name: Add a path with pwsh
+        if: runner.os == 'Windows'
+        run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
         shell: pwsh
-      #- name: Debug
-      #  run: |
-      #    echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
-      #  shell: bash
-      - name: Debug
-        run: |
-          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
-        shell: pwsh
-      - name: Debug
-        run: |
-          set
-          poetry --version
-        shell: cmd
 
       - name: Test with pytest
         run: |
-          ls -la "$HOME/.local/bin"
           #poetry run tox -e py # This is not possible on Windows.
           poetry run tox -e ${{ steps.vars.outputs.env }}
-          #poetry run tox -e gh
