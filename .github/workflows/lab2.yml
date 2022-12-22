@@ -11,8 +11,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ['3.7', '3.8']
-        #os: [ubuntu-20.04, macos-latest, windows-latest]
-        os: [windows-latest, ]
+        os: [ubuntu-20.04, macos-latest, windows-latest]
+        #os: [windows-latest, ]
     defaults:
       run:
         shell: bash
@@ -23,30 +23,36 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
+
       - name: Load cached Poetry installation
         # On Windows, using poetry restored from the cache causes several problems.
-        if: runner.os != 'Windows'
+        #if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
         with:
           path: ~/.local # the path depends on the OS
           key: lab2-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
+
       - name: Restore PATH variable
         if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
         run: |
           echo "$HOME/.local/bin" >> $GITHUB_PATH
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
           path: .venv
-          key: lab-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: lab2-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --with dev
@@ -62,12 +68,7 @@ jobs:
               print(f'env=py{value}', file=fh)
         shell: python
 
-      - name: Debug
-        run: |
-          echo ${{ steps.vars.outputs.env }}
-          echo "$HOME\\.local\\bin" >> $GITHUB_PATH
-
       - name: Test with pytest
         run: |
-          #run: poetry run tox -e py # This is not possible on Windows.
+          #poetry run tox -e py # This is not possible on Windows.
           poetry run tox -e ${{ steps.vars.outputs.env }}
