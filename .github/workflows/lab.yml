@@ -39,7 +39,9 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: Debug
-        run: echo $PATH
+        run: |
+          echo $PATH
+          poetry --version
 
       - name: Configure Poetry
         run: |
