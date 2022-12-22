@@ -54,17 +54,17 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Display the path
-        id: pyv
+        id: vars
         run: |
           import os
           with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
               value = str(${{ matrix.python-version }}).replace('.', '')
-              print(f'pyv={value}', file=fh)
+              print(f'pyv=py{value}', file=fh)
         shell: python
       - name: Display the path
-        run: echo ${{ steps.pyv.outputs.pyv }}
+        run: echo ${{ steps.vars.outputs.pyv }}
 
       - name: Test with pytest
         run: |
           #run: poetry run tox -e py # This is not possible on Windows.
-          poetry --version
+          run: poetry run tox -e ${{ steps.vars.outputs.pyv }}
