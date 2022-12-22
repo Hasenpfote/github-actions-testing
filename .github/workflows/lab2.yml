@@ -53,18 +53,19 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Display the path
+      - name: Get the environment name for Tox
         id: vars
         run: |
           import os
           with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
               value = str(${{ matrix.python-version }}).replace('.', '')
-              print(f'pyv=py{value}', file=fh)
+              print(f'env=py{value}', file=fh)
         shell: python
-      - name: Display the path
-        run: echo ${{ steps.vars.outputs.pyv }}
+
+      - name: Debug
+        run: echo ${{ steps.vars.outputs.env }}
 
       - name: Test with pytest
         run: |
           #run: poetry run tox -e py # This is not possible on Windows.
-          poetry run tox -e ${{ steps.vars.outputs.pyv }}
+          poetry run tox -e ${{ steps.vars.outputs.env }}
