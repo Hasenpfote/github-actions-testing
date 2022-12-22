@@ -29,7 +29,8 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: ~/.local # the path depends on the OS
+          #path: ~/.local # the path depends on the OS
+          path: 
           key: lab-poetry-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -41,6 +42,7 @@ jobs:
       - name: Debug
         run: |
           echo $PATH
+          echo $APPDATA
           poetry --version
 
       - name: Configure Poetry
