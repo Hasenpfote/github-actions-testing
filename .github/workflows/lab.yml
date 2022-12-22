@@ -52,7 +52,8 @@ jobs:
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
-          path: .venv
+          #path: .venv
+          path: ~/.cache
           key: lab-venv-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
