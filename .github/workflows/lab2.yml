@@ -55,8 +55,7 @@ jobs:
 
       - name: Display the path
         run: |
-          import os
-          print(os.environ['PATH'])
+          print(${{ matrix.python-version }})
         shell: python
 
       - name: Test with pytest
