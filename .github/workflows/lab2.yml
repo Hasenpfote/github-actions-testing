@@ -73,7 +73,7 @@ jobs:
           echo $HOME
       - name: Debug
         run: |
-          echo ${env:PATH}
+          echo ${env:HOME}
         shell: pwsh
       - name: Debug
         run: |
