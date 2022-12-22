@@ -55,7 +55,8 @@ jobs:
 
       - name: Display the path
         run: |
-          print(${{ matrix.python-version }}.replace('.', ''))
+          ver = str(${{ matrix.python-version }})
+          print(ver.replace('.', ''))
         shell: python
 
       - name: Test with pytest
