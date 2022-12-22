@@ -29,8 +29,7 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          #path: ~/.local # the path depends on the OS
-          path: ~/AppData/Roaming/Python/Scripts
+          path: ~/.local # the path depends on the OS
           key: lab-poetry-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
