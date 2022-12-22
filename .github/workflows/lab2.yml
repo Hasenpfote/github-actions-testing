@@ -72,6 +72,7 @@ jobs:
         run: |
           dir/w
           #poetry --version
+          setx /M path "C:\\Users\\runneradmin\\.lacal\\bin;%path%"
           set
         shell: cmd
 
