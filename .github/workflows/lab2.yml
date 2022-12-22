@@ -73,8 +73,8 @@ jobs:
           echo $HOME
       - name: Debug
         run: |
-          echo $HOME
-        shell: cmd
+          echo ${env:PATH}
+        shell: pwsh
       - name: Debug
         run: |
           echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
