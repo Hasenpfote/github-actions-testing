@@ -68,21 +68,25 @@ jobs:
               print(f'env=py{value}', file=fh)
         shell: python
 
-      - name: Debug
+      - name: Debug1
         run: |
           echo $HOME
-      - name: Debug
+      - name: Debug2
         run: |
           echo %USERPROFILE%
         shell: cmd
-      - name: Debug
+      - name: Debug3
         run: |
           echo $env:USERPROFILE
         shell: pwsh
+      #- name: Debug
+      #  run: |
+      #    echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
+      #  shell: bash
       - name: Debug
         run: |
-          echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
-        shell: bash
+          echo "$env:USERPROFILE\\.local\\bin" >> $GITHUB_PATH
+        shell: pwsh
       - name: Debug
         run: |
           set
