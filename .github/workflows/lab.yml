@@ -7,9 +7,9 @@ permissions:
 
 jobs:
   build:
-    #defaults:
-    #  run:
-    #    shell: bash
+    defaults:
+      run:
+        shell: bash
     #[ubuntu-20.04, macos-latest, windows-latest]
     runs-on: windows-latest
     steps:
@@ -42,7 +42,6 @@ jobs:
           echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
 
       - name: Debug
-        shell: cmd
         run: |
           echo $PATH
           echo $APPDATA
