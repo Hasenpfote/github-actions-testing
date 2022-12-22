@@ -12,7 +12,7 @@ jobs:
       matrix:
         python-version: ['3.7', '3.8']
         #os: [ubuntu-20.04, macos-latest, windows-latest]
-        #os: [windows-latest, ]
+        os: [windows-latest, ]
     defaults:
       run:
         shell: bash
