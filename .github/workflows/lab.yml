@@ -26,6 +26,7 @@ jobs:
         with:
           python-version: ${{ steps.python-version.outputs.content }}
       - name: Load cached Poetry installation
+        if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
         with:
@@ -34,6 +35,10 @@ jobs:
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
+
+      - name: Debug
+        run: echo ${{ steps.cached-poetry.outputs.cache-hit }}
+
       - name: Restore PATH variable
         if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
         run: |
