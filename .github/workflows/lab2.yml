@@ -49,6 +49,10 @@ jobs:
         run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
         shell: pwsh
 
+      - name: Debug
+        run: set
+        shell: cmd
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
