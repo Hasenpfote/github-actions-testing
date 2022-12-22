@@ -41,9 +41,11 @@ jobs:
       - name: Debug
         run: |
           echo "$APPDATA/pypoetry/venv/Scripts/poetry" >> $GITHUB_PATH
+      - name: Debug
+        run: |
           echo $PATH
           echo $APPDATA
-          #poetry --version
+          poetry --version
 
       - name: Configure Poetry
         run: |
