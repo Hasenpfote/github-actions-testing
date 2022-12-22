@@ -43,7 +43,7 @@ jobs:
           echo $POETRY_HOME
       - name: Echo
         run: | 
-          ~/.local/bin/poetry --version
+          poetry --version
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
