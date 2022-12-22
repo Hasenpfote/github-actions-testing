@@ -70,6 +70,9 @@ jobs:
 
       - name: Debug
         run: |
+          echo $HOME
+      - name: Debug
+        run: |
           echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
         shell: bash
       - name: Debug
