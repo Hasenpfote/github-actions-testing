@@ -71,7 +71,8 @@ jobs:
       - name: Debug
         run: |
           dir/w
-          poetry --version
+          #poetry --version
+          set
         shell: cmd
 
       - name: Test with pytest
