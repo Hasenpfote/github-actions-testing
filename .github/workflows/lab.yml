@@ -40,9 +40,9 @@ jobs:
 
       - name: Debug
         run: |
+          echo "$APPDATA/pypoetry/venv/Scripts/poetry" >> $GITHUB_PATH
           echo $PATH
           echo $APPDATA
-          echo "$APPDATA/pypoetry/venv/Scripts/poetry"
           poetry --version
 
       - name: Configure Poetry
