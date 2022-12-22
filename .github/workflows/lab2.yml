@@ -63,10 +63,11 @@ jobs:
         shell: python
 
       - name: Debug
-        run: echo ${{ steps.vars.outputs.env }}
+        run: |
+          echo ${{ steps.vars.outputs.env }}
+          echo "$HOME\\.local\\bin" >> $GITHUB_PATH
 
       - name: Test with pytest
         run: |
           #run: poetry run tox -e py # This is not possible on Windows.
-          #poetry run tox -e ${{ steps.vars.outputs.env }}
-          poetry run tox --version
+          poetry run tox -e ${{ steps.vars.outputs.env }}
