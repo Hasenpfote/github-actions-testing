@@ -52,8 +52,14 @@ jobs:
         run: poetry install --no-interaction --only dev
       - name: Install project
         run: poetry install --no-interaction --only-root
+
+      - name: Display the path
+        run: |
+          import os
+          print(os.environ['PATH'])
+        shell: python
+
       - name: Test with pytest
         run: |
           #run: poetry run tox -e py # This is not possible on Windows.
           poetry --version
-          
