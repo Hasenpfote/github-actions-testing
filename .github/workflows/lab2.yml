@@ -85,7 +85,7 @@ jobs:
       #  shell: bash
       - name: Debug
         run: |
-          echo "$env:USERPROFILE\\.local\\bin" >> $GITHUB_PATH
+          echo "$env:USERPROFILE\.local\bin" >> $GITHUB_PATH
         shell: pwsh
       - name: Debug
         run: |
