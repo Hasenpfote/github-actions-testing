@@ -37,8 +37,9 @@ jobs:
       - name: Restore PATH variable
         if: steps.cached-poetry.outputs.cache-hit == 'true'
         run: |
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
-          export PATH="$HOME/.local/bin:$PATH"
+          #echo "$HOME/.local/bin" >> $GITHUB_PATH
+          #export PATH="$HOME/.local/bin:$PATH"
+          echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
 
       - name: Debug
         run: |
