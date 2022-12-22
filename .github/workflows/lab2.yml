@@ -73,7 +73,11 @@ jobs:
           dir/w
           #poetry --version
           setx /M path "C:\\Users\\runneradmin\\.lacal\\bin;%path%"
+        shell: cmd
+      - name: Debug
+        run: |
           set
+          poetry --version
         shell: cmd
 
       - name: Test with pytest
