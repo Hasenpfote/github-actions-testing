@@ -42,13 +42,14 @@ jobs:
           echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
 
       - name: Debug
+        shell: cmd
         run: |
           echo $PATH
           echo $APPDATA
           #"$APPDATA\\pypoetry\\venv\\Scripts\\poetry.exe"  --version
           #"$APPDATA\\Python\\Scripts\\poetry.exe"  --version
-          "$HOME/.local/bin/poetry.exe --version"
-          #poetry --version
+          #"$HOME/.local/bin/poetry.exe --version"
+          poetry --version
 
       - name: Configure Poetry
         run: |
