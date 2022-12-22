@@ -43,7 +43,8 @@ jobs:
           echo '(2)' "${{ steps.cached-poetry.outputs.cache-hit }} == 'true'"
 
       - name: Restore PATH variable
-        if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
+        #if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
+        if: runner.os != 'Linux' && steps.cached-poetry.outputs.cache-hit == 'true'
         run: |
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
