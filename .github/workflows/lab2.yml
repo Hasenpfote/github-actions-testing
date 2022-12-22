@@ -55,8 +55,13 @@ jobs:
 
       - name: Display the path
         run: |
-          ver = str(${{ matrix.python-version }})
-          print(ver.replace('.', ''))
+          #import os
+          #with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+          #    str(${{ matrix.python-version }})
+          #    print(f'pyv={str(${{ matrix.python-version }})}', file=fh)
+          #ver = str(${{ matrix.python-version }})
+          #print(ver.replace('.', ''))
+          print(f'pyv={str(${{ matrix.python-version }})}')
         shell: python
 
       - name: Test with pytest
