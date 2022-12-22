@@ -43,7 +43,7 @@ jobs:
           echo "$APPDATA/pypoetry/venv/Scripts/poetry" >> $GITHUB_PATH
           echo $PATH
           echo $APPDATA
-          poetry --version
+          #poetry --version
 
       - name: Configure Poetry
         run: |
