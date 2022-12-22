@@ -70,10 +70,8 @@ jobs:
 
       - name: Debug
         run: |
-          dir/w
-          #poetry --version
-          setx /M path "C:\\Users\\runneradmin\\.lacal\\bin;%path%"
-        shell: cmd
+          echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
+        shell: bash
       - name: Debug
         run: |
           set
