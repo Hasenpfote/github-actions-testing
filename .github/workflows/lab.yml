@@ -36,8 +36,10 @@ jobs:
         uses: snok/install-poetry@v1
       - name: Echo PATH
         run: | 
-          #export PATH="$HOME/.local/bin:$PATH"
           echo '$HOME/.local/bin' >> $GITHUB_PATH
+      - name: Echo PATH
+        run: | 
+          #export PATH="$HOME/.local/bin:$PATH"
           echo $PATH
       - name: Echo POETRY_HOME
         run: | 
