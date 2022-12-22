@@ -34,9 +34,14 @@ jobs:
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
-      - name: Echo
+      - name: Echo PATH
         run: | 
           echo $PATH
+      - name: Echo POETRY_HOME
+        run: | 
+          echo $POETRY_HOME
+      - name: Echo
+        run: | 
           ~/.local/bin/poetry --version
       - name: Configure Poetry
         run: |
