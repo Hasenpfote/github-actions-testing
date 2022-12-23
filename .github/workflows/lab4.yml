@@ -72,6 +72,11 @@ jobs:
         run: |
           echo "$HOME/.local/bin" >> $GITHUB_PATH
 
+      - name: Debug
+        shell: bash
+        run: |
+          ls -la ~/.local
+
       - name: Add paths for Windows
         if: runner.os == 'Windows'
         shell: pwsh
