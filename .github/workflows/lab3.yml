@@ -64,6 +64,17 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
         shell: bash
 
+      - name: Debug
+        run: |
+          if [ "$RUNNER_OS" == "macOS" ]; then
+            echo "has_cache: $HAS_CACHE"
+          elif [ "$RUNNER_OS" == "Windows" ]; then
+            echo "has_cache: $HAS_CACHE"
+          fi
+        env: |
+          HAS_CACHE: ${{ steps.cached-poetry.outputs.cache-hit }}
+        shell: bash
+
       - name: Add paths for Windows
         if: runner.os == 'Windows'
         run: Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
