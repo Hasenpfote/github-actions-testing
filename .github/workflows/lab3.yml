@@ -52,7 +52,7 @@ jobs:
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
         run: |
-          curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local python3 -
+          curl -sSL https://install.python-poetry.org | POETRY_HOME=~/.local python3 -
 
       # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
       - name: Install Poetry for Windows
