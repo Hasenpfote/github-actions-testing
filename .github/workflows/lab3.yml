@@ -53,16 +53,25 @@ jobs:
         shell: bash
 
       # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
-      - name: Install Poetry for Windows
-        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-        run: |
-          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-        shell: pwsh
+      #- name: Install Poetry for Windows
+      #  if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+      #  run: |
+      #    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+      #  shell: pwsh
 
       - name: Add paths for macOS
         if: runner.os == 'macOS'
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
         shell: bash
+      
+      - name: Install Poetry for Windows
+        if: runner.os == 'Windows'
+        run: |
+          if ( ${{ steps.cached-poetry.outputs.cache-hit }} -ne 'true' ) {
+            (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+          }
+          Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
+        shell: pwsh
 
 #$value = Get-MysteryValue
 #if ( 5 -eq $value )
@@ -81,10 +90,10 @@ jobs:
           HAS_CACHE: ${{ steps.cached-poetry.outputs.cache-hit }}
         shell: bash
 
-      - name: Add paths for Windows
-        if: runner.os == 'Windows'
-        run: Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
-        shell: pwsh
+      #- name: Add paths for Windows
+      #  if: runner.os == 'Windows'
+      #  run: Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
+      #  shell: pwsh
 
       - name: Debug
         run: |
