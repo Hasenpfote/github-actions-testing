@@ -51,8 +51,11 @@ jobs:
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
+        env:
+          POETRY_HOME: ~/.local
         run: |
-          curl -sSL https://install.python-poetry.org | POETRY_HOME=~/.local python3 -
+          #curl -sSL https://install.python-poetry.org | POETRY_HOME=~/.local python3 -
+          curl -sSL https://install.python-poetry.org | python3 -
 
       # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
       - name: Install Poetry for Windows
@@ -87,6 +90,7 @@ jobs:
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --with dev
+
       - name: Install project
         run: poetry install --no-interaction --only-root
 
