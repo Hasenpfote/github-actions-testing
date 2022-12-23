@@ -24,12 +24,12 @@ jobs:
 
       - name: Load cached Poetry installation
         # On Windows, using poetry restored from the cache causes several problems.
-        if: runner.os != 'Windows'
+        #if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
         with:
           #path: ~/.local # the path depends on the OS
-          path: "C:\\Users\\runneradmin\\.local"
+          path: "$env:APPDATA\\Python\\Scripts"
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
