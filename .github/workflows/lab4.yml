@@ -76,9 +76,9 @@ jobs:
         shell: bash
         run: |
           ls -la ~/.local
+          ls -la ~/.local/bin
           ls -la ~/.local/venv
           ls -la ~/.local/venv/Scripts
-          ls -la ~/.local/venv/poetry_env
 
       - name: Add paths for Windows
         if: runner.os == 'Windows'
@@ -86,6 +86,11 @@ jobs:
         run: |
           #Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
           Add-Content $env:GITHUB_PATH "$env:HOME\.local\venv\Scripts"
+
+      - name: Debug
+        shell: cmd
+        run: |
+          set
 
       - name: Configure Poetry
         run: |
