@@ -78,16 +78,10 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
+          #Add-Content $env:GITHUB_PATH "$env:USERPROFILE\AppData\Roaming\bin"
+          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\AppData\Roaming\venv\Scripts"
+          #Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
           #Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
-
-      - name: Debug
-        shell: bash
-        run: |
-          ls -la ~/.local
-          ls -la ~/.local/bin
-          ls -la ~/.local/venv
-          ls -la ~/.local/venv/Scripts
 
       - name: Debug
         shell: cmd
