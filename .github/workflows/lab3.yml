@@ -11,12 +11,14 @@ jobs:
       fail-fast: false
       matrix:
         #python-version: ['3.7', '3.8']
-        #os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04, macos-latest, windows-latest]
         python-version: ['3.7', ]
-        os: [windows-latest, ]
+        #os: [windows-latest, ]
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -24,6 +26,7 @@ jobs:
 
       - name: Make cache paths
         id: make-cache-paths
+        shell: bash
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
             PATH1='~\AppData\Local\pypoetry'
@@ -36,7 +39,6 @@ jobs:
             PATH='~/.local'
             echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
           fi
-        shell: bash
 
       - name: Load cached Poetry installation
         id: cached-poetry
@@ -46,54 +48,30 @@ jobs:
             ${{ env.CACHE_PATHS }}
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
-      #- name: Install Poetry for Linux/macOS
-      #  if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-      #  run: |
-      #    curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local py -
-      #  shell: bash
+      - name: Install Poetry for Linux/macOS
+        if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
+          curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local py -
 
       # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
-      #- name: Install Poetry for Windows
-      #  if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-      #  run: |
-      #    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-      #  shell: pwsh
-
-      #- name: Add paths for macOS
-      #  if: runner.os == 'macOS'
-      #  run: echo "$HOME/.local/bin" >> $GITHUB_PATH
-      #  shell: bash
-
-      - name: Install Poetry for Linux/macOS
-        if: runner.os != 'Windows'
-        run: |
-          if [ ${{ steps.cached-poetry.outputs.cache-hit }} != 'true' ]; then
-            curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local py -
-          fi
-          if [ ${{ runner.os }} == 'macOS' ]; then
-            echo "$HOME/.local/bin" >> $GITHUB_PATH
-          fi
-        shell: bash
-
-      - name: Debug
-        run: |
-          if ( ${{ steps.cached-poetry.outputs.cache-hit }} ) {
-            echo "not empty"
-          }
-          else {
-            echo "empty"
-          }
-        shell: pwsh
-
-
       - name: Install Poetry for Windows
-        if: runner.os == 'Windows'
-        run: |
-          if ( ${{ steps.cached-poetry.outputs.cache-hit }} -ne 'true' ) {
-            (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-          }
-          Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
+        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
+        run: |
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+      - name: Add paths for macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Add paths for Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
 
       - name: Configure Poetry
         run: |
@@ -114,12 +92,12 @@ jobs:
 
       - name: Get the environment name for Tox
         id: vars
+        shell: python
         run: |
           import os
           with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
               value = str(${{ matrix.python-version }}).replace('.', '')
               print(f'env=py{value}', file=fh)
-        shell: python
 
       - name: Test with pytest
         run: |
