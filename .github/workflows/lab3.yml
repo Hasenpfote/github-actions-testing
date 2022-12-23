@@ -37,10 +37,10 @@ jobs:
         run: curl -sSL https://install.python-poetry.org | POETRY_HOME="C:\\Users\\runneradmin\\.local" python3 -
         shell: bash
 
-      - name: Restore PATH variable
-        if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
-        run: |
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+      #- name: Restore PATH variable
+      #  if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
+      #  run: |
+      #    echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       #- name: Add a path with cmd
       #  if: runner.os == 'Windows'
