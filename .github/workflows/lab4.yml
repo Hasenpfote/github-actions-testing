@@ -84,8 +84,8 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          #Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
-          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
+          #Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
+          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
 
       - name: Debug
         shell: cmd
