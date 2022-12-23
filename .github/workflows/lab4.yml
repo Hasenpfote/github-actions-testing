@@ -54,8 +54,7 @@ jobs:
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
         env:
-          # POETRY_HOME: ~/.local
-          POETRY_HOME: C:\Users\runneradmin\AppData\Roaming
+          POETRY_HOME: ~/.local
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
@@ -64,7 +63,8 @@ jobs:
         if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
         env:
-          POETRY_HOME: ~\.local
+          # POETRY_HOME: ~\.local
+          POETRY_HOME: C:\Users\runneradmin\AppData\Roaming
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
