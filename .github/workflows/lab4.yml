@@ -35,7 +35,8 @@ jobs:
             # echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
             # echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
             # echo 'EOF' >> $GITHUB_ENV
-            PATH='~\.local'
+            #PATH='~\.local'
+            PATH='C:\Users\runneradmin\AppData\Roaming'
             echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
           else
             PATH='~/.local'
@@ -53,7 +54,8 @@ jobs:
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
         env:
-          POETRY_HOME: ~/.local
+          # POETRY_HOME: ~/.local
+          POETRY_HOME: C:\Users\runneradmin\AppData\Roaming
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
