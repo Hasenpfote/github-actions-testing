@@ -71,7 +71,7 @@ jobs:
           elif [ "$RUNNER_OS" == "Windows" ]; then
             echo "$HAS_CACHE"
           fi
-        env: |
+        env:
           HAS_CACHE: ${{ steps.cached-poetry.outputs.cache-hit }}
         shell: bash
 
