@@ -1,0 +1,112 @@
+name: Lab4
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        #python-version: ['3.7', '3.8']
+        #os: [ubuntu-20.04, macos-latest, windows-latest]
+        python-version: ['3.7', ]
+        os: [windows-latest, ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Make cache paths
+        id: make-cache-paths
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            # PATH1='~\AppData\Local\pypoetry'
+            # PATH2='~\AppData\Roaming\pypoetry'
+            # PATH3='~\AppData\Roaming\Python\Scripts'
+            # echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
+            # echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
+            # echo 'EOF' >> $GITHUB_ENV
+            PATH='~/.local'
+            echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
+          else
+            PATH='~/.local'
+            echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
+          fi
+      - name: Load cached Poetry installation
+        id: cached-poetry
+        uses: actions/cache@v3
+        with:
+          path: |
+            ${{ env.CACHE_PATHS }}
+          key: lab4-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+
+      - name: Install Poetry for Linux/macOS
+        if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          POETRY_HOME: ~/.local
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
+      - name: Install Poetry for Windows
+        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        shell: pwsh
+        env:
+          POETRY_HOME: ~/.local
+        run: |
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+      - name: Add paths for macOS
+        if: runner.os == 'macOS'
+        shell: bash
+        run: |
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      - name: Add paths for Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          #Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
+          Add-Content $env:GITHUB_PATH "$env:HOME\.local\bin"
+
+      - name: Configure Poetry
+        run: |
+          poetry config virtualenvs.in-project true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: lab4-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root --with dev
+
+      - name: Install project
+        run: poetry install --no-interaction --only-root
+
+      - name: Get the environment name for Tox
+        id: vars
+        shell: python
+        run: |
+          import os
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
+              value = str(${{ matrix.python-version }}).replace('.', '')
+              print(f'env=py{value}', file=fh)
+
+      - name: Test with pytest
+        run: |
+          #poetry run tox -e py # This is not possible on Windows.
+          poetry run tox -e ${{ steps.vars.outputs.env }}
