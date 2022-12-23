@@ -69,6 +69,8 @@ jobs:
 
       - name: Debug
         run: |
+          echo $RUNNER_OS
+          echo ${{ runner.os }}
           if [ "$RUNNER_OS" == "macOS" ]; then
             echo "$HAS_CACHE"
           elif [ "$RUNNER_OS" == "Windows" ]; then
