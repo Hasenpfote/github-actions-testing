@@ -62,8 +62,7 @@ jobs:
         if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
         env:
-          # POETRY_HOME: ~\local
-          POETRY_HOME: 'C:\Users\runneradmin\.local'
+          POETRY_HOME: ~\local
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
