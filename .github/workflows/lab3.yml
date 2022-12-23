@@ -54,7 +54,6 @@ jobs:
         env:
           POETRY_HOME: ~/.local
         run: |
-          #curl -sSL https://install.python-poetry.org | POETRY_HOME=~/.local python3 -
           curl -sSL https://install.python-poetry.org | python3 -
 
       # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
@@ -62,7 +61,7 @@ jobs:
         if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
-          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python3 -
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
       - name: Add paths for macOS
         if: runner.os == 'macOS'
