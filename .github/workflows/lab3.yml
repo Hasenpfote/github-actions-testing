@@ -52,7 +52,8 @@ jobs:
 
       - name: Add a path with pwsh
         if: runner.os == 'Windows'
-        run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
+        #run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
+        run: Add-Content $env:GITHUB_PATH "$env:APPDATA\Python\Scripts"
         shell: pwsh
 
       - name: Debug
