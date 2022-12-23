@@ -34,7 +34,7 @@ jobs:
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         #uses: snok/install-poetry@v1
-        #run: curl -sSL https://install.python-poetry.org | POETRY_HOME="C:\\Users\\runneradmin\\.local" python3 -
+        #run: curl -sSL https://install.python-poetry.org | POETRY_HOME="C:\Users\runneradmin\.local" py -
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | POETRY_HOME="C:\\Users\\runneradmin\\.local" py -
         shell: pwsh
