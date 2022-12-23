@@ -29,8 +29,9 @@ jobs:
             PATH1='~\AppData\Local\pypoetry'
             PATH2='~\AppData\Roaming\pypoetry'
             PATH3='~\AppData\Roaming\Python\Scripts'
-            PATHS="${PATH1}\n${PATH2}\n${PATH3}"
-            echo "paths:${PATHS}" >> $GITHUB_OUTPUT
+            echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
+            echo "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
+            echo 'EOF' >> $GITHUB_ENV
           else
             echo "paths:~/.local" >> $GITHUB_OUTPUT
           fi
@@ -53,7 +54,8 @@ jobs:
           # ~\AppData\Roaming\pypoetry
           # ~\AppData\Roaming\Python\Scripts
           path: |
-            ${{ steps.make-cache-paths.outputs.paths }}
+            # ${{ steps.make-cache-paths.outputs.paths }}
+            ${{ env.CACHE_PATHS }}
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
