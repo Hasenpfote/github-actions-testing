@@ -35,7 +35,7 @@ jobs:
             # echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
             # echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
             # echo 'EOF' >> $GITHUB_ENV
-            PATH='~\local'
+            PATH='~\.local'
             echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
           else
             PATH='~/.local'
@@ -62,7 +62,7 @@ jobs:
         if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
         env:
-          POETRY_HOME: ~\local
+          POETRY_HOME: ~\.local
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
@@ -76,9 +76,15 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\local\venv\Scripts"
-          #Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
+          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
           #Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
+
+      - name: Debug
+        shell: bash
+        run: |
+          ls -la ~/AppData/Local/pypoetry
+          ls -la ~/AppData/Roaming/pypoetry
+          ls -la ~/AppData/Roaming/Python/Scripts
 
       - name: Debug
         shell: cmd
