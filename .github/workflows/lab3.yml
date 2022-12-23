@@ -67,9 +67,9 @@ jobs:
       - name: Debug
         run: |
           if [ "$RUNNER_OS" == "macOS" ]; then
-            echo "has_cache: $HAS_CACHE"
+            echo "$HAS_CACHE"
           elif [ "$RUNNER_OS" == "Windows" ]; then
-            echo "has_cache: $HAS_CACHE"
+            echo "$HAS_CACHE"
           fi
         env: |
           HAS_CACHE: ${{ steps.cached-poetry.outputs.cache-hit }}
