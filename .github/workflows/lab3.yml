@@ -36,7 +36,7 @@ jobs:
         #uses: snok/install-poetry@v1
         #run: curl -sSL https://install.python-poetry.org | POETRY_HOME="C:\\Users\\runneradmin\\.local" python3 -
         run: |
-          [System.Text.Encoding]::UTF8.GetString((Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content) | POETRY_HOME="C:\\Users\\runneradmin\\.local" python3 -
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | POETRY_HOME="C:\\Users\\runneradmin\\.local" py -
         shell: pwsh
 
       #- name: Restore PATH variable
