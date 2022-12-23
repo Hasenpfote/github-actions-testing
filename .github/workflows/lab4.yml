@@ -85,7 +85,7 @@ jobs:
         shell: pwsh
         run: |
           #Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
-          Add-Content $env:GITHUB_PATH "$env:HOME\.local\venv\Scripts"
+          Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
 
       - name: Debug
         shell: cmd
