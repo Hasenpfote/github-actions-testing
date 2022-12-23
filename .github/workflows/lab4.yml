@@ -78,6 +78,7 @@ jobs:
           ls -la ~/.local
           ls -la ~/.local/venv
           ls -la ~/.local/venv/Scripts
+          ls -la ~/.local/venv/poetry_env
 
       - name: Add paths for Windows
         if: runner.os == 'Windows'
