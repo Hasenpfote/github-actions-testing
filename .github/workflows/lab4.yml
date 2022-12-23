@@ -76,6 +76,7 @@ jobs:
         shell: bash
         run: |
           ls -la ~/.local
+          ls -la ~/.local/venv
 
       - name: Add paths for Windows
         if: runner.os == 'Windows'
