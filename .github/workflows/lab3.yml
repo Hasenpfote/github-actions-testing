@@ -27,12 +27,18 @@ jobs:
         #if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
+        # LOCALAPPDATA
+        #
         with:
-          # C:\Users\runneradmin\AppData\Local\pypa
+          # C:\Users\runneradmin\AppData\Local\pypa # for tox
+          # C:\Users\runneradmin\AppData\Local\pypoetry
+          # C:\Users\runneradmin\AppData\Roaming\pypoetry
+          # C:\Users\runneradmin\AppData\Roaming\Python\Scripts
+          # https://github.com/actions/cache#windows-environment-variables
           path: |
-            C:\Users\runneradmin\AppData\Local\pypoetry
-            C:\Users\runneradmin\AppData\Roaming\pypoetry
-            C:\Users\runneradmin\AppData\Roaming\Python\Scripts
+            ~\AppData\Local\pypoetry
+            ~\AppData\Roaming\pypoetry
+            ~\AppData\Roaming\Python\Scripts
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
