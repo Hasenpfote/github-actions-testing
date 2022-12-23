@@ -33,53 +33,39 @@ jobs:
             echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV
           else
-            echo "paths:~/.local" >> $GITHUB_OUTPUT
+            PATH='~/.local'
+            echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
           fi
         shell: bash
 
       - name: Load cached Poetry installation
-        # On Windows, using poetry restored from the cache causes several problems.
-        #if: runner.os != 'Windows'
         id: cached-poetry
         uses: actions/cache@v3
-        # LOCALAPPDATA
-        #
         with:
-          # C:\Users\runneradmin\AppData\Local\pypa # for tox
-          # C:\Users\runneradmin\AppData\Local\pypoetry
-          # C:\Users\runneradmin\AppData\Roaming\pypoetry
-          # C:\Users\runneradmin\AppData\Roaming\Python\Scripts
-          # https://github.com/actions/cache#windows-environment-variables
-          # ~\AppData\Local\pypoetry
-          # ~\AppData\Roaming\pypoetry
-          # ~\AppData\Roaming\Python\Scripts
           path: |
-            # ${{ steps.make-cache-paths.outputs.paths }}
             ${{ env.CACHE_PATHS }}
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
-        #uses: snok/install-poetry@v1
-        # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
+        if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        run: |
+          curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local py -
+        shell: bash
+
+      # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
+      - name: Install Poetry for Windows
+        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
         shell: pwsh
 
-      #- name: Restore PATH variable
-      #  if: steps.cached-poetry.outputs.cache-hit == 'true' && runner.os != 'Linux'
-      #  run: |
-      #    echo "$HOME/.local/bin" >> $GITHUB_PATH
+      - name: Add paths for macOS
+        if: runner.os == 'macOS'
+        run: echo "$HOME/.local/bin" >> $GITHUB_PATH
+        shell: bash
 
-      #- name: Add a path with cmd
-      #  if: runner.os == 'Windows'
-      #  run: echo "C:\\Users\\runneradmin\\.local\\bin" >> $GITHUB_PATH
-      #  shell: cmd
-
-      - name: Add a path with pwsh
+      - name: Add paths for Windows
         if: runner.os == 'Windows'
-        #run: Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\bin"
-        #run: Add-Content $env:GITHUB_PATH "$env:APPDATA\Python\Scripts"
         run: Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
         shell: pwsh
 
