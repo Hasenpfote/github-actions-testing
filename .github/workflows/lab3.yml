@@ -22,6 +22,20 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
+      - name: Make cache paths
+        id: make-cache-paths
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            PATH1 = '~\AppData\Local\pypoetry'
+            PATH2 = '~\AppData\Roaming\pypoetry'
+            PATH3 = '~\AppData\Roaming\Python\Scripts'
+            PATHS = "${PATH1}\n${PATH2}\n${PATH3}"
+            echo "paths:${PATHS}" >> $GITHUB_OUTPUT
+          else
+            echo "paths:~/.local" >> $GITHUB_OUTPUT
+          fi
+        shell: bash
+
       - name: Load cached Poetry installation
         # On Windows, using poetry restored from the cache causes several problems.
         #if: runner.os != 'Windows'
@@ -35,10 +49,11 @@ jobs:
           # C:\Users\runneradmin\AppData\Roaming\pypoetry
           # C:\Users\runneradmin\AppData\Roaming\Python\Scripts
           # https://github.com/actions/cache#windows-environment-variables
+          # ~\AppData\Local\pypoetry
+          # ~\AppData\Roaming\pypoetry
+          # ~\AppData\Roaming\Python\Scripts
           path: |
-            ~\AppData\Local\pypoetry
-            ~\AppData\Roaming\pypoetry
-            ~\AppData\Roaming\Python\Scripts
+            ${{ steps.make-cache-paths.outputs.paths }}
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
