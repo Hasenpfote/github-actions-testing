@@ -29,7 +29,7 @@ jobs:
         uses: actions/cache@v3
         with:
           #path: ~/.local # the path depends on the OS
-          path: ${{ env:APPDATA }}\\Python\\Scripts
+          path: C:\Users\runneradmin\AppData\Roaming\Python\Scripts
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
