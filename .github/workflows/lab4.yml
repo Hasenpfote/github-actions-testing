@@ -35,7 +35,7 @@ jobs:
             # echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
             # echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
             # echo 'EOF' >> $GITHUB_ENV
-            PATH='~\.local'
+            PATH='C:\Users\runneradmin\.local'
             echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
           else
             PATH='~/.local'
