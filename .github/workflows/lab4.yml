@@ -83,7 +83,7 @@ jobs:
         shell: pwsh
         run: |
           #Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
-          Add-Content $env:GITHUB_PATH "$env:HOME\.local\bin"
+          Add-Content $env:GITHUB_PATH "$env:HOME\.local\bin\venv\Scripts"
 
       - name: Configure Poetry
         run: |
