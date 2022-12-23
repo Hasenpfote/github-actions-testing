@@ -26,10 +26,10 @@ jobs:
         id: make-cache-paths
         run: |
           if [ "$RUNNER_OS" == "Windows" ]; then
-            PATH1 = '~\AppData\Local\pypoetry'
-            PATH2 = '~\AppData\Roaming\pypoetry'
-            PATH3 = '~\AppData\Roaming\Python\Scripts'
-            PATHS = "${PATH1}\n${PATH2}\n${PATH3}"
+            PATH1='~\AppData\Local\pypoetry'
+            PATH2='~\AppData\Roaming\pypoetry'
+            PATH3='~\AppData\Roaming\Python\Scripts'
+            PATHS="${PATH1}\n${PATH2}\n${PATH3}"
             echo "paths:${PATHS}" >> $GITHUB_OUTPUT
           else
             echo "paths:~/.local" >> $GITHUB_OUTPUT
