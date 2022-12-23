@@ -78,13 +78,26 @@ jobs:
         run: |
           Add-Content $env:GITHUB_PATH "$env:USERPROFILE\.local\venv\Scripts"
 
-      - name: Debug
+      - name: "~/.local"
         shell: bash
         run: |
           ls -la ~/.local
+
+      - name: "~/.local/bin"
+        shell: bash
+        run: |
           ls -la ~/.local/bin
+
+      - name: "ls -la ~/.local/venv"
+        shell: bash
+        run: |
           ls -la ~/.local/venv
+
+      - name: "ls -la ~/.local/venv/Scripts"
+        shell: bash
+        run: |
           ls -la ~/.local/venv/Scripts
+
 
       - name: Configure Poetry
         run: |
