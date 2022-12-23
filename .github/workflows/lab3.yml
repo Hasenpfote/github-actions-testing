@@ -52,14 +52,14 @@ jobs:
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
         run: |
-          curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local py -
+          curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local python3 -
 
       # https://github.com/python-poetry/poetry/issues/6875#issuecomment-1315476316
       - name: Install Poetry for Windows
         if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
         run: |
-          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | python3 -
 
       - name: Add paths for macOS
         if: runner.os == 'macOS'
