@@ -46,7 +46,7 @@ jobs:
             ${{ env.CACHE_PATHS }}
           key: lab3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
-      - name: Install Poetry
+      - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         run: |
           curl -sSL https://install.python-poetry.org | POETRY_HOME=/.local py -
