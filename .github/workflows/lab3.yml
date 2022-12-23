@@ -30,6 +30,7 @@ jobs:
         with:
           #path: ~/.local # the path depends on the OS
           path: |
+            C:\Users\runneradmin\AppData\Local\pypa
             C:\Users\runneradmin\AppData\Local\pypoetry
             C:\Users\runneradmin\AppData\Roaming\pypoetry
             C:\Users\runneradmin\AppData\Roaming\Python\Scripts
