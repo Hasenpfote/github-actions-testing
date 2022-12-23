@@ -30,7 +30,7 @@ jobs:
             PATH2='~\AppData\Roaming\pypoetry'
             PATH3='~\AppData\Roaming\Python\Scripts'
             echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
-            echo "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
+            echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
             echo 'EOF' >> $GITHUB_ENV
           else
             echo "paths:~/.local" >> $GITHUB_OUTPUT
