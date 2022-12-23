@@ -82,8 +82,8 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          ls -la ~/AppData/Local/pypoetry
-          ls -la ~/AppData/Roaming/pypoetry
+          ls -la ~/AppData/Local
+          ls -la ~/AppData/Roaming
           ls -la ~/AppData/Roaming/Python/Scripts
 
       - name: Debug
