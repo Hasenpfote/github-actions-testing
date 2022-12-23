@@ -64,12 +64,16 @@ jobs:
         run: echo "$HOME/.local/bin" >> $GITHUB_PATH
         shell: bash
 
+#$value = Get-MysteryValue
+#if ( 5 -eq $value )
+
       - name: Debug
         run: |
           if [ "$RUNNER_OS" == "macOS" ]; then
             echo "$HAS_CACHE"
           elif [ "$RUNNER_OS" == "Windows" ]; then
             echo "$HAS_CACHE"
+            echo ${{ steps.cached-poetry.outputs.cache-hit }}
           fi
         env:
           HAS_CACHE: ${{ steps.cached-poetry.outputs.cache-hit }}
