@@ -17,12 +17,12 @@ jobs:
         include:
           - os: ubuntu-20.04
             poetry_home: ''
-            poetry_path: ${HOME}/.local/bin
+            poetry_path: ${HOME}/.local/share/pypoetry/venv/bin/poetry
             poetry_cache_paths: |
               ~/.local/share/pypoetry
           - os: macos-latest
             poetry_home: ''
-            poetry_path: ${HOME}/.local/bin
+            poetry_path: ${HOME}/Library/Application Support/pypoetry/venv/bin/poetry
             poetry_cache_paths: |
               ~/Library/Application Support/pypoetry
           - os: windows-latest
