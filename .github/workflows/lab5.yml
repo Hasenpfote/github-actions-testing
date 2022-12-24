@@ -87,18 +87,6 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Debug
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == 'Linux' ]; then
-              ls -la /home/runner/.cache/pypoetry
-          elif [ "$RUNNER_OS" == 'macOS' ]; then            
-              ls -la /Users/runner/Library/Caches/pypoetry
-          else
-              #ls -la ~/Appdata/Local/pypoetry/Cache
-              ls -la ~/Appdata/Local/pypoetry
-          fi
-
       - name: Get the environment name for Tox
         id: vars
         shell: python
@@ -112,3 +100,15 @@ jobs:
         run: |
           #poetry run tox -e py # This is not possible on Windows.
           poetry run tox -e ${{ steps.vars.outputs.env }}
+
+      - name: Debug
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == 'Linux' ]; then
+              ls -la /home/runner/.cache/pypoetry
+          elif [ "$RUNNER_OS" == 'macOS' ]; then            
+              ls -la /Users/runner/Library/Caches/pypoetry
+          else
+              #ls -la ~/Appdata/Local/pypoetry/Cache
+              ls -la ~/Appdata/Local/pypoetry
+          fi
