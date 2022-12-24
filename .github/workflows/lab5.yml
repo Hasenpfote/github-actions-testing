@@ -75,16 +75,16 @@ jobs:
           #  echo $USERPROFILE
           #fi
 
-      - name: Debug
-        shell: bash
-        run: |
-          echo "$(realpath ${{ matrix.poetry_path }})"
-
       - name: Add Poetry to the PATH environment variable.
         if: runner.os != 'Linux'
         shell: bash
         run: |
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
 
       #- name: Add paths for macOS
       #  if: runner.os == 'macOS'
