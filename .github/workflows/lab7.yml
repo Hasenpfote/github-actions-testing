@@ -37,8 +37,7 @@ jobs:
             poetry_home: ~\.local
             poetry_path: ${USERPROFILE}\.local\bin
             poetry_cache_paths: |
-              ~\.local\share\pypoetry
-              ~\.local\bin\poetry.exe
+              ~\.local\bin
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -88,8 +87,6 @@ jobs:
         run: |
           ls -la ~/.local
           ls -la ~/.local/bin
-          ls -la ~/.local/share
-          ls -la ~/.local/share/pypoetry
 
       - name: Load cached venv
         id: cached-poetry-dependencies
