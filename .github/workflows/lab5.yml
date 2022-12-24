@@ -25,7 +25,8 @@ jobs:
           #  poetry_cache_paths: ~/.local
           - os: windows-latest
             poetry_home: ''
-            poetry_path: ~\AppData\Roaming\pypoetry\venv\Scripts
+            #poetry_path: ~\AppData\Roaming\pypoetry\venv\Scripts
+            poetry_path: ${APPDATA}\pypoetry\venv\Scripts
             poetry_cache_paths: |
               ~\AppData\Local\pypoetry
               ~\AppData\Roaming\pypoetry
