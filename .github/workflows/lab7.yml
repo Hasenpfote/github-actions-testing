@@ -21,19 +21,19 @@ jobs:
             poetry_cache_paths: |
               ~/.local/share/pypoetry
               ~/.local/bin/poetry
-          #- os: macos-latest
-          #  poetry_home: ~/.local
-          #  poetry_path: ${HOME}/.local/bin
-          #  poetry_cache_paths: |
-          #    ~/.local/VERSION
-          #    ~/.local/bin/poetry
-          #    ~/.local/venv
-          #- os: windows-latest
-          #  poetry_home: ~\.local
-          #  poetry_path: ${USERPROFILE}\.local\venv\Scripts
-          #  poetry_cache_paths: |
-          #    ~\.local\VERSION
-          #    ~\.local\venv
+          - os: macos-latest
+            poetry_home: ~/.local
+            poetry_path: ${HOME}/.local/bin
+            poetry_cache_paths: |
+              ~/.local/VERSION
+              ~/.local/bin/poetry
+              ~/.local/venv
+          - os: windows-latest
+            poetry_home: ~\.local
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
+            poetry_cache_paths: |
+              ~\.local\VERSION
+              ~\.local\venv
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -51,11 +51,6 @@ jobs:
         with:
           path: ${{ matrix.poetry_cache_paths }}
           key: lab7-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
-
-      - name: Debug
-        shell: bash
-        run: |
-          ls -la ~
 
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
@@ -82,15 +77,6 @@ jobs:
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
-
-      - name: Debug
-        shell: bash
-        run: |
-          ls -la ~/.local
-          ls -la ~/.local/bin
-          ls -la ~/.local/share
-          ls -la ~/.local/share/pypoetry
-          #ls -la ~/.local/venv
 
       - name: Load cached venv
         id: cached-poetry-dependencies
