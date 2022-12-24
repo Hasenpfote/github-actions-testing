@@ -70,7 +70,6 @@ jobs:
           if [ "$RUNNER_OS" == 'Linux' ]; then
             ls -la ~/.local/bin
           elif [ "$RUNNER_OS" == 'macOS' ]; then
-            ls -la '~/Library/Application Support/pypoetry'
             ls -la ~/.local/bin
           else
             ls -la ~/AppData/Roaming/Python/Scripts
