@@ -16,7 +16,7 @@ jobs:
         os: [windows-latest, ]
         include:
           - os: windows-latest
-            poetry_cache_paths:
+            poetry_cache_paths: |
               ~\AppData\Local\pypoetry
               ~\AppData\Roaming\pypoetry
               ~\AppData\Roaming\Python\Scripts
@@ -52,8 +52,7 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: |
-            ${{ matrix.poetry_cache_paths }}
+          path: ${{ matrix.poetry_cache_paths }}
           #path: |
           #  ${{ env.CACHE_PATHS }}
           key: lab5-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
