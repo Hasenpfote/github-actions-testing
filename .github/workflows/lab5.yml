@@ -105,9 +105,9 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == 'Linux' ]; then
-              du -h /home/runner/.cache/pypoetry
+              du -sh /home/runner/.cache/pypoetry
           elif [ "$RUNNER_OS" == 'macOS' ]; then            
-              du -h /Users/runner/Library/Caches/pypoetry
+              du -sh /Users/runner/Library/Caches/pypoetry
           else
-              du -h ~/Appdata/Local/pypoetry
+              du -sh ~/Appdata/Local/pypoetry/Cache
           fi
