@@ -21,8 +21,7 @@ jobs:
           #  poetry_cache_paths: ~/.local
           - os: macos-latest
             poetry_home: ~/.local
-            #poetry_path: ~/.local/bin
-            poetry_path: /Users/runner/.local/bin
+            poetry_path: ${HOME}/.local/bin
             poetry_cache_paths: ~/.local
           #- os: windows-latest
           #  poetry_home: ''
