@@ -10,19 +10,19 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04, macos-latest, windows-latest]
         #python-version: ['3.7', '3.8']
-        os: [windows-latest, ]
+        #os: [windows-latest, ]
         python-version: ['3.7', ]
         include:
-          #- os: ubuntu-20.04
-          #  poetry_home: ~/.local
-          #  poetry_path: ''
-          #  poetry_cache_paths: ~/.local
-          #- os: macos-latest
-          #  poetry_home: ~/.local
-          #  poetry_path: ${HOME}/.local/bin
-          #  poetry_cache_paths: ~/.local
+          - os: ubuntu-20.04
+            poetry_home: ~/.local
+            poetry_path: ''
+            poetry_cache_paths: ~/.local
+          - os: macos-latest
+            poetry_home: ~/.local
+            poetry_path: ${HOME}/.local/bin
+            poetry_cache_paths: ~/.local
           - os: windows-latest
             poetry_home: ''
             poetry_path: ${APPDATA}\pypoetry\venv\Scripts
@@ -70,8 +70,15 @@ jobs:
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
 
       - name: Debug
+        shell: bash
         run: |
-          poetry config --list
+          if [ "$RUNNER_OS" == 'Linux' ]; then
+            ls -la ~/.cache/pypoetry
+          elif [ "$RUNNER_OS" == 'macOS' ]; then            
+            ls -la ~/.cache/Library/Caches/pypoetry
+          else:
+            ls -la ~/Appdata/Local/pypoetry/cache
+          fi
 
       - name: Configure Poetry
         run: |
