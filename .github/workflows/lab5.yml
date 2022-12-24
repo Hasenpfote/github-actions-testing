@@ -64,7 +64,11 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          printenv
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            echo $USERPROFILE
+          else
+            echo $HOME
+          fi
 
       - name: Add paths for macOS
         if: runner.os == 'macOS'
