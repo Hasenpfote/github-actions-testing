@@ -14,9 +14,6 @@ jobs:
         os: [ubuntu-20.04, macos-latest, windows-latest]
         python-version: ['3.7', ]
         #os: [windows-latest, ]
-        exclude:
-          - os: ubuntu-20.04
-          - os: macos-latest
         include:
           - os: ubuntu-20.04
             poetry_cache_paths: ~/.local
@@ -27,6 +24,9 @@ jobs:
               ~\AppData\Local\pypoetry
               ~\AppData\Roaming\pypoetry
               ~\AppData\Roaming\Python\Scripts
+        exclude:
+          - os: ubuntu-20.04
+          - os: macos-latest
             
     runs-on: ${{ matrix.os }}
     steps:
