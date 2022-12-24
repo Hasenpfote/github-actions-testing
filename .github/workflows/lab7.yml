@@ -25,7 +25,9 @@ jobs:
             poetry_home: ~/.local
             poetry_path: ${HOME}/.local/bin
             poetry_cache_paths: |
+              ~/.local/VERSION
               ~/.local/bin/poetry
+              ~/.local/venv
           #- os: windows-latest
           #  poetry_home: ~\.local
           #  poetry_path: ${USERPROFILE}\.local\venv\Scripts
