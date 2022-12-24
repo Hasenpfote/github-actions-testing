@@ -16,16 +16,16 @@ jobs:
         os: [windows-latest, ]
         include:
           - os: windows-latest
-            paths:
-              foo
-              bar
-              baz
+            poetry_cache_paths:
+              ~\AppData\Local\pypoetry
+              ~\AppData\Roaming\pypoetry
+              ~\AppData\Roaming\Python\Scripts
             
     runs-on: ${{ matrix.os }}
     steps:
       - name: Debug
         run: |
-          echo ${{ matrix.paths }}
+          echo ${{ matrix.poetry_cache_paths }}
     
       - name: Checkout
         uses: actions/checkout@v3
