@@ -20,17 +20,19 @@ jobs:
             poetry_path: ${HOME}/.local/share/pypoetry/venv/bin
             poetry_cache_paths: |
               ~/.local/share/pypoetry
+              ~/.local/bin/poetry
           - os: macos-latest
             poetry_home: ''
             poetry_path: ${HOME}/Library/Application Support/pypoetry/venv/bin
             poetry_cache_paths: |
               ~/Library/Application Support/pypoetry
+              ~/.local/bin/poetry
           - os: windows-latest
             poetry_home: ''
             poetry_path: ${APPDATA}\pypoetry\venv\Scripts
             poetry_cache_paths: |
               ~\AppData\Roaming\pypoetry
-              ~\AppData\Roaming\Python\Scripts
+              ~\AppData\Roaming\Python\Scripts\poetry.exe
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -63,17 +65,6 @@ jobs:
           POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
-
-      - name: Debug
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == 'Linux' ]; then
-            ls -la ~/.local/bin
-          elif [ "$RUNNER_OS" == 'macOS' ]; then
-            ls -la ~/.local/bin
-          else
-            ls -la ~/AppData/Roaming/Python/Scripts
-          fi
 
       - name: Add Poetry to the PATH environment variable
         if: matrix.poetry_path != ''
