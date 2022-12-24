@@ -52,7 +52,8 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: matrix.poetry_cache_paths
+          path: |
+            ${{ matrix.poetry_cache_paths }}
           #path: |
           #  ${{ env.CACHE_PATHS }}
           key: lab5-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
