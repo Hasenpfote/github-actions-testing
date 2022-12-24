@@ -73,11 +73,14 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == 'Linux' ]; then
-              ls -la ~/.cache/pypoetry
+              #ls -la ~/.cache/pypoetry
+              ls -la ~/.cache
           elif [ "$RUNNER_OS" == 'macOS' ]; then            
-              ls -la ~/.cache/Library/Caches/pypoetry
+              #ls -la ~/.cache/Library/Caches/pypoetry
+              ls -la ~/.cache/Library/Caches
           else
-              ls -la ~/Appdata/Local/pypoetry/cache
+              #ls -la ~/Appdata/Local/pypoetry/cache
+              ls -la ~/Appdata/Local
           fi
 
       - name: Configure Poetry
