@@ -64,6 +64,7 @@ jobs:
           POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
+
       - name: Install Poetry for Windows
         if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: pwsh
@@ -71,14 +72,25 @@ jobs:
           POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
       - name: Add Poetry to the PATH environment variable
         if: matrix.poetry_path != ''
         shell: bash
         run: |
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
+      - name: Debug
+        shell: bash
+        run: |
+          ls -la ~/.local
+          ls -la ~/.local/bin
+          ls -la ~/.local/share
+          ls -la ~/.local/share/pypoetry
+
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
@@ -101,6 +113,7 @@ jobs:
           with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
               value = ''.join(str(${{ matrix.python-version }}).split('.', 2)[0:2])
               print(f'env=py{value}', file=fh)
+
       - name: Test with pytest
         run: |
           #poetry run tox -e py # This is not possible on Windows.
