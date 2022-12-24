@@ -74,6 +74,11 @@ jobs:
           #  echo $USERPROFILE
           #fi
 
+      - name: Debug
+        shell: bash
+        run: |
+          echo "$(realpath ${{ matrix.poetry_path }})"
+
       - name: Add Poetry to the PATH environment variable.
         if: runner.os != 'Linux'
         shell: bash
