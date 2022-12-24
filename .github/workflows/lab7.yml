@@ -87,6 +87,7 @@ jobs:
         run: |
           ls -la ~/.local
           ls -la ~/.local/bin
+          ls -la ~/.local/venv
 
       - name: Load cached venv
         id: cached-poetry-dependencies
