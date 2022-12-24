@@ -17,7 +17,7 @@ jobs:
         include:
           - os: ubuntu-20.04
             poetry_home: ~/.local
-            poetry_path: ''
+            #poetry_path: ''
             poetry_cache_paths: ~/.local
           #- os: macos-latest
           #  poetry_home: ~/.local
