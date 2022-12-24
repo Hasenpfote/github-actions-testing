@@ -12,24 +12,24 @@ jobs:
       matrix:
         #os: [ubuntu-20.04, macos-latest, windows-latest]
         #python-version: ['3.7', '3.8']
-        os: [windows-latest, ]
+        os: [ubuntu-20.04, ]
         python-version: ['3.7', ]
         include:
-          #- os: ubuntu-20.04
-          #  poetry_home: ~/.local
-          #  poetry_path: ~/.local/bin
-          #  poetry_cache_paths: ~/.local
+          - os: ubuntu-20.04
+            poetry_home: ~/.local
+            poetry_path: ''
+            poetry_cache_paths: ~/.local
           #- os: macos-latest
           #  poetry_home: ~/.local
           #  poetry_path: ~/.local/bin
           #  poetry_cache_paths: ~/.local
-          - os: windows-latest
-            poetry_home: ''
-            poetry_path: ${APPDATA}\pypoetry\venv\Scripts
-            poetry_cache_paths: |
-              ~\AppData\Local\pypoetry
-              ~\AppData\Roaming\pypoetry
-              ~\AppData\Roaming\Python\Scripts
+          #- os: windows-latest
+          #  poetry_home: ''
+          #  poetry_path: ${APPDATA}\pypoetry\venv\Scripts
+          #  poetry_cache_paths: |
+          #    ~\AppData\Local\pypoetry
+          #    ~\AppData\Roaming\pypoetry
+          #    ~\AppData\Roaming\Python\Scripts
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -65,10 +65,12 @@ jobs:
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
       - name: Add Poetry to the PATH environment variable
-        if: runner.os != 'Linux'
+        #if: runner.os != 'Linux'
         shell: bash
         run: |
-          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+          if [ -n ${{ matrix.poetry_path }} ]; then
+            echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+          fi
 
       - name: Configure Poetry
         run: |
