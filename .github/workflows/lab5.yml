@@ -80,7 +80,7 @@ jobs:
             if [ -d '~/.cache/Library/Caches/pypoetry' ]; then
               ls -la ~/.cache/Library/Caches/pypoetry
             fi
-          else:
+          else
             if [ -d '~/Appdata/Local/pypoetry/cache' ]; then
               ls -la ~/Appdata/Local/pypoetry/cache
             fi
