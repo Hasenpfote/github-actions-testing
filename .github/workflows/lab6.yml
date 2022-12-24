@@ -17,14 +17,12 @@ jobs:
         include:
           - os: ubuntu-20.04
             poetry_home: ''
-            #poetry_path: ${HOME}/.local/share/pypoetry/venv/bin
             poetry_path: ''
             poetry_cache_paths: |
               ~/.local/share/pypoetry
               ~/.local/bin/poetry
           - os: macos-latest
             poetry_home: ''
-            #poetry_path: ${HOME}/Library/Application Support/pypoetry/venv/bin
             poetry_path: ${HOME}/.local/bin
             poetry_cache_paths: |
               ~/Library/Application Support/pypoetry
@@ -68,21 +66,11 @@ jobs:
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
-      - name: Debug
-        shell: bash
-        run: |
-          printenv
-
       - name: Add Poetry to the PATH environment variable
         if: matrix.poetry_path != ''
         shell: bash
         run: |
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
-
-      - name: Debug
-        shell: bash
-        run: |
-          printenv
 
       - name: Configure Poetry
         run: |
