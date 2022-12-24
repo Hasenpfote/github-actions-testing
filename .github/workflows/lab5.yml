@@ -95,7 +95,7 @@ jobs:
               ls -la ~/.cache
           elif [ "$RUNNER_OS" == 'macOS' ]; then            
               #ls -la ~/Library/Caches/pypoetry
-              ls -la ~/.cache/Library/Caches
+              ls -la ~/Library/Caches
           else
               #ls -la ~/Appdata/Local/pypoetry/cache
               ls -la ~/Appdata/Local
