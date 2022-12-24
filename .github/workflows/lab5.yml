@@ -27,13 +27,9 @@ jobs:
             poetry_home: ''
             poetry_path: ${APPDATA}\pypoetry\venv\Scripts
             poetry_cache_paths: |
-              "${LOCALAPPDATA}\pypoetry"
-              "${APPDATA}\pypoetry"
-              "${APPDATA}\Python\Scripts"
-            #poetry_cache_paths: |
-            #  ~\AppData\Local\pypoetry
-            #  ~\AppData\Roaming\pypoetry
-            #  ~\AppData\Roaming\Python\Scripts
+              ~\AppData\Local\pypoetry
+              ~\AppData\Roaming\pypoetry
+              ~\AppData\Roaming\Python\Scripts
 
     runs-on: ${{ matrix.os }}
     steps:
