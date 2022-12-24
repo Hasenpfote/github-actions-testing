@@ -18,15 +18,15 @@ jobs:
           - os: ubuntu-20.04
           - os: macos-latest
         include:
-          - poetry_cache_paths: ~/.local
-            os: ubuntu-20.04
-          - poetry_cache_paths: ~/.local
-            os: macos-latest
-          - poetry_cache_paths: |
+          - os: ubuntu-20.04
+            poetry_cache_paths: ~/.local
+          - os: macos-latest
+            poetry_cache_paths: ~/.local
+          - os: windows-latest
+            poetry_cache_paths: |
               ~\AppData\Local\pypoetry
               ~\AppData\Roaming\pypoetry
               ~\AppData\Roaming\Python\Scripts
-            os: windows-latest
             
     runs-on: ${{ matrix.os }}
     steps:
