@@ -49,7 +49,7 @@ jobs:
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
         env:
-          POETRY_HOME: ~/.local
+          POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
@@ -60,6 +60,11 @@ jobs:
           POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
 
       - name: Add paths for macOS
         if: runner.os == 'macOS'
