@@ -10,26 +10,26 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        #os: [ubuntu-20.04, macos-latest, windows-latest]
-        #python-version: ['3.7', '3.8']
-        os: [macos-latest, ]
-        python-version: ['3.7', ]
+        os: [ubuntu-20.04, macos-latest, windows-latest]
+        python-version: ['3.7', '3.8']
+        #os: [macos-latest, ]
+        #python-version: ['3.7', ]
         include:
-          #- os: ubuntu-20.04
-          #  poetry_home: ~/.local
-          #  poetry_path: ''
-          #  poetry_cache_paths: ~/.local
+          - os: ubuntu-20.04
+            poetry_home: ~/.local
+            poetry_path: ''
+            poetry_cache_paths: ~/.local
           - os: macos-latest
             poetry_home: ~/.local
             poetry_path: ${HOME}/.local/bin
             poetry_cache_paths: ~/.local
-          #- os: windows-latest
-          #  poetry_home: ''
-          #  poetry_path: ${APPDATA}\pypoetry\venv\Scripts
-          #  poetry_cache_paths: |
-          #    ~\AppData\Local\pypoetry
-          #    ~\AppData\Roaming\pypoetry
-          #    ~\AppData\Roaming\Python\Scripts
+          - os: windows-latest
+            poetry_home: ''
+            poetry_path: ${APPDATA}\pypoetry\venv\Scripts
+            poetry_cache_paths: |
+              ~\AppData\Local\pypoetry
+              ~\AppData\Roaming\pypoetry
+              ~\AppData\Roaming\Python\Scripts
 
     runs-on: ${{ matrix.os }}
     steps:
