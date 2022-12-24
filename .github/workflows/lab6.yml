@@ -68,11 +68,21 @@ jobs:
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
+
       - name: Add Poetry to the PATH environment variable
         if: matrix.poetry_path != ''
         shell: bash
         run: |
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
 
       - name: Configure Poetry
         run: |
