@@ -37,7 +37,7 @@ jobs:
             poetry_home: ~\.local
             poetry_path: ${USERPROFILE}\.local\bin
             poetry_cache_paths: |
-              ~\.local\bin
+              ~\.local
 
     runs-on: ${{ matrix.os }}
     steps:
