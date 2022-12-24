@@ -15,19 +15,19 @@ jobs:
         os: [macos-latest, ]
         python-version: ['3.7', ]
         include:
-          #- os: ubuntu-20.04
-          #  poetry_home: ''
-          #  poetry_path: ''
-          #  poetry_cache_paths: |
-          #    ~/.local/share/pypoetry
-          #    ~/.local/bin/poetry
-          - os: macos-latest
-            poetry_home: ~/.local
-            poetry_path: ${HOME}/.local/bin
+          - os: ubuntu-20.04
+            poetry_home: ''
+            poetry_path: ''
             poetry_cache_paths: |
-              ~/.local/VERSION
+              ~/.local/share/pypoetry
               ~/.local/bin/poetry
-              ~/.local/venv
+          #- os: macos-latest
+          #  poetry_home: ~/.local
+          #  poetry_path: ${HOME}/.local/bin
+          #  poetry_cache_paths: |
+          #    ~/.local/VERSION
+          #    ~/.local/bin/poetry
+          #    ~/.local/venv
           #- os: windows-latest
           #  poetry_home: ~\.local
           #  poetry_path: ${USERPROFILE}\.local\venv\Scripts
@@ -90,6 +90,7 @@ jobs:
           ls -la ~/.local
           ls -la ~/.local/bin
           ls -la ~/.local/share
+          ls -la ~/.local/share/pypoetry
           ls -la ~/.local/venv
 
       - name: Load cached venv
