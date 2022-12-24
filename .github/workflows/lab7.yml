@@ -54,6 +54,7 @@ jobs:
         shell: bash
         run: |
           ls -la ~/.local
+          ls -la ~/.local/share
 
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
