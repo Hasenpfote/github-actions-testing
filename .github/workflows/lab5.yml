@@ -96,7 +96,7 @@ jobs:
               ls -la /Users/runner/Library/Caches/pypoetry
           else
               #ls -la ~/Appdata/Local/pypoetry/Cache
-              ls -la ~/Appdata/Local
+              ls -la ~/Appdata/Local/pypoetry
           fi
 
       - name: Get the environment name for Tox
