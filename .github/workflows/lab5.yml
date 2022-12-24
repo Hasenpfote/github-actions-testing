@@ -17,12 +17,15 @@ jobs:
         include:
           #- os: ubuntu-20.04
           #  poetry_home: ~/.local
+          #  poetry_path: ~/.local/bin
           #  poetry_cache_paths: ~/.local
           #- os: macos-latest
           #  poetry_home: ~/.local
+          #  poetry_path: ~/.local/bin
           #  poetry_cache_paths: ~/.local
           - os: windows-latest
             poetry_home: ''
+            poetry_path: ~\AppData\Roaming\pypoetry\venv\Scripts
             poetry_cache_paths: |
               ~\AppData\Local\pypoetry
               ~\AppData\Roaming\pypoetry
@@ -64,23 +67,30 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            echo $USERPROFILE
-          else
-            echo $HOME
-          fi
+          printenv
+          #if [ "$RUNNER_OS" == "macOS" ]; then
+          #  echo $HOME
+          #elif [ "$RUNNER_OS" == "Windows" ]; then
+          #  echo $USERPROFILE
+          #fi
 
-      - name: Add paths for macOS
-        if: runner.os == 'macOS'
+      - name: Add Poetry to the PATH environment variable.
+        if: runner.os != 'Linux'
         shell: bash
         run: |
-          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
 
-      - name: Add paths for Windows
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
+      #- name: Add paths for macOS
+      #  if: runner.os == 'macOS'
+      #  shell: bash
+      #  run: |
+      #    echo "$HOME/.local/bin" >> $GITHUB_PATH
+
+      #- name: Add paths for Windows
+      #  if: runner.os == 'Windows'
+      #  shell: pwsh
+      #  run: |
+      #    Add-Content $env:GITHUB_PATH "$env:APPDATA\pypoetry\venv\Scripts"
 
       - name: Configure Poetry
         run: |
