@@ -100,14 +100,3 @@ jobs:
         run: |
           #poetry run tox -e py # This is not possible on Windows.
           poetry run tox -e ${{ steps.vars.outputs.env }}
-
-      - name: Debug
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == 'Linux' ]; then
-              du -sh /home/runner/.cache/pypoetry
-          elif [ "$RUNNER_OS" == 'macOS' ]; then            
-              du -sh /Users/runner/Library/Caches/pypoetry
-          else
-              du -sh ~/Appdata/Local/pypoetry/Cache
-          fi
