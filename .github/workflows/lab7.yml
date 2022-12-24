@@ -90,7 +90,7 @@ jobs:
           ls -la ~/.local/bin
           ls -la ~/.local/share
           ls -la ~/.local/share/pypoetry
-          ls -la ~/.local/venv
+          #ls -la ~/.local/venv
 
       - name: Load cached venv
         id: cached-poetry-dependencies
