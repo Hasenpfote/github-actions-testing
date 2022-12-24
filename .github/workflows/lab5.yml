@@ -91,7 +91,7 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == 'Linux' ]; then
-              ls -la /home/runnrt/.cache
+              ls -la /home/runner/.cache
           elif [ "$RUNNER_OS" == 'macOS' ]; then            
               ls -la /Users/runner/Library/Caches
           else
