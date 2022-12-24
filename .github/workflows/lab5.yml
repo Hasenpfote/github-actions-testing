@@ -66,11 +66,13 @@ jobs:
 
       - name: Add Poetry to the PATH environment variable
         #if: runner.os != 'Linux'
+        if: matrix.poetry_path != ''
         shell: bash
         run: |
-          if [ -n ${{ matrix.poetry_path }} ]; then
-            echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
-          fi
+          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+          #if [ -n ${{ matrix.poetry_path }} ]; then
+          #  echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+          #fi
 
       - name: Configure Poetry
         run: |
