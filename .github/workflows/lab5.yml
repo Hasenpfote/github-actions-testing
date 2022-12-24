@@ -82,9 +82,9 @@ jobs:
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
 
       - name: Debug
-        shell: bash
+        shell: cmd
         run: |
-          printenv
+          set
 
       #- name: Add paths for macOS
       #  if: runner.os == 'macOS'
