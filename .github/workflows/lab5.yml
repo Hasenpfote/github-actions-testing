@@ -15,6 +15,10 @@ jobs:
         python-version: ['3.7', ]
         os: [windows-latest, ]
         include:
+          - os: ubuntu-20.04
+            poetry_cache_paths: ~/.local
+          - os: macos-latest
+            poetry_cache_paths: ~/.local
           - os: windows-latest
             poetry_cache_paths: |
               ~\AppData\Local\pypoetry
@@ -31,30 +35,11 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Make cache paths
-        id: make-cache-paths
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            PATH1='~\AppData\Local\pypoetry'
-            PATH2='~\AppData\Roaming\pypoetry'
-            PATH3='~\AppData\Roaming\Python\Scripts'
-            echo 'CACHE_PATHS<<EOF' >> $GITHUB_ENV
-            #echo -e "${PATH1}\n${PATH2}\n${PATH3}" >> $GITHUB_ENV
-            echo -e "${PATH2}\n${PATH3}" >> $GITHUB_ENV
-            echo 'EOF' >> $GITHUB_ENV
-          else
-            PATH='~/.local'
-            echo "CACHE_PATHS=${PATH}" >> $GITHUB_ENV
-          fi
-
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
         with:
           path: ${{ matrix.poetry_cache_paths }}
-          #path: |
-          #  ${{ env.CACHE_PATHS }}
           key: lab5-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry for Linux/macOS
