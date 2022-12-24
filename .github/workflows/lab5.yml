@@ -91,11 +91,9 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == 'Linux' ]; then
-              #ls -la ~/.cache/pypoetry
-              ls -la ~/.cache
+              ls -la /home/runnrt/.cache
           elif [ "$RUNNER_OS" == 'macOS' ]; then            
-              #ls -la ~/Library/Caches/pypoetry
-              ls -la ~/Library/Caches
+              ls -la /Users/runner/Library/Caches
           else
               #ls -la ~/Appdata/Local/pypoetry/cache
               ls -la ~/Appdata/Local
