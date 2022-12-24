@@ -69,20 +69,6 @@ jobs:
         run: |
           echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
 
-      - name: Debug
-        shell: bash
-        run: |
-          if [ "$RUNNER_OS" == 'Linux' ]; then
-              #ls -la ~/.cache/pypoetry
-              ls -la ~/.cache
-          elif [ "$RUNNER_OS" == 'macOS' ]; then            
-              #ls -la ~/.cache/Library/Caches/pypoetry
-              ls -la ~/.cache/Library/Caches
-          else
-              #ls -la ~/Appdata/Local/pypoetry/cache
-              ls -la ~/Appdata/Local
-          fi
-
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
@@ -100,6 +86,20 @@ jobs:
 
       - name: Install project
         run: poetry install --no-interaction --only-root
+
+      - name: Debug
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == 'Linux' ]; then
+              #ls -la ~/.cache/pypoetry
+              ls -la ~/.cache
+          elif [ "$RUNNER_OS" == 'macOS' ]; then            
+              #ls -la ~/Library/Caches/pypoetry
+              ls -la ~/.cache/Library/Caches
+          else
+              #ls -la ~/Appdata/Local/pypoetry/cache
+              ls -la ~/Appdata/Local
+          fi
 
       - name: Get the environment name for Tox
         id: vars
