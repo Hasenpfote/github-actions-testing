@@ -50,6 +50,11 @@ jobs:
           path: ${{ matrix.poetry_cache_paths }}
           key: lab7-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
+      - name: Debug
+        shell: bash
+        run: |
+          ls -la ~/.local
+
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
@@ -80,7 +85,8 @@ jobs:
         shell: bash
         run: |
           ls -la ~/.local
-          #ls -la ~/.local/bin
+          ls -la ~/.local/bin
+          ls -la ~/.local/share
           ls -la ~/.local/venv
 
       - name: Load cached venv
