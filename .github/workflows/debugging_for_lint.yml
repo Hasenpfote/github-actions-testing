@@ -20,7 +20,7 @@ jobs:
         shell: bash
         run: |
           JSON=$(cat .github/workflows/env.json)
-          echo 'matrix<<EOF' >> $GITHUB_OUTPUT
+          echo 'env<<EOF' >> $GITHUB_OUTPUT
           echo "${JSON}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
 
