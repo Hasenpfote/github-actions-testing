@@ -58,6 +58,7 @@ jobs:
       if: steps.cached-poetry.outputs.cache-hit != 'true'
       shell: bash
       env:
+        POETRY_VERSION: ${{ env.poetry_version }}
         POETRY_HOME: ${{ env.poetry_home }}
       run: |
         curl -sSL https://install.python-poetry.org | python3 -
