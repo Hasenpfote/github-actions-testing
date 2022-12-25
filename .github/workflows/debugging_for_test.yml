@@ -14,7 +14,8 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - id: set-matrix
+      - name: Read JSON file
+        id: set-matrix
         shell: bash
         run: |
           JSON=$(cat .github/workflows/test.json)
