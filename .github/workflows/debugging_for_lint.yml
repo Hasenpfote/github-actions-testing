@@ -10,7 +10,7 @@ jobs:
   env_prep:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-env.outputs.env }}
+      env: ${{ steps.set-env.outputs.env }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
