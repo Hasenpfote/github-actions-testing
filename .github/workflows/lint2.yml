@@ -8,6 +8,13 @@ permissions:
 
 jobs:
   build:
+    env:
+      POETRY_HOME: ''
+      POETRY_PATH: ''
+      POETRY_CACHE_PATHS: |
+        ~/.local/share/pypoetry
+        ~/.local/bin/poetry
+  
     strategy:
       matrix:
         include:
@@ -41,22 +48,22 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.poetry_cache_paths }}
+          path: ${POETRY_CACHE_PATHS}
           key: poetry-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
 
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
-        env:
-          POETRY_HOME: ${{ matrix.poetry_home }}
+        #env:
+        #  POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
       - name: Add Poetry to the PATH environment variable
-        if: matrix.poetry_path != ''
+        if: ${POETRY_PATH} != ''
         shell: bash
         run: |
-          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+          echo "${POETRY_PATH}" >> $GITHUB_PATH
 
       - name: Configure Poetry
         run: |
