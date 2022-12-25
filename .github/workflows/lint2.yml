@@ -19,42 +19,61 @@ jobs:
               ~/.local/bin/poetry
 
     runs-on: ${{ matrix.os }}
-    name: build - ${{ runner.name }} (${{ matrix.os }})
+    name: build (${{ matrix.os }})
 
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Read version
         id: python-version
         uses: juliangruber/read-file-action@v1
         with:
           path: .github/python-version.txt
           trim: true
+
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ steps.python-version.outputs.content }}
+
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: ~/.local # the path depends on the OS
+          path: ${{ matrix.poetry_cache_paths }}
           key: poetry-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
+
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
+        shell: bash
+        env:
+          POETRY_HOME: ${{ matrix.poetry_home }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Add Poetry to the PATH environment variable
+        if: matrix.poetry_path != ''
+        shell: bash
+        run: |
+          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
           path: .venv
           key: venv-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --only dev
+
       - name: Install project
         run: poetry install --no-interaction --only-root
       - name: Lint with tox
