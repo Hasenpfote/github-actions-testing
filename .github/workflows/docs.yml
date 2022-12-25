@@ -27,7 +27,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Read version
+      - name: Read the Python version from the file
         id: python-version
         uses: juliangruber/read-file-action@v1
         with:
