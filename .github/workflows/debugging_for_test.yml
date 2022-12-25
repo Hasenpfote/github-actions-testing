@@ -6,14 +6,14 @@ permissions:
   contents: read
 
 jobs:
-  job1:
+  matrix_prep:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-    
+
       - id: set-matrix
         shell: bash
         run: |
@@ -21,11 +21,12 @@ jobs:
           echo 'matrix<<EOF' >> $GITHUB_OUTPUT
           echo "${JSON}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
+
   build:
-    needs: job1
+    needs: matrix_prep
     strategy:
       fail-fast: false
-      matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
 
     runs-on: ${{ matrix.os }}
     steps:
