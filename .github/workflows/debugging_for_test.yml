@@ -18,12 +18,6 @@ jobs:
         shell: bash
         run: |
           JSON=$(cat .github/workflows/test.json)
-          #JSON="${JSON//'%'/'%25'}"
-          #JSON="${JSON//$'\n'/'%0A'}"
-          #JSON="${JSON//$'\r'/'%0D'}"
-          #echo "matrix=${JSON}" >> $GITHUB_OUTPUT
-          #echo -e "matrix=${JSON}" >> $GITHUB_OUTPUT
-          #echo "::set-output name=matrix::${JSON}"
           echo 'matrix<<EOF' >> $GITHUB_OUTPUT
           echo "${JSON}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
