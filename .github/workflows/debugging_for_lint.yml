@@ -1,4 +1,4 @@
-name: Lint
+name: Debugging for Lint
 
 #on: [ push, pull_request ]
 on: workflow_dispatch
