@@ -19,6 +19,7 @@ jobs:
               ~/.local/bin/poetry
 
     runs-on: ${{ matrix.os }}
+    name: build (${{ matrix.os }})
 
     steps:
       - uses: actions/checkout@v3
