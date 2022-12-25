@@ -11,15 +11,14 @@ jobs:
     strategy:
       matrix:
         include:
-          - os: ubuntu-latest
-            poetry_home: ''
+          - poetry_home: ''
             poetry_path: ''
             poetry_cache_paths: |
               ~/.local/share/pypoetry
               ~/.local/bin/poetry
 
     runs-on: ubuntu-latest
-    name: build (${{ jobs.build.runs-on }})
+    name: build # (${{ jobs.build.runs-on }})
 
     steps:
       - name: Checkout
