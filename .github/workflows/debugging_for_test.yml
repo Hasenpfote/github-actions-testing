@@ -18,7 +18,7 @@ jobs:
         id: set-matrix
         shell: bash
         run: |
-          JSON=$(cat .github/workflows/test.json)
+          JSON=$(cat .github/workflows/test_matrix.json)
           echo 'matrix<<EOF' >> $GITHUB_OUTPUT
           echo "${JSON}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
