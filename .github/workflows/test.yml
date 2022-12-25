@@ -11,10 +11,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
-        #python-version: ['3.7', '3.8']
-        #os: [windows-latest, ]
-        python-version: ['3.7', ]
+        #os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [ubuntu-20.04, ]
+        python-version: ['3.7', '3.8']
         include:
           - os: ubuntu-20.04
             poetry_home: ''
@@ -22,18 +21,18 @@ jobs:
             poetry_cache_paths: |
               ~/.local/share/pypoetry
               ~/.local/bin/poetry
-          - os: macos-latest
-            poetry_home: ''
-            poetry_path: ${HOME}/.local/bin
-            poetry_cache_paths: |
-              ~/Library/Application Support/pypoetry
-              ~/.local/bin/poetry
-          - os: windows-latest
-            poetry_home: ''
-            poetry_path: ${APPDATA}\pypoetry\venv\Scripts
-            poetry_cache_paths: |
-              ~\AppData\Roaming\pypoetry
-              ~\AppData\Roaming\Python\Scripts\poetry.exe
+          #- os: macos-latest
+          #  poetry_home: ''
+          #  poetry_path: ${HOME}/.local/bin
+          #  poetry_cache_paths: |
+          #    ~/Library/Application Support/pypoetry
+          #    ~/.local/bin/poetry
+          #- os: windows-latest
+          #  poetry_home: ''
+          #  poetry_path: ${APPDATA}\pypoetry\venv\Scripts
+          #  poetry_cache_paths: |
+          #    ~\AppData\Roaming\pypoetry
+          #    ~\AppData\Roaming\Python\Scripts\poetry.exe
 
     runs-on: ${{ matrix.os }}
     steps:
