@@ -76,6 +76,11 @@ jobs:
         run: |
           poetry config virtualenvs.in-project true
 
+      - name: Debug
+        shell: bash
+        run: |
+          poetry run python -V
+
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
