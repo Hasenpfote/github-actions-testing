@@ -23,8 +23,8 @@
     {
       "os": "windows-latest",
       "poetry_home": "",
-      "poetry_path": "${APPDATA}\pypoetry\venv\Scripts",
-      "poetry_cache_paths": "~\AppData\Roaming\pypoetry\n~\AppData\Roaming\Python\Scripts",
+      "poetry_path": "${APPDATA}\\pypoetry\\venv\\Scripts",
+      "poetry_cache_paths": "~\\AppData\\Roaming\\pypoetry\n~\\AppData\\Roaming\\Python\\Scripts",
     },
   ],
 }
