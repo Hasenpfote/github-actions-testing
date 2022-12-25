@@ -18,8 +18,8 @@ jobs:
               ~/.local/share/pypoetry
               ~/.local/bin/poetry
 
-    runs-on: ${{ matrix.os }}
-    name: build (${{ matrix.os }})
+    runs-on: ubuntu-latest
+    name: build (${{ runner.os }})
 
     steps:
       - name: Checkout
