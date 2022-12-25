@@ -14,25 +14,9 @@ jobs:
       POETRY_CACHE_PATHS: |
         ~/.local/share/pypoetry
         ~/.local/bin/poetry
-  
-    strategy:
-      matrix:
-        include:
-          - poetry_home: ''
-            poetry_path: ''
-            poetry_cache_paths: |
-              ~/.local/share/pypoetry
-              ~/.local/bin/poetry
 
     runs-on: ubuntu-latest
-    name: build # (${{ jobs.build.runs-on }})
-
     steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo -e ${POETRY_CACHE_PATHS}
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -59,8 +43,6 @@ jobs:
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         shell: bash
-        #env:
-        #  POETRY_HOME: ${{ matrix.poetry_home }}
         run: |
           curl -sSL https://install.python-poetry.org | python3 -
 
