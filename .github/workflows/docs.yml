@@ -13,41 +13,68 @@ permissions:
 jobs:
   # Build the documentation and upload the static HTML files as an artifact.
   build:
+    env:
+      poetry_home: ''
+      poetry_path: ''
+      poetry_cache_paths: |
+        ~/.local/share/pypoetry
+        ~/.local/bin/poetry
+    
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
+
       - name: Read version
         id: python-version
         uses: juliangruber/read-file-action@v1
         with:
           path: .github/python-version.txt
           trim: true
+
       - name: Set up Python
         id: setup-python
         uses: actions/setup-python@v4
         with:
           python-version: ${{ steps.python-version.outputs.content }}
+
       - name: Load cached Poetry installation
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: ~/.local  # the path depends on the OS
+          path: ${{ env.poetry_cache_paths }}
           key: poetry-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
+
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
+        shell: bash
+        env:
+          POETRY_HOME: ${{ env.poetry_home }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      - name: Add Poetry to the PATH environment variable
+        if: env.poetry_path != ''
+        shell: bash
+        run: |
+          echo "${{ env.poetry_path }}" >> $GITHUB_PATH
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
       - name: Install dependencies
         run: poetry install --no-interaction --only docs
+  
       - name: Install project
         run: poetry install --no-interaction --only-root        
+
       - name: Build
         run: |
           poetry run python ./docs/make.py
+
       - uses: actions/upload-pages-artifact@v1
         with:
           path: docs/build/
