@@ -53,7 +53,7 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: $POETRY_CACHE_PATHS
+          path: ${{ POETRY_CACHE_PATHS }}
           key: poetry-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
 
       - name: Install Poetry
