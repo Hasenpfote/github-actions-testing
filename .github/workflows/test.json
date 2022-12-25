@@ -11,7 +11,7 @@
     {
       "os": "ubuntu-20.04",
       "poetry_home": "~/.local",
-      "poetry_path": "~/.local/bin",
+      "poetry_path": "~/.local/share/pypoetry/venv/bin/poetry",
       "poetry_cache_paths": "~/.local/share/pypoetry\n~/.local/bin/poetry",
     },
     {
