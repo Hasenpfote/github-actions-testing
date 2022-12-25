@@ -23,7 +23,7 @@ jobs:
     needs: job1
     strategy:
       fail-fast: false
-      matrix: ${{fromJson(needs.job1.outputs.matrix)}}
+      matrix: ${{ fromJson(needs.job1.outputs.matrix) }}
 
     runs-on: ${{ matrix.os }}
     steps:
