@@ -19,7 +19,7 @@ jobs:
               ~/.local/bin/poetry
 
     runs-on: ubuntu-latest
-    name: build (${{ runner.os }})
+    name: build (${{ runs-on }})
 
     steps:
       - name: Checkout
