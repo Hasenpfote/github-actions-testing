@@ -1,7 +1,7 @@
 {
   "os": [
     "ubuntu-20.04",
-  ]
+  ],
   "python-version": [
     "3.7",
   ],
@@ -12,5 +12,5 @@
       "poetry_path": "",
       "poetry_cache_paths": "~/.local/share/pypoetry\n~/.local/bin/poetry",
     },
-  ]
+  ],
 }
