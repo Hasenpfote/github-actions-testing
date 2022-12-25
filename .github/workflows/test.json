@@ -7,10 +7,10 @@
   ],
   "include": [
     {
-      "os": "ubuntu-20.04"
-      "poetry_home": "''"
-      "poetry_path": "''"
-      "poetry_cache_paths": "~/.local/share/pypoetry\n~/.local/bin/poetry"
+      "os": "ubuntu-20.04",
+      "poetry_home": "",
+      "poetry_path": "",
+      "poetry_cache_paths": "~/.local/share/pypoetry\n~/.local/bin/poetry",
     },
   ]
 }
