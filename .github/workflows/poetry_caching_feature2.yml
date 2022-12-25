@@ -47,7 +47,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ matrix.poetry_cache_paths }}
-          key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
+          #key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
+          key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}
 
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
