@@ -32,12 +32,12 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo  ${{ matrix.os }}
-          echo  ${{ matrix.python-version }}
-          echo  ${{ matrix.poetry_home }}
-          echo  ${{ matrix.poetry_path }}
-          echo  ${{ matrix.poetry_cache_paths }}
-          echo  ${{ matrix.poetry_version }}
+          echo  "${{ matrix.os }}"
+          echo  "${{ matrix.python-version }}"
+          echo  "${{ matrix.poetry_home }}"
+          echo  "${{ matrix.poetry_path }}"
+          echo  -e "${{ matrix.poetry_cache_paths }}"
+          echo  "${{ matrix.poetry_version }}"
     
       - name: Checkout
         uses: actions/checkout@v3
