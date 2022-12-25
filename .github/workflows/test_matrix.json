@@ -10,18 +10,21 @@
   "include": [
     {
       "os": "ubuntu-20.04",
+      "poetry_version": "1.3.1",
       "poetry_home": "",
       "poetry_path": "",
       "poetry_cache_paths": "~/.local/share/pypoetry\n~/.local/bin/poetry",
     },
     {
       "os": "macos-latest",
+      "poetry_version": "1.3.1",
       "poetry_home": "",
       "poetry_path": "${HOME}/.local/bin",
       "poetry_cache_paths": "~/Library/Application Support/pypoetry\n~/.local/bin/poetry",
     },
     {
       "os": "windows-latest",
+      "poetry_version": "1.3.1",
       "poetry_home": "",
       "poetry_path": "${APPDATA}\\pypoetry\\venv\\Scripts",
       "poetry_cache_paths": "~\\AppData\\Roaming\\pypoetry\n~\\AppData\\Roaming\\Python\\Scripts\\poetry.exe",
