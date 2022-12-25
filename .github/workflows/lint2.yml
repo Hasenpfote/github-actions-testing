@@ -28,6 +28,11 @@ jobs:
     name: build # (${{ jobs.build.runs-on }})
 
     steps:
+      - name: Debug
+        shell: bash
+        run: |
+          echo -e ${POETRY_CACHE_PATHS}
+
       - name: Checkout
         uses: actions/checkout@v3
 
