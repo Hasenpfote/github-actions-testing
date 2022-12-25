@@ -9,13 +9,20 @@ permissions:
 jobs:
   build:
     env:
-      poetry_home: ''
-      poetry_path: ''
+      #poetry_home: ''
+      #poetry_path: ''
+      #poetry_cache_paths: |
+      #  ~/.local/share/pypoetry
+      #  ~/.local/bin/poetry
+      poetry_home: ~/.local
+      poetry_path: ${HOME}/.local/bin
       poetry_cache_paths: |
-        ~/.local/share/pypoetry
+        ~/.local/VERSION
         ~/.local/bin/poetry
+        ~/.local/venv
 
-    runs-on: ubuntu-latest
+    #runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v3
