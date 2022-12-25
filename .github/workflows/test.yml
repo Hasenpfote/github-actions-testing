@@ -7,32 +7,28 @@ permissions:
   contents: read
 
 jobs:
+  matrix_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read JSON file
+        id: set-matrix
+        shell: bash
+        run: |
+          JSON=$(cat .github/workflows/test_matrix.json)
+          echo 'matrix<<EOF' >> $GITHUB_OUTPUT
+          echo "${JSON}" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
   build:
+    needs: matrix_prep
     strategy:
       fail-fast: false
-      matrix:
-        #os: [ubuntu-20.04, macos-latest, windows-latest]
-        os: [ubuntu-20.04, ]
-        python-version: ['3.7', '3.8']
-        include:
-          - os: ubuntu-20.04
-            poetry_home: ''
-            poetry_path: ''
-            poetry_cache_paths: |
-              ~/.local/share/pypoetry
-              ~/.local/bin/poetry
-          #- os: macos-latest
-          #  poetry_home: ''
-          #  poetry_path: ${HOME}/.local/bin
-          #  poetry_cache_paths: |
-          #    ~/Library/Application Support/pypoetry
-          #    ~/.local/bin/poetry
-          #- os: windows-latest
-          #  poetry_home: ''
-          #  poetry_path: ${APPDATA}\pypoetry\venv\Scripts
-          #  poetry_cache_paths: |
-          #    ~\AppData\Roaming\pypoetry
-          #    ~\AppData\Roaming\Python\Scripts\poetry.exe
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
 
     runs-on: ${{ matrix.os }}
     steps:
