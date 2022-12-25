@@ -71,7 +71,7 @@ jobs:
       run: |
         poetry build
 
-    - name: publish
+    - name: Publish
       run: |
         poetry publish -r test-pypi
 
