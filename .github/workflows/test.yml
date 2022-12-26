@@ -105,6 +105,7 @@ jobs:
           if [ $RUNNER_OS == 'Windows' ]; then
             VAR1="${{ matrix.poetry_home }}"
             VAR2=${{ matrix.poetry_home }}
+            VAR3='${{ matrix.poetry_home }}'
             echo $VAR1
             echo $VAR2
             VER="${{ matrix.python-version }}"
