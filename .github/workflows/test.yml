@@ -90,35 +90,14 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Get the environment name for Tox
-        id: vars
-        shell: python
-        run: |
-          import os
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-              value = ''.join(str(${{ matrix.python-version }}).split('.', 2)[0:2])
-              print(f'env=py{value}', file=fh)
-
       - name: Test with pytest
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            VAR1="${{ matrix.poetry_home }}"
-            VAR2=${{ matrix.poetry_home }}
-            VAR3='${{ matrix.poetry_home }}'
-            VAR4="${{ matrix.python-version }}"
-            VAR5='${{ matrix.python-version }}'
-            echo $VAR1
-            echo $VAR2
-            echo $VAR3
-            echo $VAR4
-            echo $VAR5
-            VER="${{ matrix.python-version }}"
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
             ARR=(${VER//./ })
             poetry run tox -e "py${ARR[0]}${ARR[1]}"
           else
             poetry run tox -e py
           fi
-          #poetry run tox -e py # This is not possible on Windows.
-          #poetry run tox -e ${{ steps.vars.outputs.env }}
-          #- run: tox -e py -- -vvv ${{ matrix.args }}
