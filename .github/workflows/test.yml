@@ -100,6 +100,7 @@ jobs:
               print(f'env=py{value}', file=fh)
 
       - name: Test with pytest
+        shell: bash
         run: |
           poetry run tox -e py # This is not possible on Windows.
           #poetry run tox -e ${{ steps.vars.outputs.env }}
