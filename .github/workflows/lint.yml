@@ -30,6 +30,15 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
+      - name: Debug
+        shell: cmd
+        run: |
+          set
+
       - name: Checkout
         uses: actions/checkout@v3
 
