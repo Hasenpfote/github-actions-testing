@@ -30,11 +30,6 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Debug-${{ format(env.poetry_name_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }} 
-        shell: bash
-        run: |
-          printenv
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -56,7 +51,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.poetry_cache_paths }}
-          key: poetry-${{ env.poetry_version }}-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          #key: poetry-${{ env.poetry_version }}-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          key: ${{ format(env.poetry_name_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
 
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
