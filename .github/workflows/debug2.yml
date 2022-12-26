@@ -1,0 +1,111 @@
+name: DEBUG
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        python-version: ['3.7', ]
+        include:
+          - os: windows-latest
+            poetry_home: ~\.local
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
+          #  #poetry_path: ${USERPROFILE}\.local\bin
+            poetry_cache_paths: |
+              ~\.local\VERSION
+              #~\.local\bin\poetry.exe
+              ~\.local\venv
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Debug
+        shell: bash
+        run: python -V
+      
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Load cached Poetry installation
+        id: cached-poetry
+        uses: actions/cache@v3
+        with:
+          path: ${{ matrix.poetry_cache_paths }}
+          key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
+
+      - name: Install Poetry for Linux/macOS
+        if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        shell: bash
+        env:
+          POETRY_VERSION: ${{ matrix.poetry_version }}
+          POETRY_HOME: ${{ matrix.poetry_home }}
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+
+      #- name: Install Poetry for Windows
+      #  if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+      #  shell: pwsh
+      #  env:
+      #    POETRY_VERSION: ${{ matrix.poetry_version }}
+      #    POETRY_HOME: ${{ matrix.poetry_home }}
+      #  run: |
+      #    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+      - name: Install Poetry for Windows
+        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        uses: snok/install-poetry@v1
+
+      - name: Debug
+        shell: bash
+        env: |
+          printenv
+
+      - name: Add Poetry to the PATH environment variable
+        if: matrix.poetry_path != ''
+        shell: bash
+        run: |
+          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+  
+      - name: Configure Poetry
+        run: |
+          poetry config virtualenvs.in-project true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root --with dev
+
+      - name: Install project
+        run: poetry install --no-interaction --only-root
+
+      - name: Debug
+        shell: bash
+        run: printenv
+
+      - name: Test with pytest
+        shell: bash
+        run: |
+          if [ $RUNNER_OS == 'Windows' ]; then
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
+            ARR=(${VER//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
+          fi
