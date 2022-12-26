@@ -20,22 +20,22 @@ jobs:
             poetry_cache_paths: |
               ~/.local/share/pypoetry
               ~/.local/bin/poetry
-          #- os: windows-latest
-          #  poetry_version: '1.3.1'
-          #  poetry_home: ''
-            #poetry_path: ${APPDATA}\pypoetry\venv\Scripts
-          #  poetry_path: ${APPDATA}\Python\Scripts
-          #  poetry_cache_paths: |
-          #    ~\AppData\Roaming\pypoetry
-          #    ~\AppData\Roaming\Python\Scripts\poetry.exe
           - os: windows-latest
-            poetry_home: ~\.local
-            poetry_path: ${USERPROFILE}\.local\venv\Scripts
-            #poetry_path: ${USERPROFILE}\.local\bin
+            poetry_version: '1.3.1'
+            poetry_home: ''
+            #poetry_path: ${APPDATA}\pypoetry\venv\Scripts
+            poetry_path: ${APPDATA}\Python\Scripts
             poetry_cache_paths: |
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe
-              ~\.local\venv
+              ~\AppData\Roaming\pypoetry
+              ~\AppData\Roaming\Python\Scripts\poetry.exe
+          #- os: windows-latest
+          #  poetry_home: ~\.local
+          #  poetry_path: ${USERPROFILE}\.local\venv\Scripts
+          #  #poetry_path: ${USERPROFILE}\.local\bin
+          #  poetry_cache_paths: |
+          #    ~\.local\VERSION
+          #    #~\.local\bin\poetry.exe
+          #    ~\.local\venv
 
     runs-on: ${{ matrix.os }}
     steps:
