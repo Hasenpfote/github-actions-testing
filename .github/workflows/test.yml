@@ -106,8 +106,13 @@ jobs:
             VAR1="${{ matrix.poetry_home }}"
             VAR2=${{ matrix.poetry_home }}
             VAR3='${{ matrix.poetry_home }}'
+            VAR4="${{ matrix.python-version }}"
+            VAR5='${{ matrix.python-version }}'
             echo $VAR1
             echo $VAR2
+            echo $VAR3
+            echo $VAR4
+            echo $VAR5
             VER="${{ matrix.python-version }}"
             ARR=(${VER//./ })
             poetry run tox -e "py${ARR[0]}${ARR[1]}"
