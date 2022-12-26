@@ -10,9 +10,15 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [ubuntu-20.04, windows-latest]
         python-version: ['3.7', ]
         include:
+          - os: ubuntu-20.04
+            poetry_home: ''
+            poetry_path: ''
+            poetry_cache_paths: |
+              ~/.local/share/pypoetry
+              ~/.local/bin/poetry
           - os: windows-latest
             poetry_home: ''
             #poetry_path: ${APPDATA}\pypoetry\venv\Scripts
@@ -75,6 +81,10 @@ jobs:
 
       - name: Install project
         run: poetry install --no-interaction --only-root
+
+      - name: Debug
+        shell: bash
+        run: printenv
 
       - name: Test with pytest
         shell: bash
