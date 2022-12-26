@@ -40,7 +40,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          printenv
+          printenv PATH
 
       - name: Add Poetry to the PATH environment variable
         if: matrix.poetry_path != ''
@@ -52,7 +52,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          printenv
+          printenv PATH
 
       - name: Configure Poetry
         run: |
