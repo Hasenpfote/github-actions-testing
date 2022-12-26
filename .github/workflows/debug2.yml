@@ -1,4 +1,4 @@
-name: DEBUG
+name: DEBUG2
 
 on: workflow_dispatch
 
