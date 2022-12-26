@@ -97,9 +97,11 @@ jobs:
       - name: Test with pytest
         shell: bash
         run: |
-          poetry run tox -e py
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            ls -la 
-            /d/a/github_actions_testing3/github_actions_testing3/.tox/py/Scripts/python -V
-            #"D:\\a\\github_actions_testing3\\github_actions_testing3\\.tox\\py\\Scripts\\python.exe -V"
+          if [ $RUNNER_OS == 'Windows' ]; then
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
+            ARR=(${VER//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
           fi
