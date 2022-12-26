@@ -46,7 +46,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ matrix.poetry_cache_paths }}
-          #key: poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
           key: ${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
 
       - name: Install Poetry for Linux/macOS
@@ -82,7 +81,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          #key: venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
           key: ${{ format(matrix.venv_cache_key_fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Install dependencies
