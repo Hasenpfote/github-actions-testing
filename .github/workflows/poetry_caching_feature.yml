@@ -11,7 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        #os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [windows-latest]
         python-version: ['3.7', ]
         include:
           - os: ubuntu-20.04
@@ -93,14 +94,15 @@ jobs:
       - name: Test with pytest
         shell: bash
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            # Avoid referencing the wrong Python version.
-            VER='${{ matrix.python-version }}'
-            ARR=(${VER//./ })
-            poetry run tox -e "py${ARR[0]}${ARR[1]}"
-          else
-            poetry run tox -e py
-          fi
+          poetry run tox -e py
+          #if [ $RUNNER_OS == 'Windows' ]; then
+          #  # Avoid referencing the wrong Python version.
+          #  VER='${{ matrix.python-version }}'
+          #  ARR=(${VER//./ })
+          #  poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          #else
+          #  poetry run tox -e py
+          #fi
 
   # Same as above.
   load-cache:
@@ -109,7 +111,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-20.04, macos-latest, windows-latest]
+        #os: [ubuntu-20.04, macos-latest, windows-latest]
+        os: [windows-latest]
         python-version: ['3.7', ]
         include:
           - os: ubuntu-20.04
@@ -191,11 +194,12 @@ jobs:
       - name: Test with pytest
         shell: bash
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            # Avoid referencing the wrong Python version.
-            VER='${{ matrix.python-version }}'
-            ARR=(${VER//./ })
-            poetry run tox -e "py${ARR[0]}${ARR[1]}"
-          else
-            poetry run tox -e py
-          fi
+          poetry run tox -e py
+          #if [ $RUNNER_OS == 'Windows' ]; then
+          #  # Avoid referencing the wrong Python version.
+          #  VER='${{ matrix.python-version }}'
+          #  ARR=(${VER//./ })
+          #  poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          #else
+          #  poetry run tox -e py
+          #fi
