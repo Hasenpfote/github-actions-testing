@@ -33,6 +33,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
+
       - name: Read the Python version from the file
         id: python-version
         uses: juliangruber/read-file-action@v1
