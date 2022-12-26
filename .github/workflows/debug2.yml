@@ -67,7 +67,7 @@ jobs:
 
       - name: Debug
         shell: bash
-        env: |
+        run: |
           printenv
 
       - name: Add Poetry to the PATH environment variable
