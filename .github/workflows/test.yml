@@ -102,6 +102,12 @@ jobs:
       - name: Test with pytest
         shell: bash
         run: |
-          poetry run tox -e py # This is not possible on Windows.
+          if [ $RUNNER_OS == 'Windows' ]; then
+            ARR=(${${{ matrix.python-version }}//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
+          fi
+          #poetry run tox -e py # This is not possible on Windows.
           #poetry run tox -e ${{ steps.vars.outputs.env }}
           #- run: tox -e py -- -vvv ${{ matrix.args }}
