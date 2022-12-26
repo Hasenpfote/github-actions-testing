@@ -7,7 +7,7 @@ permissions:
 
 jobs:
   create-cache:
-    name: caching 1/2 - ${{ matrix.os }}
+    name: caching 1/2 - ${{ matrix.os }}, ${{ matrix.python-version }}
     strategy:
       fail-fast: false
       matrix:
@@ -105,7 +105,7 @@ jobs:
   # Same as above.
   load-cache:
     needs: create-cache
-    name: caching 2/2 - ${{ matrix.os }}
+    name: caching 2/2 - ${{ matrix.os }}, ${{ matrix.python-version }}
     strategy:
       fail-fast: false
       matrix:
