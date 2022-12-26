@@ -30,8 +30,8 @@ jobs:
           #    ~\AppData\Roaming\Python\Scripts\poetry.exe
           - os: windows-latest
             poetry_home: ~\.local
-            #poetry_path: ${USERPROFILE}\.local\venv\Scripts
-            poetry_path: ${USERPROFILE}\.local\bin
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
+            #poetry_path: ${USERPROFILE}\.local\bin
             poetry_cache_paths: |
               ~\.local\VERSION
               ~\.local\bin\poetry.exe
