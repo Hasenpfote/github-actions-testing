@@ -34,7 +34,7 @@ jobs:
             #poetry_path: ${USERPROFILE}\.local\bin
             poetry_cache_paths: |
               ~\.local\VERSION
-              ~\.local\bin\poetry.exe
+              #~\.local\bin\poetry.exe
               ~\.local\venv
 
     runs-on: ${{ matrix.os }}
