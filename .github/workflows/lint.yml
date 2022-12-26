@@ -33,11 +33,8 @@ jobs:
       - name: Debug
         shell: bash
         run: |
+          echo format('Hello, {}!', 'world')
           printenv
-      - name: Debug
-        shell: cmd
-        run: |
-          set
 
       - name: Checkout
         uses: actions/checkout@v3
