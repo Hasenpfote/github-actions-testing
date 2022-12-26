@@ -33,6 +33,11 @@ jobs:
               ~\.local\venv
           key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
+      - name: Debug
+        shell: bash
+        run: |
+          printenv HOME
+
       - name: Install Poetry for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
@@ -71,10 +76,6 @@ jobs:
 
       - name: Install project
         run: poetry install --no-interaction --only-root
-
-      - name: Debug
-        shell: bash
-        run: printenv
 
       - name: Test with pytest
         shell: bash
