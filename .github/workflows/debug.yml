@@ -93,7 +93,7 @@ jobs:
       - name: Test with pytest
         shell: bash
         run: |
-          if [ "$RUNNER_OS" == "Windows" ]; then
-            "D:\a\github_actions_testing3\github_actions_testing3\.tox\py\Scripts\python.exe -V"
-          fi
           poetry run tox -e py
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            "D:\\a\\github_actions_testing3\\github_actions_testing3\\.tox\\py\\Scripts\\python.exe -V"
+          fi
