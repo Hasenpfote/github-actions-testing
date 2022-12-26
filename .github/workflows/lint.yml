@@ -30,9 +30,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Debug-${{ format(env.fmt, 'world') }} 
+      - name: Debug-${{ format(env.name_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }} 
         env:
-          fmt: 'Hello, {0}!'
+          name_fmt: 'poetry-{0}-{1}-python-{2}'
         shell: bash
         run: |
           printenv
