@@ -43,11 +43,11 @@ jobs:
           printenv PATH
 
       - name: Add Poetry to the PATH environment variable
-        if: steps.cached-poetry.outputs.cache-hit == 'true'
+        #if: steps.cached-poetry.outputs.cache-hit == 'true'
         shell: bash
         run: |
-          echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
-          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
+          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
 
       - name: Debug
         shell: bash
