@@ -77,7 +77,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          #key: venv-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
           key: ${{ format(env.venv_cache_key_fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Install dependencies
