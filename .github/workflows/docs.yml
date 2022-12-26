@@ -58,7 +58,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.poetry_cache_paths }}
-          key: poetry-${{ env.poetry_version }}-${{ runner.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          key: ${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
 
       - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
