@@ -30,7 +30,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Debug-${{ format('Hello, {0}!', 'world') }} 
+      - name: Debug-${{ format(${{ env.fmt }}, 'world') }} 
+        env:
+          fmt: 'Hello, {0}!'
         shell: bash
         run: |
           printenv
