@@ -103,7 +103,7 @@ jobs:
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            ARR=(${${{ matrix.python-version }}//./ })
+            ARR=(${"${{ matrix.python-version }}"//./ })
             poetry run tox -e "py${ARR[0]}${ARR[1]}"
           else
             poetry run tox -e py
