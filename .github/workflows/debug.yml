@@ -28,6 +28,10 @@ jobs:
               ~\AppData\Roaming\Python\Scripts\poetry.exe
     runs-on: ${{ matrix.os }}
     steps:
+      - name: Debug
+        shell: bash
+        run: python -V
+      
       - name: Checkout
         uses: actions/checkout@v3
 
