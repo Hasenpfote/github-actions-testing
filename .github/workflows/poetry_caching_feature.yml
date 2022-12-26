@@ -90,19 +90,19 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Get the environment name for Tox
-        id: vars
-        shell: python
-        run: |
-          import os
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-              value = ''.join(str(${{ matrix.python-version }}).split('.', 2)[0:2])
-              print(f'env=py{value}', file=fh)
-
       - name: Test with pytest
+        shell: bash
         run: |
-          poetry run tox -e ${{ steps.vars.outputs.env }}
+          if [ $RUNNER_OS == 'Windows' ]; then
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
+            ARR=(${VER//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
+          fi
 
+  # Same as above.
   load-cache:
     needs: create-cache
     name: caching 2/2 - ${{ matrix.os }}
@@ -188,15 +188,14 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Get the environment name for Tox
-        id: vars
-        shell: python
-        run: |
-          import os
-          with open(os.environ['GITHUB_OUTPUT'], 'a') as fh:
-              value = ''.join(str(${{ matrix.python-version }}).split('.', 2)[0:2])
-              print(f'env=py{value}', file=fh)
-
       - name: Test with pytest
+        shell: bash
         run: |
-          poetry run tox -e ${{ steps.vars.outputs.env }}    
+          if [ $RUNNER_OS == 'Windows' ]; then
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
+            ARR=(${VER//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
+          fi
