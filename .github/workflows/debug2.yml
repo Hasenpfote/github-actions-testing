@@ -33,11 +33,6 @@ jobs:
               ~\.local\venv
           key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
-      - name: Debug
-        shell: bash
-        run: |
-          printenv HOME
-
       - name: Install Poetry for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
@@ -48,7 +43,7 @@ jobs:
           printenv PATH
 
       - name: Add Poetry to the PATH environment variable
-        if: steps.cached-poetry.outputs.cache-hit == 'true'
+        #if: steps.cached-poetry.outputs.cache-hit == 'true'
         shell: bash
         run: |
           echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
