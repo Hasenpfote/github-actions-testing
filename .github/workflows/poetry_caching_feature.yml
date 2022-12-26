@@ -15,18 +15,18 @@ jobs:
         os: [windows-latest]
         python-version: ['3.7', ]
         include:
-          - os: ubuntu-20.04
-            poetry_home: ''
-            poetry_path: ''
-            poetry_cache_paths: |
-              ~/.local/share/pypoetry
-              ~/.local/bin/poetry
-          - os: macos-latest
-            poetry_home: ''
-            poetry_path: ${HOME}/.local/bin
-            poetry_cache_paths: |
-              ~/Library/Application Support/pypoetry
-              ~/.local/bin/poetry
+          #- os: ubuntu-20.04
+          #  poetry_home: ''
+          #  poetry_path: ''
+          #  poetry_cache_paths: |
+          #    ~/.local/share/pypoetry
+          #    ~/.local/bin/poetry
+          #- os: macos-latest
+          #  poetry_home: ''
+          #  poetry_path: ${HOME}/.local/bin
+          #  poetry_cache_paths: |
+          #    ~/Library/Application Support/pypoetry
+          #    ~/.local/bin/poetry
           - os: windows-latest
             poetry_home: ''
             poetry_path: ${APPDATA}\pypoetry\venv\Scripts
@@ -115,18 +115,18 @@ jobs:
         os: [windows-latest]
         python-version: ['3.7', ]
         include:
-          - os: ubuntu-20.04
-            poetry_home: ''
-            poetry_path: ''
-            poetry_cache_paths: |
-              ~/.local/share/pypoetry
-              ~/.local/bin/poetry
-          - os: macos-latest
-            poetry_home: ''
-            poetry_path: ${HOME}/.local/bin
-            poetry_cache_paths: |
-              ~/Library/Application Support/pypoetry
-              ~/.local/bin/poetry
+          #- os: ubuntu-20.04
+          #  poetry_home: ''
+          #  poetry_path: ''
+          #  poetry_cache_paths: |
+          #    ~/.local/share/pypoetry
+          #    ~/.local/bin/poetry
+          #- os: macos-latest
+          #  poetry_home: ''
+          #  poetry_path: ${HOME}/.local/bin
+          #  poetry_cache_paths: |
+          #    ~/Library/Application Support/pypoetry
+          #    ~/.local/bin/poetry
           - os: windows-latest
             poetry_home: ''
             poetry_path: ${APPDATA}\pypoetry\venv\Scripts
