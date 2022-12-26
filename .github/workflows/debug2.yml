@@ -12,22 +12,9 @@ jobs:
       matrix:
         os: [windows-latest]
         python-version: ['3.7', ]
-        include:
-          - os: windows-latest
-            poetry_home: ~\.local
-            poetry_path: ${USERPROFILE}\.local\venv\Scripts
-          #  #poetry_path: ${USERPROFILE}\.local\bin
-            poetry_cache_paths: |
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe
-              ~\.local\venv
 
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Debug
-        shell: bash
-        run: python -V
-      
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -40,29 +27,14 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: ${{ matrix.poetry_cache_paths }}
-          key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
-
-      - name: Install Poetry for Linux/macOS
-        if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-        shell: bash
-        env:
-          POETRY_VERSION: ${{ matrix.poetry_version }}
-          POETRY_HOME: ${{ matrix.poetry_home }}
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
-
-      #- name: Install Poetry for Windows
-      #  if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-      #  shell: pwsh
-      #  env:
-      #    POETRY_VERSION: ${{ matrix.poetry_version }}
-      #    POETRY_HOME: ${{ matrix.poetry_home }}
-      #  run: |
-      #    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+          path: | 
+              ~\.local\VERSION
+              ~\.local\bin\poetry.exe
+              ~\.local\venv
+          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry for Windows
-        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
 
       - name: Debug
@@ -74,8 +46,14 @@ jobs:
         if: matrix.poetry_path != ''
         shell: bash
         run: |
-          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
-  
+          echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
+          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
