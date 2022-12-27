@@ -94,21 +94,6 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
-        shell: bash
-        run: |
-          printenv
-
-      - name: Debug
-        if: runner.os == 'Windows'
-        shell: bash
-        env:
-          PY_PYTHON: 3.7
-        run: |
-          py --version
-          py --list
-          py -3.11 --version
-
-      - name: Debug
         if: runner.os == 'Windows'
         shell: bash
         run: |
@@ -118,7 +103,6 @@ jobs:
         shell: bash
         run: |
           poetry run tox -e py
-        
           #if [ $RUNNER_OS == 'Windows' ]; then
           #  # Avoid referencing the wrong Python version.
           #  VER='${{ matrix.python-version }}'
