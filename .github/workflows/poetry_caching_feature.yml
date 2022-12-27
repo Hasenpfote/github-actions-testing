@@ -99,6 +99,11 @@ jobs:
         run: |
           printenv
 
+      - name: Debug
+        shell: cmd
+        run: |
+          del c:\windows\py.exe
+
       - name: Test with pytest
         shell: bash
         run: |
