@@ -61,9 +61,11 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
-        shell: cmd
+        shell: bash
         run: |
-          set PATH
+          which py
+          py --version
+
       - name: Test with pytest
         shell: bash
         run: |
