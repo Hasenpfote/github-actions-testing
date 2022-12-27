@@ -60,12 +60,6 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Debug
-        shell: bash
-        run: |
-          which py
-          py --version
-
       - name: Test with pytest
         shell: bash
         run: |
