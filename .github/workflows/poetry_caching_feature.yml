@@ -94,10 +94,12 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
+        if: matrix.os == 'Windows'
         shell: bash
         run: |
           which py
           py --version
+          py --list
 
       - name: Test with pytest
         shell: bash
@@ -201,10 +203,12 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
+        if: matrix.os == 'Windows'
         shell: bash
         run: |
           which py
           py --version
+          py --list
 
       - name: Test with pytest
         shell: bash
