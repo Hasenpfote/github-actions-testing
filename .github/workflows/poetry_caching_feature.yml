@@ -49,7 +49,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ matrix.poetry_cache_paths }}
-          key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
+          key: temp-0-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
@@ -84,7 +84,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
@@ -92,6 +92,12 @@ jobs:
 
       - name: Install project
         run: poetry install --no-interaction --only-root
+
+      - name: Debug
+        shell: bash
+        run: |
+          which py
+          py --version
 
       - name: Test with pytest
         shell: bash
@@ -150,7 +156,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ matrix.poetry_cache_paths }}
-          key: temp-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
+          key: temp-0-poetry-${{ matrix.poetry_version }}-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry for Linux/macOS
         if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
@@ -185,7 +191,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
@@ -193,6 +199,12 @@ jobs:
 
       - name: Install project
         run: poetry install --no-interaction --only-root
+
+      - name: Debug
+        shell: bash
+        run: |
+          which py
+          py --version
 
       - name: Test with pytest
         shell: bash
