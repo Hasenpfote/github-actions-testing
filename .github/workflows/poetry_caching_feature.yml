@@ -91,23 +91,8 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --with dev
 
-      #- name: Install project
-      #  run: poetry install --no-interaction --only-root
-
-      - name: Debug
-        if: runner.os == 'Windows'
-        shell: bash
-        env:
-          PY_PYTHON3: 3.7
-        run: |
-          which py
-
-      - name: Debug
-        if: runner.os == 'Windows'
-        shell: bash
-        run: |
-          echo ".venv\Scripts" >> $GITHUB_PATH
-          #poetry run tox -e py
+      - name: Install project
+        run: poetry install --no-interaction --only-root
 
       - name: Test with pytest
         shell: bash
