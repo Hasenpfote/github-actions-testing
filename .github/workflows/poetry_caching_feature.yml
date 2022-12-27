@@ -97,17 +97,16 @@ jobs:
       - name: Debug
         if: runner.os == 'Windows'
         shell: bash
+        env:
+          PY_PYTHON3: 3.7
         run: |
           which py
 
       - name: Test with pytest
         shell: bash
-        env:
-          PY_PYTHON3: 3.7
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            py --version
-            py --list
+            .venv/Scripts/activate
             poetry run tox -e py
           else
             poetry run tox -e py
