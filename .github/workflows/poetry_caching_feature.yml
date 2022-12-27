@@ -96,8 +96,9 @@ jobs:
       - name: Debug
         if: runner.os == 'Windows'
         shell: bash
+        env:
+          PY_PYTHON: 3.7
         run: |
-          which py
           py --version
           py --list
 
