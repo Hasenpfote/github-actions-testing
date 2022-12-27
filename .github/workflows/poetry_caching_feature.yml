@@ -108,8 +108,9 @@ jobs:
             VER='${{ matrix.python-version }}'
             ARR=(${VER//./ })
             py -"${ARR[0]}.${ARR[1]}"
+            py --version
           fi
-          py --version
+          poetry run tox -e py
         
           #if [ $RUNNER_OS == 'Windows' ]; then
           #  # Avoid referencing the wrong Python version.
@@ -224,8 +225,9 @@ jobs:
             VER='${{ matrix.python-version }}'
             ARR=(${VER//./ })
             py -"${ARR[0]}.${ARR[1]}"
+            py --version
           fi
-          py --version
+          poetry run tox -e py
 
           #if [ $RUNNER_OS == 'Windows' ]; then
           #  # Avoid referencing the wrong Python version.
