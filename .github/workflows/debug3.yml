@@ -1,0 +1,146 @@
+name: DEBUG2
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  create-cache:
+    name: caching 1/2 - ${{ matrix.os }}, ${{ matrix.python-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        python-version: ['3.7', ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Load cached Poetry installation
+        id: cached-poetry
+        uses: actions/cache@v3
+        with:
+          path: | 
+              ~\.local\VERSION
+              #~\.local\bin\poetry.exe
+              ~\.local\venv
+          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+
+      - name: Install Poetry for Windows
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
+        uses: snok/install-poetry@v1
+
+      - name: Add Poetry to the PATH environment variable
+        shell: bash
+        run: |
+          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
+          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+
+      - name: Configure Poetry
+        run: |
+          poetry config virtualenvs.in-project true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root --with dev
+
+      - name: Install project
+        run: poetry install --no-interaction --only-root
+
+      - name: Test with pytest
+        shell: bash
+        run: |
+          if [ $RUNNER_OS == 'Windows' ]; then
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
+            ARR=(${VER//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
+          fi
+
+  # Same as above.
+  load-cache:
+    needs: create-cache
+    name: caching 2/2 - ${{ matrix.os }}, ${{ matrix.python-version }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest]
+        python-version: ['3.7', ]
+
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Load cached Poetry installation
+        id: cached-poetry
+        uses: actions/cache@v3
+        with:
+          path: | 
+              ~\.local\VERSION
+              #~\.local\bin\poetry.exe
+              ~\.local\venv
+          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+
+      - name: Install Poetry for Windows
+        if: steps.cached-poetry.outputs.cache-hit != 'true'
+        uses: snok/install-poetry@v1
+
+      - name: Add Poetry to the PATH environment variable
+        shell: bash
+        run: |
+          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
+          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+
+      - name: Configure Poetry
+        run: |
+          poetry config virtualenvs.in-project true
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: .venv
+          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: poetry install --no-interaction --no-root --with dev
+
+      - name: Install project
+        run: poetry install --no-interaction --only-root
+
+      - name: Test with pytest
+        shell: bash
+        run: |
+          if [ $RUNNER_OS == 'Windows' ]; then
+            # Avoid referencing the wrong Python version.
+            VER='${{ matrix.python-version }}'
+            ARR=(${VER//./ })
+            poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          else
+            poetry run tox -e py
+          fi
