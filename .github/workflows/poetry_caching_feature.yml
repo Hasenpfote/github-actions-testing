@@ -104,9 +104,10 @@ jobs:
 
       - name: Debug
         if: runner.os == 'Windows'
-        shell: cmd
+        shell: bash
         run: |
-          .venv\Scripts\activate.exe
+          #.venv\Scripts\activate.exe
+          echo ".venv\Scripts" >> $GITHUB_PATH
           poetry run tox -e py
 
       - name: Test with pytest
