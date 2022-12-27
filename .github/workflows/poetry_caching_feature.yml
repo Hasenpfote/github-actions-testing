@@ -108,24 +108,15 @@ jobs:
           py --list
           py -3.11 --version
 
+      - name: Debug
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo "PY_PYTHON=3.7" >> $GITHUB_ENV 
+
       - name: Test with pytest
         shell: bash
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            echo "PY_PYTHON=3.7" >> $GITHUB_ENV
-            py --version
-
-            #VER='${{ matrix.python-version }}'
-            #ARR=(${VER//./ })
-            #py -${ARR[0]}.${ARR[1]}
-            #py --help
-            #py -0p
-            #py --version
-            #py --list
-            #py -3.7 -V
-            #py --version
-            #py --list
-          fi
           poetry run tox -e py
         
           #if [ $RUNNER_OS == 'Windows' ]; then
