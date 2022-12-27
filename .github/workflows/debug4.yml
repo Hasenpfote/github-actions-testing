@@ -41,8 +41,8 @@ jobs:
       - name: Add Poetry to the PATH environment variable
         shell: bash
         run: |
-          echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
-          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
+          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
@@ -113,8 +113,8 @@ jobs:
       - name: Add Poetry to the PATH environment variable
         shell: bash
         run: |
-          echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
-          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
+          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
