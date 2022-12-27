@@ -105,13 +105,20 @@ jobs:
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            # Avoid referencing the wrong Python version.
             VER='${{ matrix.python-version }}'
             ARR=(${VER//./ })
-            poetry run tox -e "py${ARR[0]}${ARR[1]}"
-          else
-            poetry run tox -e py
+            py -"${ARR[0]}.${ARR[1]}"
           fi
+          py --version
+        
+          #if [ $RUNNER_OS == 'Windows' ]; then
+          #  # Avoid referencing the wrong Python version.
+          #  VER='${{ matrix.python-version }}'
+          #  ARR=(${VER//./ })
+          #  poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          #else
+          #  poetry run tox -e py
+          #fi
 
   # Same as above.
   load-cache:
@@ -214,10 +221,17 @@ jobs:
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            # Avoid referencing the wrong Python version.
             VER='${{ matrix.python-version }}'
             ARR=(${VER//./ })
-            poetry run tox -e "py${ARR[0]}${ARR[1]}"
-          else
-            poetry run tox -e py
+            py -"${ARR[0]}.${ARR[1]}"
           fi
+          py --version
+
+          #if [ $RUNNER_OS == 'Windows' ]; then
+          #  # Avoid referencing the wrong Python version.
+          #  VER='${{ matrix.python-version }}'
+          #  ARR=(${VER//./ })
+          #  poetry run tox -e "py${ARR[0]}${ARR[1]}"
+          #else
+          #  poetry run tox -e py
+          #fi
