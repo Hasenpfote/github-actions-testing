@@ -102,7 +102,15 @@ jobs:
         run: |
           which py
 
+      - name: Debug
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          .venv\Scripts\activate.exe
+          poetry run tox -e py
+
       - name: Test with pytest
+        if: runner.os != 'Windows'
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
