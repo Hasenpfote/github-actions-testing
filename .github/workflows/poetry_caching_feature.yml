@@ -94,6 +94,11 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
+        shell: bash
+        run: |
+          printenv PY_PYTHON
+
+      - name: Debug
         if: runner.os == 'Windows'
         shell: bash
         env:
