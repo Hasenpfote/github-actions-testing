@@ -107,7 +107,7 @@ jobs:
           if [ $RUNNER_OS == 'Windows' ]; then
             py --version
             py --list
-            poetry run tox -e py -3.7
+            poetry run tox -e py -- -3.7
           else
             poetry run tox -e py
           fi
