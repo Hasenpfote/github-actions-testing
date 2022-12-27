@@ -94,6 +94,11 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
+
       - name: Test with pytest
         shell: bash
         run: |
