@@ -98,10 +98,13 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          echo "PY_PYTHON=3.7" >> $GITHUB_ENV 
+          #echo "PY_PYTHON=3.7" >> $GITHUB_ENV 
+          echo
 
       - name: Test with pytest
         shell: bash
+        env:
+          PY_PYTHON: 3.7        
         run: |
           poetry run tox -e py
           #if [ $RUNNER_OS == 'Windows' ]; then
