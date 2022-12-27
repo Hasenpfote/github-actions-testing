@@ -103,13 +103,11 @@ jobs:
 
       - name: Test with pytest
         shell: bash
-        env:
-          PY_PYTHON: 3.7        
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
             py --version
             py --list
-            poetry run tox -e py
+            poetry run tox -e py -3.7
           else
             poetry run tox -e py
           fi
