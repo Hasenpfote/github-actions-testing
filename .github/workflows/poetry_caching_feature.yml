@@ -106,17 +106,15 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          #.venv\Scripts\activate.exe
           echo ".venv\Scripts" >> $GITHUB_PATH
-          poetry run tox -e py
+          #poetry run tox -e py
 
       - name: Test with pytest
-        if: runner.os != 'Windows'
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            source .venv/Scripts/activate
-            py --list
+            #source .venv/Scripts/activate
+            #py --list
             poetry run tox -e py
           else
             poetry run tox -e py
