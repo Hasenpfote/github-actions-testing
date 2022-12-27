@@ -106,8 +106,10 @@ jobs:
         env:
           PY_PYTHON: 3.7        
         run: |
-          py --version
-          py --list
+          if [ $RUNNER_OS == 'Windows' ]; then
+            py --version
+            py --list
+          fi
           poetry run tox -e py
           #if [ $RUNNER_OS == 'Windows' ]; then
           #  # Avoid referencing the wrong Python version.
