@@ -112,16 +112,19 @@ jobs:
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            VER='${{ matrix.python-version }}'
-            ARR=(${VER//./ })
+            echo "PY_PYTHON=3.7" >> $GITHUB_ENV
+            py --version
+
+            #VER='${{ matrix.python-version }}'
+            #ARR=(${VER//./ })
             #py -${ARR[0]}.${ARR[1]}
             #py --help
-            py -0p
-            py --version
-            py --list
-            py -3.7 -V
-            py --version
-            py --list
+            #py -0p
+            #py --version
+            #py --list
+            #py -3.7 -V
+            #py --version
+            #py --list
           fi
           poetry run tox -e py
         
