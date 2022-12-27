@@ -101,6 +101,7 @@ jobs:
         run: |
           py --version
           py --list
+          py -3.11 --version
 
       - name: Test with pytest
         shell: bash
