@@ -94,7 +94,7 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
-        if: matrix.os == 'Windows'
+        if: runner.os == 'Windows'
         shell: bash
         run: |
           which py
@@ -203,7 +203,7 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
-        if: matrix.os == 'Windows'
+        if: runner.os == 'Windows'
         shell: bash
         run: |
           which py
