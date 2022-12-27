@@ -96,7 +96,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          printenv PY_PYTHON
+          printenv
 
       - name: Debug
         if: runner.os == 'Windows'
