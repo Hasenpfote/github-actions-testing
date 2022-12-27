@@ -109,7 +109,7 @@ jobs:
             ARR=(${VER//./ })
             #py -${ARR[0]}.${ARR[1]}
             py --help
-            py -V:3.7
+            py -3.7 -V
             py --version
             py --list
           fi
