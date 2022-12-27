@@ -29,7 +29,8 @@ jobs:
               ~/.local/bin/poetry
           - os: windows-latest
             poetry_home: ''
-            poetry_path: ${APPDATA}\Python\Scripts
+            #poetry_path: ${APPDATA}\Python\Scripts
+            poetry_path: ${APPDATA}\pypoetry\venv\Scripts
             poetry_cache_paths: |
               ~\AppData\Roaming\pypoetry
               ~\AppData\Roaming\Python\Scripts\poetry.exe
@@ -137,7 +138,8 @@ jobs:
               ~/.local/bin/poetry
           - os: windows-latest
             poetry_home: ''
-            poetry_path: ${APPDATA}\Python\Scripts
+            #poetry_path: ${APPDATA}\Python\Scripts
+            poetry_path: ${APPDATA}\pypoetry\venv\Scripts
             poetry_cache_paths: |
               ~\AppData\Roaming\pypoetry
               ~\AppData\Roaming\Python\Scripts\poetry.exe
