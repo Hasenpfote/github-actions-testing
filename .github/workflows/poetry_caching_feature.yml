@@ -108,7 +108,10 @@ jobs:
             VER='${{ matrix.python-version }}'
             ARR=(${VER//./ })
             #py -${ARR[0]}.${ARR[1]}
-            py --help
+            #py --help
+            py -0p
+            py --version
+            py --list
             py -3.7 -V
             py --version
             py --list
