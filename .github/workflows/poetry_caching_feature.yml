@@ -98,8 +98,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          #echo "PY_PYTHON=3.7" >> $GITHUB_ENV 
-          echo
+          which py
 
       - name: Test with pytest
         shell: bash
