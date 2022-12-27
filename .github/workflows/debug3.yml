@@ -32,7 +32,7 @@ jobs:
               ~\.local\VERSION
               #~\.local\bin\poetry.exe
               ~\.local\venv
-          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+          key: temp-3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -53,7 +53,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: temp-3-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
@@ -103,7 +103,7 @@ jobs:
               ~\.local\VERSION
               #~\.local\bin\poetry.exe
               ~\.local\venv
-          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+          key: temp-3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -124,7 +124,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: temp-3-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
