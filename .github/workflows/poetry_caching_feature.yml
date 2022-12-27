@@ -106,7 +106,7 @@ jobs:
         shell: bash
         run: |
           if [ $RUNNER_OS == 'Windows' ]; then
-            .venv/Scripts/activate
+            source .venv/Scripts/activate
             poetry run tox -e py
           else
             poetry run tox -e py
