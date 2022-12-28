@@ -43,6 +43,7 @@ runs:
 
     - name: Set the environment used by Poetry on Windows 2/2
       if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      shell: bash
       env:
         PY_PYTHON: ${{ steps.py.outputs.tag }}
       run: |
@@ -50,5 +51,6 @@ runs:
 
     - name: Install dependencies
       if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      shell: bash
       run: |
         poetry install ${{ inputs.poetry-install-args }}
