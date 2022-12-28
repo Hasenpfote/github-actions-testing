@@ -1,30 +1,30 @@
 inputs:
   cache-path:
-    description: ''
+    description: 'The argument to pass to actions/cache'
     required: true
 
   cache-key:
-    description: ''
+    description: 'The argument to pass to actions/cache'
     required: true
 
   poetry-version:
-    description: ''
+    description: 'Used for POETRY_VERSION'
     required: false
     default: ''
 
   poetry-home:
-    description: ''
+    description: 'Used for POETRY_HOME'
     required: false
     default: ''
 
   poetry-path:
-    description: ''
+    description: 'Path to Poetry is to be added to the PATH environment variable'
     required: false
     default: ''
 
 outputs:
   cache-hit:
-    description: ''
+    description: 'The output from actions/cache'
     value: ${{ steps.cached-poetry.outputs.cache-hit }}
 
 runs:
