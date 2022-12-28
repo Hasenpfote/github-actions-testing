@@ -87,6 +87,12 @@ jobs:
           path: .venv
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
+      - name: Debug
+        if: runner.os == 'Windows'
+        shell: bash
+        run: |
+          echo 'PY_PYTHON=3.7' >> $GITHUB_PATH
+
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --with dev
@@ -95,6 +101,7 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Debug
+        if: runner.os == 'Windows'
         shell: bash
         run: |
           D:\\a\\github_actions_testing3\\github_actions_testing3\\.venv\\Scripts\\python.exe -V
