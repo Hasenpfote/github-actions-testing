@@ -37,12 +37,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Debug
-        run: py --list
-  
-      - name: Debug
-        run: python -V
-      
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -76,9 +70,6 @@ jobs:
         run: |
           (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
 
-      - name: Debug
-        run: python -V
-
       - name: Add Poetry to the PATH environment variable
         if: matrix.poetry_path != ''
         shell: bash
@@ -101,12 +92,12 @@ jobs:
       #  run: |
       #    poetry env use python
 
-      #- name: Set the environment used by Poetry on Windows
-      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      #  env:
-      #    PY_PYTHON: ${{ matrix.python-version }}
-      #  run: |
-      #    poetry env use py
+      - name: Set the environment used by Poetry on Windows
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        env:
+          PY_PYTHON: ${{ matrix.python-version }}
+        run: |
+          poetry env use py
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
