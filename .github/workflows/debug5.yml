@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
 
-      - name: Debug:
+      - name: Debug
         uses: .github/actions/poetry
 
       - name: Load cached Poetry installation
