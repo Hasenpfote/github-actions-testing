@@ -97,7 +97,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          D:\a\github_actions_testing3\github_actions_testing3\.venv\Scripts\python.exe -V
+          D:\\a\\github_actions_testing3\\github_actions_testing3\\.venv\\Scripts\\python.exe -V
 
       - name: Test with pytest
         shell: bash
