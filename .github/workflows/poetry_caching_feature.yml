@@ -40,15 +40,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Set up Poetry ${{ matrix.poetry_version }}
+      - name: Set up Poetry ${{ matrix.poetry-version }}
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
-          cache-path: ${{ matrix.poetry_cache_paths }}
-          cache-key: pcf-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
-          poetry-version: ${{ matrix.poetry_version }}
-          poetry-home: ${{ matrix.poetry_home }}
-          poetry-path: ${{ matrix.poetry_path }}
+          cache-path: ${{ matrix.poetry-cache-paths }}
+          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, matrix.python-version) }}
+          poetry-version: ${{ matrix.poetry-version }}
+          poetry-home: ${{ matrix.poetry-home }}
+          poetry-path: ${{ matrix.poetry-path }}
 
       - name: Configure Poetry
         run: |
@@ -59,7 +59,7 @@ jobs:
         uses: ./.github/actions/setup-poetry-dependencies
         with:
           cache-path: .venv
-          cache-key: pcf-${{ format(matrix.venv_cache_key_fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
+          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ matrix.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
@@ -85,15 +85,15 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Set up Poetry ${{ matrix.poetry_version }}
+      - name: Set up Poetry ${{ matrix.poetry-version }}
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
-          cache-path: ${{ matrix.poetry_cache_paths }}
-          cache-key: pcf-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
-          #poetry-version: ${{ matrix.poetry_version }}
-          #poetry-home: ${{ matrix.poetry_home }}
-          poetry-path: ${{ matrix.poetry_path }}
+          cache-path: ${{ matrix.poetry-cache-paths }}
+          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, matrix.python-version) }}
+          #poetry-version: ${{ matrix.poetry-version }}
+          #poetry-home: ${{ matrix.poetry-home }}
+          poetry-path: ${{ matrix.poetry-path }}
 
       - name: Configure Poetry
         run: |
@@ -104,7 +104,7 @@ jobs:
         uses: ./.github/actions/setup-poetry-dependencies
         with:
           cache-path: .venv
-          cache-key: pcf-${{ format(matrix.venv_cache_key_fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
+          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
           #python-version: ${{ matrix.python-version }}
           #poetry-install-args: --no-interaction --no-root --with dev
 
