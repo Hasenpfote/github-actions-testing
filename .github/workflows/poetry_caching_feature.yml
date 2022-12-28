@@ -91,11 +91,16 @@ jobs:
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         shell: bash
         run: |
+          echo "PY_PYTHON=3.7" >> $GITHUB_ENV
+
+      - name: Debug
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        shell: bash
+        run: |
           if [ "$RUNNER_OS" == 'Windows' ]; then
-            poetry env use py -3.7
+            poetry env use py
           else
-            #poetry env use python
-            poetry env use 3.7
+            poetry env use python
           fi
 
       #- name: for Windows
