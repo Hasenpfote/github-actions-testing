@@ -2,7 +2,7 @@ import sys
 import time
 
 
-def add(a, b):
+def add(a,                     b):
     '''Adds two numbers.
     Args:
         a: The value of the left-hand side.
