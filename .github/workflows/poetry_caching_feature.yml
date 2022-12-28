@@ -87,67 +87,30 @@ jobs:
           path: .venv
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Debug
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        shell: bash
+      - name: Set the environment used by Poetry on Linux/macOS
+        if: runner.os != 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          echo "PY_PYTHON=3.7" >> $GITHUB_ENV
+          poetry env use python
 
-      - name: Debug
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        shell: bash
+      - name: Set the environment used by Poetry on Windows
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        env:
+          PY_PYTHON: ${{ matrix.python-version }}
         run: |
-          if [ "$RUNNER_OS" == 'Windows' ]; then
-            poetry env use py
-          else
-            poetry env use python
-          fi
-
-      #- name: for Windows
-      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      #  env:
-      #    PY_PYTHON: 3.7
-      #  run: |
-      #    poetry env use py
-
-      #- name: for Linux/maxOS
-      #  if: runner.os != 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-      #  run: |
-      #    poetry env use python
+          poetry env use py
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
           poetry install --no-interaction --no-root --with dev
 
-      - name: Debug
-        if: runner.os == 'Windows'
-        shell: bash
-        run: |
-          #/home/runner/work/github_actions_testing3/github_actions_testing3/
-          D:\\a\\github_actions_testing3\\github_actions_testing3\\.venv\\Scripts\\python.exe -V
-
       - name: Install project
-        run: poetry install --no-interaction --only-root
+        run: |
+          poetry install --no-interaction --only-root
 
       - name: Test with pytest
-        shell: bash
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            #source .venv/Scripts/activate
-            #py --list
-            poetry run tox -rvv -e py 
-          else
             poetry run tox -e py
-          fi
-          #if [ $RUNNER_OS == 'Windows' ]; then
-          #  # Avoid referencing the wrong Python version.
-          #  VER='${{ matrix.python-version }}'
-          #  ARR=(${VER//./ })
-          #  poetry run tox -e "py${ARR[0]}${ARR[1]}"
-          #else
-          #  poetry run tox -e py
-          #fi
 
   # Same as above.
   load-cache:
