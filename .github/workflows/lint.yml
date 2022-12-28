@@ -43,11 +43,11 @@ jobs:
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
-          cache-path: ${{ env.poetry_cache_paths }}
-          cache-key: ${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
-          poetry-version: ${{ env.poetry_version }}
-          poetry-home: ${{ env.poetry_home }}
-          poetry-path: ${{ env.poetry_path }}
+          cache-path: ${{ env.poetry-cache-paths }}
+          cache-key: ${{ format(env.poetry-cache-key-fmt, env.poetry-version, runner.os, steps.setup-python.outputs.python-version) }}
+          poetry-version: ${{ env.poetry-version }}
+          poetry-home: ${{ env.poetry-home }}
+          poetry-path: ${{ env.poetry-path }}
 
       - name: Configure Poetry
         run: |
@@ -58,7 +58,7 @@ jobs:
         uses: ./.github/actions/setup-poetry-dependencies
         with:
           cache-path: .venv
-          cache-key: ${{ format(env.venv_cache_key_fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
+          cache-key: ${{ format(env.venv-cache-key-fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ env.python-version }}
           poetry-install-args: --no-interaction --only dev
 
