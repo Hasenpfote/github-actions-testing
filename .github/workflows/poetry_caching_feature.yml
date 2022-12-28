@@ -97,11 +97,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          #source .venv/Scripts/activate
-          #echo '.venv/Scripts' >> $GITHUB_PATH
-          #source /d:/a/github_actions_testing3/github_actions_testing3/.venv/Scripts/activate
-          #echo 'D:\a\github_actions_testing3\github_actions_testing3\.venv\Scripts' >> $GITHUB_PATH
-          echo
+          D:\a\github_actions_testing3\github_actions_testing3\.venv\Scripts\python.exe -V
 
       - name: Test with pytest
         shell: bash
