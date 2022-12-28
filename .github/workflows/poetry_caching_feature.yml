@@ -88,7 +88,7 @@ jobs:
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       - name: Debug
-        if: runner.os = 'Windows'
+        if: runner.os == 'Windows'
         shell: bash
         run: |
           echo "PY_PYTHON=3.7" >> $GITHUB_ENV
