@@ -94,21 +94,10 @@ jobs:
       - name: Install project
         run: poetry install --no-interaction --only-root
 
-      - name: Debug
+      - name: Test with pytest
         shell: bash
         run: |
-          which py
-
-      - name: Debug
-        if: runner.os == 'Windows'
-        shell: cmd
-        run: |
-          del c:\windows\py.exe
-
-      - name: Debug
-        shell: bash
-        run: |
-          which py
+          printenv
 
       - name: Test with pytest
         shell: bash
