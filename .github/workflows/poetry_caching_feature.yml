@@ -95,14 +95,18 @@ jobs:
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        env:
-          PY_PYTHON: 3.7
         run: poetry install --no-interaction --no-root --with dev
+
+      - name: Debug
+        shell: bash
+        run: |
+          printenv
 
       - name: Debug
         if: runner.os == 'Windows'
         shell: bash
         run: |
+          #/home/runner/work/github_actions_testing3/github_actions_testing3/
           D:\\a\\github_actions_testing3\\github_actions_testing3\\.venv\\Scripts\\python.exe -V
 
       - name: Install project
