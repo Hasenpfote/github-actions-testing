@@ -7,10 +7,6 @@ inputs:
     description: ''
     required: true
 
-  cache-hit:
-    description: ''
-    required: true
-
   poetry-version:
     description: ''
     required: false
