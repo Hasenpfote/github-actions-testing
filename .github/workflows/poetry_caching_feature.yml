@@ -88,15 +88,16 @@ jobs:
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
       ####
-      - name: Set the environment used by Poetry on Windows
+      - name: Set the environment used by Poetry on Windows 1/2
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         id: py
         shell: bash
         run: |
           VER='${{ matrix.python-version }}'
           ARR=(${VER//./ })
-          ehco "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
+          echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
 
-      - name: Set the environment used by Poetry on Windows
+      - name: Set the environment used by Poetry on Windows 2/2
         if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         env:
           PY_PYTHON: ${{ steps.py.outputs.tag }}
