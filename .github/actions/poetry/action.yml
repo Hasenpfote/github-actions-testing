@@ -1,7 +1,17 @@
+inputs:
+  numOctocats:
+    description: 'Number of Octocats'
+    required: false
+    default: '1'
+
+  octocatEyeColor:
+    description: 'Eye color of the Octocats'
+    required: true
+
 runs:
   using: 'composite'
   steps:
   - name: Step1
     shell: bash
     run: |
-      echo Hello, world!
+      echo Hello, world! ${{ inputs.numOctocats }} ${{ inputs.octocatEyeColor }}
