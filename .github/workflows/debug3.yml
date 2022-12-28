@@ -16,7 +16,7 @@ jobs:
         include:
           - os: windows-latest
             #poetry_path: ${USERPROFILE}\.local\bin
-            poetry_path: ${USERPROFILE}\venv\Scripts
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
             poetry_cache_paths: |
               ~\.local\VERSION
               #~\.local\bin\poetry.exe
@@ -111,7 +111,7 @@ jobs:
         include:
           - os: windows-latest
             #poetry_path: ${USERPROFILE}\.local\bin
-            poetry_path: ${USERPROFILE}\venv\Scripts
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
             poetry_cache_paths: |
               ~\.local\VERSION
               #~\.local\bin\poetry.exe
