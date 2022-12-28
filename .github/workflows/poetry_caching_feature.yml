@@ -87,17 +87,27 @@ jobs:
           path: .venv
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
-      - name: for Windows
-        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        env:
-          PY_PYTHON: 3.7
+      - name: Debug
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        shell: bash
         run: |
-          poetry env use py
+          if [ "$RUNNER_OS" == 'Windows' ]; then
+            poetry env use $(py -3.7)
+          else
+            poetry env use python
+          fi
 
-      - name: for Linux/maxOS
-        if: runner.os != 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: |
-          poetry env use python
+      #- name: for Windows
+      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  env:
+      #    PY_PYTHON: 3.7
+      #  run: |
+      #    poetry env use py
+
+      #- name: for Linux/maxOS
+      #  if: runner.os != 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  run: |
+      #    poetry env use python
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
