@@ -93,7 +93,7 @@ jobs:
           cache-key: pcf-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
           #poetry-version: ${{ matrix.poetry_version }}
           #poetry-home: ${{ matrix.poetry_home }}
-          #poetry-path: ${{ matrix.poetry_path }}
+          poetry-path: ${{ matrix.poetry_path }}
 
       - name: Configure Poetry
         run: |
