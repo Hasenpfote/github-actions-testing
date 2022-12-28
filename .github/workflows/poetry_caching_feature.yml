@@ -87,20 +87,19 @@ jobs:
           path: .venv
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Debug
-        if: runner.os == 'Windows'
-        shell: bash
+      - name: for Windows
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          echo "PY_PYTHON=3.7" >> $GITHUB_ENV
+          poetry env use py -3.7
 
-      - name: Debug
-        shell: bash
-        run: python -V
+      - name: for Linux/maxOS
+        if: runner.os != 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        run: |
+          poetry env use python
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry env use python
           poetry install --no-interaction --no-root --with dev
 
       - name: Debug
