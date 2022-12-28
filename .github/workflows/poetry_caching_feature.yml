@@ -91,7 +91,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: bash
         run: |
-          echo 'PY_PYTHON=3.7' >> $GITHUB_PATH
+          echo 'PY_PYTHON=3.7' >> $GITHUB_ENV
 
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
