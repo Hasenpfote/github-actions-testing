@@ -83,6 +83,22 @@ jobs:
           path: .venv
           key: ${{ format(matrix.venv_cache_key_fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
 
+      - name: Set the environment used by Poetry on Windows 1/2
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        id: py
+        shell: bash
+        run: |
+          VER='${{ matrix.python-version }}'
+          ARR=(${VER//./ })
+          echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
+
+      - name: Set the environment used by Poetry on Windows 2/2
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        env:
+          PY_PYTHON: ${{ steps.py.outputs.tag }}
+        run: |
+          poetry env use py
+
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --no-root --with dev
@@ -91,13 +107,5 @@ jobs:
         run: poetry install --no-interaction --only-root
 
       - name: Test with pytest
-        shell: bash
         run: |
-          if [ $RUNNER_OS == 'Windows' ]; then
-            # Avoid referencing the wrong Python version.
-            VER='${{ matrix.python-version }}'
-            ARR=(${VER//./ })
-            poetry run tox -e "py${ARR[0]}${ARR[1]}"
-          else
-            poetry run tox -e py
-          fi
+          poetry run tox -e py
