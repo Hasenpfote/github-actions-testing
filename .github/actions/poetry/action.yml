@@ -1,7 +1,7 @@
 runs:
   using: 'composite'
   steps:
-  - name Step1
+  - name: Step1
     shell: bash
     run: |
       echo Hello, world!
