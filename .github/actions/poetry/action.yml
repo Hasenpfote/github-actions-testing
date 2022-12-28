@@ -1,17 +1,37 @@
 inputs:
-  numOctocats:
-    description: 'Number of Octocats'
-    required: false
-    default: '1'
-
-  octocatEyeColor:
-    description: 'Eye color of the Octocats'
+  cache-hit:
+    description: ''
     required: true
+
+  poetry-version:
+    description: ''
+    required: false
+    default: ''
+
+  poetry-home:
+    description: ''
+    required: false
+    default: ''
+
+  poetry-path:
+    description: ''
+    required: false
+    default: ''
 
 runs:
   using: 'composite'
   steps:
-  - name: Step1
+  - name: Install Poetry
+    if: inputs.cache-hit != 'true'
+    shell: bash
+    env:
+      POETRY_VERSION: ${{ inputs.poetry-version }}
+      POETRY_HOME: ${{ inputs.poetry-home }}
+    env:
+      curl -sSL https://install.python-poetry.org | python3 -
+
+  - name: Add Poetry to the PATH environment variable
+    if: env.poetry_path != ''
     shell: bash
     run: |
-      echo Hello, world! ${{ inputs.numOctocats }} ${{ inputs.octocatEyeColor }}
+      echo "${{ inputs.poetry-path }}" >> $GITHUB_PATH
