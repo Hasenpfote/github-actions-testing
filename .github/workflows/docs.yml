@@ -46,15 +46,15 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
 
-      - name: Set up Poetry ${{ env.poetry_version }}
+      - name: Set up Poetry ${{ env.poetry-version }}
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
-          cache-path: ${{ env.poetry_cache_paths }}
-          cache-key: ${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
-          poetry-version: ${{ env.poetry_version }}
-          poetry-home: ${{ env.poetry_home }}
-          poetry-path: ${{ env.poetry_path }}
+          cache-path: ${{ env.poetry-cache-paths }}
+          cache-key: ${{ format(env.poetry-cache-key-fmt, env.poetry-version, runner.os, steps.setup-python.outputs.python-version) }}
+          poetry-version: ${{ env.poetry-version }}
+          poetry-home: ${{ env.poetry-home }}
+          poetry-path: ${{ env.poetry-path }}
 
       - name: Configure Poetry
         run: |
