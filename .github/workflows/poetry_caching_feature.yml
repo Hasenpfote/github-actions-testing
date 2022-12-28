@@ -98,7 +98,8 @@ jobs:
         shell: bash
         run: |
           source .venv/Scripts/activate
-          echo '.venv/Scripts' >> $GITHUB_PATH
+          #echo '.venv/Scripts' >> $GITHUB_PATH
+          echo 'D:\a\github_actions_testing3\github_actions_testing3\.venv\Scripts' >> $GITHUB_PATH
 
       - name: Test with pytest
         shell: bash
