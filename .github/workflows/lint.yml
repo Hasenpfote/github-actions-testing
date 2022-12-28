@@ -39,37 +39,15 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
 
-      - name: Set up Poetry
+      - name: Set up Poetry ${{ env.poetry_version }}
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
           cache-path: ${{ env.poetry_cache_paths }}
-          cache-key: temp-5-${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
+          cache-key: ${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
           poetry-version: ${{ env.poetry_version }}
           poetry-home: ${{ env.poetry_home }}
           poetry-path: ${{ env.poetry_path }}
-
-      #- name: Load cached Poetry installation
-      #  id: cached-poetry
-      #  uses: actions/cache@v3
-      #  with:
-      #    path: ${{ env.poetry_cache_paths }}
-      #    key: ${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
-
-      #- name: Install Poetry
-      #  if: steps.cached-poetry.outputs.cache-hit != 'true'
-      #  shell: bash
-      #  env:
-      #    POETRY_VERSION: ${{ env.poetry_version }}
-      #    POETRY_HOME: ${{ env.poetry_home }}
-      #  run: |
-      #    curl -sSL https://install.python-poetry.org | python3 -
-
-      #- name: Add Poetry to the PATH environment variable
-      #  if: env.poetry_path != ''
-      #  shell: bash
-      #  run: |
-      #    echo "${{ env.poetry_path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
         run: |
