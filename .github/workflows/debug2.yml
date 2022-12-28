@@ -1,4 +1,4 @@
-name: DEBUG2
+name: Caching Poetry on Windows
 
 on: workflow_dispatch
 
@@ -13,6 +13,14 @@ jobs:
       matrix:
         os: [windows-latest]
         python-version: ['3.7', ]
+        include:
+          - os: windows-latest
+            #poetry_path: ${USERPROFILE}\.local\bin # Errors occur.
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
+            poetry_cache_paths: |
+              ~\.local\VERSION
+              #~\.local\bin\poetry.exe # Errors occur.
+              ~\.local\venv
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -28,21 +36,18 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: | 
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe
-              ~\.local\venv
-          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+          path: ${{ matrix.poetry_cache_paths }}
+          key: temp-2-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
-      - name: Install Poetry for Windows
+      - name: Install Poetry
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         uses: snok/install-poetry@v1
 
       - name: Add Poetry to the PATH environment variable
+        if: matrix.poetry_path != ''
         shell: bash
         run: |
-          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
-          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
         run: |
@@ -53,11 +58,27 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: temp-2-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Foo
+      - name: Set the environment used by Poetry on Windows 1/2
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        id: py
+        shell: bash
         run: |
-          poetry run python -V
+          VER='${{ matrix.python-version }}'
+          ARR=(${VER//./ })
+          echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
+
+      - name: Set the environment used by Poetry on Windows 2/2
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        env:
+          PY_PYTHON: ${{ steps.py.outputs.tag }}
+        run: |
+          poetry env use py
+
+      - name: Do stuff
+        run: |
+          poetry run -m python -V
 
   # Same as above.
   load-cache:
@@ -69,6 +90,14 @@ jobs:
       matrix:
         os: [windows-latest]
         python-version: ['3.7', ]
+        include:
+          - os: windows-latest
+            #poetry_path: ${USERPROFILE}\.local\bin # Errors occur.
+            poetry_path: ${USERPROFILE}\.local\venv\Scripts
+            poetry_cache_paths: |
+              ~\.local\VERSION
+              #~\.local\bin\poetry.exe # Errors occur.
+              ~\.local\venv
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -84,33 +113,44 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: | 
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe
-              ~\.local\venv
-          key: temp-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
+          path: ${{ matrix.poetry_cache_paths }}
+          key: temp-2-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
-      - name: Install Poetry for Windows
-        if: steps.cached-poetry.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
+      #- name: Install Poetry
+      #  if: steps.cached-poetry.outputs.cache-hit != 'true'
+      #  uses: snok/install-poetry@v1
 
       - name: Add Poetry to the PATH environment variable
+        if: matrix.poetry_path != ''
         shell: bash
         run: |
-          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH
-          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
-
+          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
-
       - name: Load cached venv
         id: cached-poetry-dependencies
         uses: actions/cache@v3
         with:
           path: .venv
-          key: temp-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: temp-2-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
-      - name: Foo
+      #- name: Set the environment used by Poetry on Windows 1/2
+      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  id: py
+      #  shell: bash
+      #  run: |
+      #    VER='${{ matrix.python-version }}'
+      #    ARR=(${VER//./ })
+      #    echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
+
+      #- name: Set the environment used by Poetry on Windows 2/2
+      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  env:
+      #    PY_PYTHON: ${{ steps.py.outputs.tag }}
+      #  run: |
+      #    poetry env use py
+
+      - name: Do stuff
         run: |
-          poetry run python -V
+          poetry run -m python -V
