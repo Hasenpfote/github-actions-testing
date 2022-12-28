@@ -78,7 +78,7 @@ jobs:
 
       - name: Do stuff
         run: |
-          poetry run -m python -V
+          poetry run python -V
 
   # Same as above.
   load-cache:
@@ -153,4 +153,4 @@ jobs:
 
       - name: Do stuff
         run: |
-          poetry run -m python -V
+          poetry run python -V
