@@ -89,8 +89,10 @@ jobs:
 
       - name: for Windows
         if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        env:
+          PY_PYTHON: 3.7
         run: |
-          poetry env use py -3.7
+          poetry env use py
 
       - name: for Linux/maxOS
         if: runner.os != 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
