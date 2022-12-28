@@ -97,7 +97,8 @@ jobs:
       - name: Test with pytest
         shell: bash
         run: |
-          printenv
+          source .vnev/Scripts/activate
+          echo '.vnev/Scripts' >> $GITHUB_PATH
 
       - name: Test with pytest
         shell: bash
