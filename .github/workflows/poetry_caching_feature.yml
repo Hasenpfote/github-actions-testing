@@ -53,6 +53,7 @@ jobs:
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
