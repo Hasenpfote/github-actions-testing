@@ -15,11 +15,11 @@ jobs:
         python-version: ['3.7', ]
         include:
           - os: windows-latest
-            #poetry_path: ${USERPROFILE}\.local\bin
+            #poetry_path: ${USERPROFILE}\.local\bin # Errors occur.
             poetry_path: ${USERPROFILE}\.local\venv\Scripts
             poetry_cache_paths: |
               ~\.local\VERSION
-              #~\.local\bin\poetry.exe
+              #~\.local\bin\poetry.exe # Errors occur.
               ~\.local\venv
 
     runs-on: ${{ matrix.os }}
@@ -36,10 +36,7 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: | 
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe
-              ~\.local\venv
+          path: ${{ matrix.poetry_cache_paths }}
           key: temp-3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       - name: Install Poetry
@@ -110,11 +107,11 @@ jobs:
         python-version: ['3.7', ]
         include:
           - os: windows-latest
-            #poetry_path: ${USERPROFILE}\.local\bin
+            #poetry_path: ${USERPROFILE}\.local\bin # Errors occur.
             poetry_path: ${USERPROFILE}\.local\venv\Scripts
             poetry_cache_paths: |
               ~\.local\VERSION
-              #~\.local\bin\poetry.exe
+              #~\.local\bin\poetry.exe # Errors occur.
               ~\.local\venv
 
     runs-on: ${{ matrix.os }}
@@ -131,10 +128,7 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: | 
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe
-              ~\.local\venv
+          path: ${{ matrix.poetry_cache_paths }}
           key: temp-3-poetry-${{ matrix.os }}-python-${{ matrix.python-version }}
 
       #- name: Install Poetry
