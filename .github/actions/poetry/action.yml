@@ -31,7 +31,7 @@ runs:
       curl -sSL https://install.python-poetry.org | python3 -
 
   - name: Add Poetry to the PATH environment variable
-    if: env.poetry_path != ''
+    if: inputs.poetry-path != ''
     shell: bash
     run: |
       echo "${{ inputs.poetry-path }}" >> $GITHUB_PATH
