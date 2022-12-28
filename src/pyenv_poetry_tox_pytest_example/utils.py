@@ -13,10 +13,6 @@ def add(a, b):
     return a + b
 
 
-def sub2(a, b):
-    return a - b
-
-
 def print_greet():
     '''Displays greeting.'''
     print('Hello, world!')
