@@ -40,6 +40,8 @@ jobs:
 
       - name: Debug
         uses: ./.github/actions/poetry
+        with:
+          octocatEyeColor: 'red'
 
       - name: Load cached Poetry installation
         id: cached-poetry
