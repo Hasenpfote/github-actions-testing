@@ -39,7 +39,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
 
-      - name: Set up Poetry ${{ env.poetry_version }}
+      - name: Set up Poetry ${{ env.poetry-version }}
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
