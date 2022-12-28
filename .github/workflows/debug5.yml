@@ -40,7 +40,7 @@ jobs:
 
       - name: Debug
         id: setup-poetry
-        uses: ./.github/actions/poetry
+        uses: ./.github/actions/setup-poetry
         with:
           cache-path: ${{ env.poetry_cache_paths }}
           cache-key: temp-5-${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
