@@ -87,10 +87,14 @@ jobs:
           path: .venv
           key: temp-0-venv-${{ matrix.os }}-python-${{ matrix.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
+      - name: Debug
+        shell: bash
+        run: python -V
+
       - name: Install dependencies
         if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: |
-          poetry env use 3.7
+          poetry env use python
           poetry install --no-interaction --no-root --with dev
 
       - name: Debug
