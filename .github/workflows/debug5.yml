@@ -38,20 +38,22 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
 
-      - name: Load cached Poetry installation
-        id: cached-poetry
-        uses: actions/cache@v3
-        with:
-          path: ${{ env.poetry_cache_paths }}
-          key: temp-5-${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
-
       - name: Debug
+        id: setup-poetry
         uses: ./.github/actions/poetry
         with:
-          cache-hit: ${{ steps.cached-poetry.outputs.cache-hit }}
+          cache-path: ${{ env.poetry_cache_paths }}
+          cache-key: temp-5-${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
           poetry-version: ${{ env.poetry_version }}
           poetry-home: ${{ env.poetry_home }}
           poetry-path: ${{ env.poetry_path }}
+
+      #- name: Load cached Poetry installation
+      #  id: cached-poetry
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: ${{ env.poetry_cache_paths }}
+      #    key: temp-5-${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
 
       #- name: Install Poetry
       #  if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -80,7 +82,8 @@ jobs:
           key: temp-5-${{ format(env.venv_cache_key_fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        #if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+        if: steps.setup-poetry.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --only dev
 
       - name: Lint with tox
