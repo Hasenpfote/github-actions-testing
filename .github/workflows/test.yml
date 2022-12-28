@@ -62,7 +62,6 @@ jobs:
           cache-path: .venv
           cache-key: ${{ format(matrix.venv_cache_key_fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ matrix.python-version }}
-          poetry-version: ${{ matrix.poetry_version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
       #- name: Load cached venv
