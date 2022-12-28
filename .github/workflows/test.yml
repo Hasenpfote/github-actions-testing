@@ -41,36 +41,46 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
 
-      - name: Load cached Poetry installation
-        id: cached-poetry
-        uses: actions/cache@v3
+      - name: Set up Poetry ${{ matrix.poetry_version }}
+        id: setup-poetry
+        uses: ./.github/actions/setup-poetry
         with:
-          path: ${{ matrix.poetry_cache_paths }}
-          key: ${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
+          cache-path: ${{ matrix.poetry_cache_paths }}
+          cache-key: temp-6-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
+          poetry-version: ${{ matrix.poetry_version }}
+          poetry-home: ${{ matrix.poetry_home }}
+          poetry-path: ${{ matrix.poetry_path }}
 
-      - name: Install Poetry for Linux/macOS
-        if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-        shell: bash
-        env:
-          POETRY_VERSION: ${{ matrix.poetry_version }}
-          POETRY_HOME: ${{ matrix.poetry_home }}
-        run: |
-          curl -sSL https://install.python-poetry.org | python3 -
+      #- name: Load cached Poetry installation
+      #  id: cached-poetry
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: ${{ matrix.poetry_cache_paths }}
+      #    key: ${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
 
-      - name: Install Poetry for Windows
-        if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
-        shell: pwsh
-        env:
-          POETRY_VERSION: ${{ matrix.poetry_version }}
-          POETRY_HOME: ${{ matrix.poetry_home }}
-        run: |
-          (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+      #- name: Install Poetry for Linux/macOS
+      #  if: runner.os != 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+      #  shell: bash
+      #  env:
+      #    POETRY_VERSION: ${{ matrix.poetry_version }}
+      #    POETRY_HOME: ${{ matrix.poetry_home }}
+      #  run: |
+      #    curl -sSL https://install.python-poetry.org | python3 -
 
-      - name: Add Poetry to the PATH environment variable
-        if: matrix.poetry_path != ''
-        shell: bash
-        run: |
-          echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
+      #- name: Install Poetry for Windows
+      #  if: runner.os == 'Windows' && steps.cached-poetry.outputs.cache-hit != 'true'
+      #  shell: pwsh
+      #  env:
+      #    POETRY_VERSION: ${{ matrix.poetry_version }}
+      #    POETRY_HOME: ${{ matrix.poetry_home }}
+      #  run: |
+      #    (Invoke-WebRequest -Uri https://install.python-poetry.org -UseBasicParsing).Content | py -
+
+      #- name: Add Poetry to the PATH environment variable
+      #  if: matrix.poetry_path != ''
+      #  shell: bash
+      #  run: |
+      #    echo "${{ matrix.poetry_path }}" >> $GITHUB_PATH
   
       - name: Configure Poetry
         run: |
