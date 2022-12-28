@@ -38,7 +38,7 @@ jobs:
         with:
           python-version: ${{ env.python-version }}
 
-      - name: Debug
+      - name: Set up Poetry
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
@@ -47,28 +47,6 @@ jobs:
           poetry-version: ${{ env.poetry_version }}
           poetry-home: ${{ env.poetry_home }}
           poetry-path: ${{ env.poetry_path }}
-
-      #- name: Load cached Poetry installation
-      #  id: cached-poetry
-      #  uses: actions/cache@v3
-      #  with:
-      #    path: ${{ env.poetry_cache_paths }}
-      #    key: temp-5-${{ format(env.poetry_cache_key_fmt, env.poetry_version, runner.os, steps.setup-python.outputs.python-version) }}
-
-      #- name: Install Poetry
-      #  if: steps.cached-poetry.outputs.cache-hit != 'true'
-      #  shell: bash
-      #  env:
-      #    POETRY_VERSION: ${{ env.poetry_version }}
-      #    POETRY_HOME: ${{ env.poetry_home }}
-      #  run: |
-      #    curl -sSL https://install.python-poetry.org | python3 -
-
-      #- name: Add Poetry to the PATH environment variable
-      #  if: env.poetry_path != ''
-      #  shell: bash
-      #  run: |
-      #    echo "${{ env.poetry_path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
         run: |
@@ -82,8 +60,7 @@ jobs:
           key: temp-5-${{ format(env.venv_cache_key_fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Install dependencies
-        #if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        if: steps.setup-poetry.outputs.cache-hit != 'true'
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         run: poetry install --no-interaction --only dev
 
       - name: Lint with tox
