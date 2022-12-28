@@ -92,7 +92,7 @@ jobs:
         shell: bash
         run: |
           if [ "$RUNNER_OS" == 'Windows' ]; then
-            poetry env use $(py -3.7)
+            poetry env use python3.7
           else
             poetry env use python
           fi
