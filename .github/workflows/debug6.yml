@@ -50,7 +50,7 @@ jobs:
         uses: ./.github/actions/setup-poetry
         with:
           cache-path: ${{ matrix.poetry_cache_paths }}
-          cache-key: temp-6-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, runner.os, matrix.python-version) }}
+          cache-key: temp-6-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
           poetry-version: ${{ matrix.poetry_version }}
           poetry-home: ${{ matrix.poetry_home }}
           poetry-path: ${{ matrix.poetry_path }}
@@ -137,7 +137,7 @@ jobs:
         uses: ./.github/actions/setup-poetry
         with:
           cache-path: ${{ matrix.poetry_cache_paths }}
-          cache-key: temp-6-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, runner.os, matrix.python-version) }}
+          cache-key: temp-6-${{ format(matrix.poetry_cache_key_fmt, matrix.poetry_version, matrix.os, matrix.python-version) }}
           poetry-version: ${{ matrix.poetry_version }}
           poetry-home: ${{ matrix.poetry_home }}
           poetry-path: ${{ matrix.poetry_path }}
