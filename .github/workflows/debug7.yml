@@ -1,0 +1,71 @@
+name: Debug7
+
+on: workflow_dispatch
+
+permissions:
+  contents: read
+
+jobs:
+  matrix_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read YAML file
+        id: set-matrix
+        shell: bash
+        run: |
+          YAML=$(cat .github/test_matrix.yml)
+          echo 'matrix<<EOF' >> $GITHUB_OUTPUT
+          echo "${YAML}" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+
+  build:
+    needs: matrix_prep
+    strategy:
+      fail-fast: false
+      matrix: ${{ needs.matrix_prep.outputs.matrix }}
+
+    runs-on: ${{ matrix.os }}
+    name: ${{ format('build ({0}, {1})', matrix.os, matrix.python-version) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up Poetry ${{ matrix.poetry-version }}
+        id: setup-poetry
+        uses: ./.github/actions/setup-poetry
+        with:
+          cache-path: ${{ matrix.poetry-cache-paths }}
+          cache-key: temp-7-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, matrix.python-version) }}
+          poetry-version: ${{ matrix.poetry-version }}
+          poetry-home: ${{ matrix.poetry-home }}
+          poetry-path: ${{ matrix.poetry-path }}
+
+      - name: Configure Poetry
+        run: |
+          poetry config virtualenvs.in-project true
+
+      - name: Set up Poetry dependencies
+        id: setup-poetry-dependencies
+        uses: ./.github/actions/setup-poetry-dependencies
+        with:
+          cache-path: .venv
+          cache-key: temp-7-${{ format(matrix.venv-cache-key-fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
+          python-version: ${{ matrix.python-version }}
+          poetry-install-args: --no-interaction --no-root --with dev
+
+      #- name: Install project
+      #  run: poetry install --no-interaction --only-root
+
+      - name: Test with pytest
+        run: |
+          poetry run tox -e py
