@@ -10,19 +10,16 @@ jobs:
   matrix_prep:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.read-file.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Read JSON file
-        id: set-matrix
-        shell: bash
-        run: |
-          JSON=$(cat .github/workflows/test_matrix.json)
-          echo 'matrix<<EOF' >> $GITHUB_OUTPUT
-          echo "${JSON}" >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+        id: read-file
+        uses: ./.github/actions/read-file
+        with:
+          path: .github/workflows/test_matrix.json
 
   build:
     needs: matrix_prep
