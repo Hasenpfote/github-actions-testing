@@ -43,7 +43,7 @@ jobs:
     strategy:
       fail-fast: false
       #matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
-      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix2) }}
+      matrix: ${{ needs.matrix_prep.outputs.matrix2 }}
 
     runs-on: ${{ matrix.os }}
     name: ${{ format('build ({0}, {1})', matrix.os, matrix.python-version) }}
