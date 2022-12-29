@@ -28,7 +28,7 @@ jobs:
         id: yaml-data
         uses: jbutcher5/read-yaml@main
         with:
-          file: .github/test_matrix.yml
+          file: '.github/test_matrix.yml'
 
       - name: output
         id: set-matrix2
