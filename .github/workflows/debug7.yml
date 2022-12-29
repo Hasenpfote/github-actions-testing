@@ -27,8 +27,7 @@ jobs:
     needs: matrix_prep
     strategy:
       fail-fast: false
-      matrix: |
-        ${{ needs.matrix_prep.outputs.matrix }}
+      matrix: ${{ needs.matrix_prep.outputs.matrix }}
 
     runs-on: ${{ matrix.os }}
     name: ${{ format('build ({0}, {1})', matrix.os, matrix.python-version) }}
