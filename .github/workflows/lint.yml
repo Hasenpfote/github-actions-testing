@@ -21,15 +21,6 @@ jobs:
         with:
           path: .github/workflows/env.json
 
-      #- name: Read JSON file
-      #  id: set-env
-      #  shell: bash
-      #  run: |
-      #    JSON=$(cat .github/workflows/env.json)
-      #    echo 'env<<EOF' >> $GITHUB_OUTPUT
-      #    echo "${JSON}" >> $GITHUB_OUTPUT
-      #    echo 'EOF' >> $GITHUB_OUTPUT
-
   build:
     needs: env_prep
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
