@@ -56,7 +56,7 @@ jobs:
         with:
           cache-path: .venv
           cache-key: ${{ format(env.venv-cache-key-fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
-          python-version: ${{ env.python-version }}
+          python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --only dev
 
       #- name: Install project
