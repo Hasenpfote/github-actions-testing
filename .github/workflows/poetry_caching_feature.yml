@@ -42,7 +42,7 @@ jobs:
         uses: ./.github/actions/setup-poetry
         with:
           cache-path: ${{ matrix.poetry-cache-paths }}
-          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, matrix.python-version) }}
+          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, steps.setup-python.outputs.python-version) }}
           poetry-version: ${{ matrix.poetry-version }}
           poetry-home: ${{ matrix.poetry-home }}
           poetry-path: ${{ matrix.poetry-path }}
@@ -56,7 +56,7 @@ jobs:
         uses: ./.github/actions/setup-poetry-dependencies
         with:
           cache-path: .venv
-          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
+          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ matrix.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
@@ -87,7 +87,7 @@ jobs:
         uses: ./.github/actions/setup-poetry
         with:
           cache-path: ${{ matrix.poetry-cache-paths }}
-          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, matrix.python-version) }}
+          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, steps.setup-python.outputs.python-version) }}
           #poetry-version: ${{ matrix.poetry-version }}
           #poetry-home: ${{ matrix.poetry-home }}
           poetry-path: ${{ matrix.poetry-path }}
@@ -101,7 +101,7 @@ jobs:
         uses: ./.github/actions/setup-poetry-dependencies
         with:
           cache-path: .venv
-          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, matrix.python-version, hashFiles('**/poetry.lock')) }}
+          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           #python-version: ${{ matrix.python-version }}
           #poetry-install-args: --no-interaction --no-root --with dev
 
