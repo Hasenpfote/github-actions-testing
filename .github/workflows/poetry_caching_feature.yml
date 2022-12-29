@@ -58,7 +58,7 @@ jobs:
         with:
           cache-path: .venv
           cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
-          python-version: ${{ matrix.python-version }}
+          python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
@@ -104,7 +104,7 @@ jobs:
         with:
           cache-path: .venv
           cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
-          #python-version: ${{ matrix.python-version }}
+          #python-version: ${{ steps.setup-python.outputs.python-version }}
           #poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
