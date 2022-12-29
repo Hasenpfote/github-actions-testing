@@ -10,19 +10,25 @@ jobs:
   env_prep:
     runs-on: ubuntu-latest
     outputs:
-      env: ${{ steps.set-env.outputs.env }}
+      env: ${{ steps.read-file.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
       - name: Read JSON file
-        id: set-env
-        shell: bash
-        run: |
-          JSON=$(cat .github/workflows/env.json)
-          echo 'env<<EOF' >> $GITHUB_OUTPUT
-          echo "${JSON}" >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+        id: read-file
+        uses: ./.github/actions/read-file
+        with:
+          path: .github/workflows/env.json
+
+      #- name: Read JSON file
+      #  id: set-env
+      #  shell: bash
+      #  run: |
+      #    JSON=$(cat .github/workflows/env.json)
+      #    echo 'env<<EOF' >> $GITHUB_OUTPUT
+      #    echo "${JSON}" >> $GITHUB_OUTPUT
+      #    echo 'EOF' >> $GITHUB_OUTPUT
 
   build:
     needs: env_prep
