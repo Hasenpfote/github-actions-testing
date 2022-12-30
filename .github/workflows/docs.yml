@@ -58,10 +58,11 @@ jobs:
           poetry config virtualenvs.in-project true
 
       - name: Install dependencies
-        run: poetry install --no-interaction --only docs
+        #run: poetry install --no-interaction --only docs
+        run: poetry install --no-interaction --with docs
   
-      - name: Install project
-        run: poetry install --no-interaction --only-root        
+      #- name: Install project
+      #  run: poetry install --no-interaction --only-root        
 
       - name: Build
         run: |
