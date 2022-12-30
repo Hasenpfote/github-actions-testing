@@ -60,7 +60,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          poetry add tox-current-env@0.0.11 --group dev
+          poetry add tox-current-env@0.0.10 --group dev
           poetry show
 
       #- name: Install project
