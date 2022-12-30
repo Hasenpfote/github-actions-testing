@@ -58,6 +58,11 @@ jobs:
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
+      - name: Install dependencies
+        run: |
+          poetry add tox-current-env@0.0.11 --group dev
+          poetry show
+
       #- name: Install project
       #  run: poetry install --no-interaction --only-root
 
