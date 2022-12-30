@@ -1,16 +1,15 @@
 name: Debug5
 
-#on: [ push, pull_request ]
 on: workflow_dispatch
 
 permissions:
   contents: read
 
 jobs:
-  env_prep:
+  matrix_prep:
     runs-on: ubuntu-latest
     outputs:
-      env: ${{ steps.read-file.outputs.content }}
+      matrix: ${{ steps.read-file.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -19,42 +18,46 @@ jobs:
         id: read-file
         uses: ./.github/actions/read-file
         with:
-          path: .github/workflows/env.json
+          path: .github/workflows/test_matrix.json
 
-  build:
-    needs: env_prep
-    env: ${{ fromJson(needs.env_prep.outputs.env) }}
+  create-cache:
+    needs: matrix_prep
+    name: caching 1/2 - ${{ matrix.os }}, ${{ matrix.python-version }}
+    strategy:
+      fail-fast: false
+      matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Set up Python ${{ env.python-version }}
+      - name: Set up Python ${{ matrix.python-version }}
         id: setup-python
         uses: actions/setup-python@v4
         with:
-          python-version: ${{ env.python-version }}
+          python-version: ${{ matrix.python-version }}
 
-      - name: Set up Poetry ${{ env.poetry-version }}
+      - name: Set up Poetry ${{ matrix.poetry-version }}
         id: setup-poetry
         uses: ./.github/actions/setup-poetry
         with:
-          cache-path: ${{ env.poetry-cache-paths }}
-          cache-key: temp-5-${{ format(env.poetry-cache-key-fmt, env.poetry-version, runner.os, steps.setup-python.outputs.python-version) }}
-          poetry-version: ${{ env.poetry-version }}
-          poetry-home: ${{ env.poetry-home }}
-          poetry-path: ${{ env.poetry-path }}
+          cache-path: ${{ matrix.poetry-cache-paths }}
+          cache-key: pcf-${{ format(matrix.poetry-cache-key-fmt, matrix.poetry-version, matrix.os, steps.setup-python.outputs.python-version) }}
+          poetry-version: ${{ matrix.poetry-version }}
+          poetry-home: ${{ matrix.poetry-home }}
+          poetry-path: ${{ matrix.poetry-path }}
 
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
         with:
           cache-path: .venv
-          cache-key: temp-5-${{ format(env.venv-cache-key-fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
+          cache-key: pcf-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
@@ -63,9 +66,6 @@ jobs:
           poetry add tox-current-env@0.0.10 --group dev
           poetry install --no-root --with dev
 
-      #- name: Install project
-      #  run: poetry install --no-interaction --only-root
-
-      - name: Lint with tox
+      - name: Test with pytest
         run: |
-          poetry run tox -e black,isort,flake8,mypy -p all -q
+          poetry run tox -e py --current-env
