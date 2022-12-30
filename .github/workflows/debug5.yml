@@ -61,7 +61,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry add tox-current-env@0.0.10 --group dev
-          poetry run pip list
+          poetry install --no-root --with dev
 
       #- name: Install project
       #  run: poetry install --no-interaction --only-root
