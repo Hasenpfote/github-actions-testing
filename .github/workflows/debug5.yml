@@ -64,7 +64,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry add tox-current-env@0.0.10 --group dev
-          poetry install --no-root --with dev
+          poetry install --no-root --with dev,test
 
       - name: Test with pytest
         run: |
