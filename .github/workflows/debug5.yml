@@ -64,7 +64,12 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          realpath .venv
+          echo "VENV_PATH=$(poetry env info --path)" >> $GITHUB_ENV
+
+      - name: Debug
+        shell: bash
+        run: |
+          echo ${VENV_PATH}
           poetry config --list
           poetry env info 
           poetry env info --path
