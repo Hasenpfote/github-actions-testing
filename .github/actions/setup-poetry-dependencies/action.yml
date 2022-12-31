@@ -24,7 +24,7 @@ outputs:
     value: ${{ steps.cached-poetry-dependencies.outputs.cache-hit }}
 
   venv-activate:
-    description: ''
+    description: 'Command to activate venv'
     value: ${{ steps.venv-activate.outputs.cmd }}
 
 runs:
