@@ -66,6 +66,7 @@ jobs:
           poetry add tox-current-env@^0.0.10 --group dev
           poetry install --no-root --with dev
           #poetry shell
-          ls -la ~/.local/bin
-          tox -e py
+          ls -la ~/.local/share
+          ls -la ~/.local/pypoetry
+          #tox -e py
           #exit
