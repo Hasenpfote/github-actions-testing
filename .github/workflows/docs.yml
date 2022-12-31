@@ -53,15 +53,8 @@ jobs:
           poetry-home: ${{ env.poetry-home }}
           poetry-path: ${{ env.poetry-path }}
 
-      - name: Configure Poetry
-        run: |
-          poetry config virtualenvs.in-project true
-
       - name: Install dependencies
         run: poetry install --no-interaction --with docs
-  
-      #- name: Install project
-      #  run: poetry install --no-interaction --only-root        
 
       - name: Build
         run: |
