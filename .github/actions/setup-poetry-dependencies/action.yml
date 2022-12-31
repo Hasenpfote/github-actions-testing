@@ -25,21 +25,21 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    #- name: Path to venv
-    #  id: venv
-    #  shell: bash
-    #  run: |
-    #    if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
-    #      echo 'path=.venv' >> $GITHUB_OUTPUT
-    #    else
-    #      echo "path=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
-    #    fi
+    - name: Path to cached venv
+      id: cached-venv
+      shell: bash
+      run: |
+        if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
+          echo 'path=.venv' >> $GITHUB_OUTPUT
+        else
+          echo "path=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
+        fi
 
     - name: Load cached venv
       id: cached-poetry-dependencies
       uses: actions/cache@v3
       with:
-        path: ${{ venv.path }}
+        path: ${{ cached-venv.path }}
         key: ${{ inputs.cache-key }}
 
     - name: Set the environment used by Poetry on Windows 1/2
