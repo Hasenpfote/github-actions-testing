@@ -67,6 +67,6 @@ jobs:
           poetry install --no-root --with dev
           #poetry shell
           ls -la ~/.local/share
-          ls -la ~/.local/pypoetry
+          ls -la ~/.local/share/pypoetry
           #tox -e py
           #exit
