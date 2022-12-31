@@ -61,15 +61,11 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
+        if: runner.os == 'Linux'
         run: |
           poetry add tox-current-env@^0.0.10 --group dev
           poetry install --no-root --with dev
-          poetry shell
-
-      - name: Test with pytest
-        run: |
+          #poetry shell
+          ls -la ~/.local/bin
           tox -e py
-
-      - name: Test with pytest
-        run: |
-          exit
+          #exit
