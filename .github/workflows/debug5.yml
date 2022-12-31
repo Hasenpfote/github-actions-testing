@@ -48,9 +48,9 @@ jobs:
           poetry-home: ${{ matrix.poetry-home }}
           poetry-path: ${{ matrix.poetry-path }}
 
-      - name: Configure Poetry
-        run: |
-          poetry config virtualenvs.in-project true
+      #- name: Configure Poetry
+      #  run: |
+      #    poetry config virtualenvs.in-project true
 
       ###
       - name: Debug
