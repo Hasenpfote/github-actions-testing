@@ -64,7 +64,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           source .venv/bin/activate
-          tox -e py -- --color=yes
+          tox -e py -- -v --color=yes
           deactivate
 
       - name: Test with pytest
