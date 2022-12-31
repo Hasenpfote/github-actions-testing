@@ -140,11 +140,19 @@ jobs:
         run: |
           pwd
 
+      #- name: Test with pytest
+      #  if: runner.os == 'Windows'
+      #  shell: pwsh
+      #  run: |
+      #    ${{ env.VENV_ACTIVATE }}.ps1
+      #    tox -e py -- -v --color=yes
+      #    deactivate
+
       - name: Test with pytest
         if: runner.os == 'Windows'
-        shell: pwsh
+        shell: bash
         run: |
-          ${{ env.VENV_ACTIVATE }}.ps1
+          source ${{ env.VENV_ACTIVATE }}
           tox -e py -- -v --color=yes
           deactivate
 
