@@ -46,21 +46,13 @@ jobs:
           poetry-home: ${{ env.poetry-home }}
           poetry-path: ${{ env.poetry-path }}
 
-      - name: Configure Poetry
-        run: |
-          poetry config virtualenvs.in-project true
-
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
         with:
-          cache-path: .venv
           cache-key: ${{ format(env.venv-cache-key-fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
-
-      #- name: Install project
-      #  run: poetry install --no-interaction --only-root
 
       - name: Lint with tox
         run: |

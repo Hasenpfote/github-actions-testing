@@ -48,30 +48,21 @@ jobs:
           poetry-home: ${{ matrix.poetry-home }}
           poetry-path: ${{ matrix.poetry-path }}
 
-      - name: Configure Poetry
-        run: |
-          poetry config virtualenvs.in-project true
+      #- name: Configure Poetry
+      #  run: |
+      #    poetry config virtualenvs.in-project true
+
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
         with:
-          cache-path: .venv
+          #cache-path: .venv
           cache-key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
-        if: runner.os == 'Linux'
         run: |
-          poetry add tox-current-env@^0.0.10 --group dev
-          poetry install --no-root --with dev,test
-          
-          source .venv/bin/activate
-          tox -e py --current-env
+          ${{ steps.setup-poetry-dependencies.outputs.venv-activate }}
+          tox -e py -- -v --color=yes
           deactivate
-
-          #ls -la ~/.local/share/pypoetry/venv
-          #ls -la ~/.local/share/pypoetry/venv/bin
-          #source ~/.local/share/pypoetry/venv/bin/activate
-          #tox -e py
-          #exit
