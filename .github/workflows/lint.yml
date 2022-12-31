@@ -54,7 +54,6 @@ jobs:
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
         with:
-          cache-path: .venv
           cache-key: ${{ format(env.venv-cache-key-fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
