@@ -22,9 +22,9 @@ outputs:
     description: 'The output from actions/cache'
     value: ${{ steps.cached-poetry-dependencies.outputs.cache-hit }}
 
-  activate-venv:
+  venv-activate:
     description: ''
-    value: ${{ steps.activate-venv.outputs.cmd }}
+    value: ${{ steps.venv-activate.outputs.cmd }}
 
 runs:
   using: 'composite'
@@ -70,7 +70,7 @@ runs:
         poetry install ${{ inputs.poetry-install-args }}
 
     - name: Command to activate venv
-      id: activate-venv
+      id: venv-activate
       shell: bash
       run: |
         PATH=$(poetry env info --path)
