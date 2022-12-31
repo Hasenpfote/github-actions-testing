@@ -58,6 +58,11 @@ jobs:
         run: |
           echo ======
           poetry config virtualenvs.in-project
+          if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
+            echo 'true'              
+          else
+            echo 'false'
+          fi
           #poetry config virtualenvs.path
           #/home/runner/.cache/pypoetry/virtualenvs
           echo ======
