@@ -61,12 +61,15 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
-        shell: bash
+        if: runner.os == 'Windows'
         run: |
-          if [ "$RUNNER_OS" == 'Windows' ]; then
-            source .venv/Scripts/activate
-          else
-            source .venv/bin/activate
-          fi
+          source .venv/Scripts/activate
+          tox -e py -- -v --color=yes
+          deactivate
+
+      - name: Test with pytest
+        if: runner.os != 'Windows'
+        run: |
+          source .venv/bin/activate
           tox -e py -- -v --color=yes
           deactivate
