@@ -144,7 +144,7 @@ jobs:
         if: runner.os == 'Windows'
         shell: pwsh
         run: |
-          ${{ env.VENV_ACTIVATE }}.exe
+          ${{ env.VENV_ACTIVATE }}.ps1
           tox -e py -- -v --color=yes
           deactivate
 
