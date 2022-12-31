@@ -122,7 +122,7 @@ jobs:
       #      echo "VENV_ACTIVATE=. ${{ env.VENV_PATH }}/bin/activate" >> $GITHUB_ENV
       #    fi
 
-      - name: Debug
+      - name: Command to activate venv
         shell: bash
         run: |
           PATH=$(poetry env info --path)
