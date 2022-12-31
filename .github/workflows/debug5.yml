@@ -64,6 +64,8 @@ jobs:
       - name: Debug
         run: |
           poetry config --list
+          poetry env info 
+          poetry env info --path
 
       - name: Debug
         shell: bash
