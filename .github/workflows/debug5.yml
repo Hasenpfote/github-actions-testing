@@ -61,14 +61,14 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
-        if: runner.os == 'Linux'
+        #if: runner.os == 'Linux'
         run: |
           source .venv/bin/activate
           tox -e py -- -v --color=yes
           deactivate
 
-      - name: Test with pytest
-        if: runner.os == 'Linux'
-        run: |
-          poetry run tox -e py -- --color=yes
+      #- name: Test with pytest
+      #  if: runner.os == 'Linux'
+      #  run: |
+      #    poetry run tox -e py -- --color=yes
 
