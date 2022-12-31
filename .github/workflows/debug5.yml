@@ -141,7 +141,18 @@ jobs:
           pwd
 
       - name: Test with pytest
+        if: runner.os != 'Windows'
+        shell: pwsh
         run: |
           . '${{ env.VENV_ACTIVATE }}'
           tox -e py -- -v --color=yes
           deactivate
+
+      - name: Test with pytest
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |
+          ${{ env.VENV_ACTIVATE }}.exe
+          tox -e py -- -v --color=yes
+          deactivate
+
