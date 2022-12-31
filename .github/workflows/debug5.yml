@@ -53,50 +53,50 @@ jobs:
       #    poetry config virtualenvs.in-project true
 
       ###
-      - name: Path to venv
-        id: venv
-        shell: bash
-        run: |
-          if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
-            echo 'path=.venv' >> $GITHUB_OUTPUT
-          else
-            echo "path=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
-          fi
+      #- name: Path to venv
+      #  id: venv
+      #  shell: bash
+      #  run: |
+      #    if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
+      #      echo 'path=.venv' >> $GITHUB_OUTPUT
+      #    else
+      #      echo "path=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
+      #    fi
 
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v3
-        with:
-          path: ${{ steps.venv.outputs.path }}
-          key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
+      #- name: Load cached venv
+      #  id: cached-poetry-dependencies
+      #  uses: actions/cache@v3
+      #  with:
+      #    path: ${{ steps.venv.outputs.path }}
+      #    key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}#
 
-      - name: Set the environment used by Poetry on Windows 1/2
-        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        id: py
-        shell: bash
-        run: |
-          VER='${{ steps.setup-python.outputs.python-version }}'
-          ARR=(${VER//./ })
-          echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
+      #- name: Set the environment used by Poetry on Windows 1/2
+      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  id: py
+      #  shell: bash
+      #  run: |
+      #    VER='${{ steps.setup-python.outputs.python-version }}'
+      #    ARR=(${VER//./ })
+      #    echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
 
-      - name: Set the environment used by Poetry on Windows 2/2
-        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        shell: bash
-        env:
-          PY_PYTHON: ${{ steps.py.outputs.tag }}
-        run: |
-          poetry env use py
+      #- name: Set the environment used by Poetry on Windows 2/2
+      #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  shell: bash
+      #  env:
+      #    PY_PYTHON: ${{ steps.py.outputs.tag }}
+      #  run: |
+      #    poetry env use py
 
-      - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        shell: bash
-        run: |
-          poetry install --no-interaction --no-root --with dev
+      #- name: Install dependencies
+      #  if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      #  shell: bash
+      #  run: |
+      #    poetry install --no-interaction --no-root --with dev
 
-      - name: Debug
-        shell: bash
-        run: |
-          poetry env info
+      #- name: Debug
+      #  shell: bash
+      #  run: |
+      #    poetry env info
       ###
 
       #- name: Set up Poetry dependencies
@@ -122,18 +122,34 @@ jobs:
       #      echo "VENV_ACTIVATE=. ${{ env.VENV_PATH }}/bin/activate" >> $GITHUB_ENV
       #    fi
 
-      - name: Command to activate venv
-        shell: bash
-        run: |
-          PATH=$(poetry env info --path)
-          if [ "$RUNNER_OS" == 'Windows' ]; then
-            echo "VENV_ACTIVATE=${PATH}\Scripts\activate.ps1" >> $GITHUB_ENV
-          else
-            echo "VENV_ACTIVATE=. ${PATH}/bin/activate" >> $GITHUB_ENV
-          fi
+      #- name: Command to activate venv
+      #  shell: bash
+      #  run: |
+      #    PATH=$(poetry env info --path)
+      #    if [ "$RUNNER_OS" == 'Windows' ]; then
+      #      echo "VENV_ACTIVATE=${PATH}\Scripts\activate.ps1" >> $GITHUB_ENV
+      #    else
+      #      echo "VENV_ACTIVATE=. ${PATH}/bin/activate" >> $GITHUB_ENV
+      #    fi
+
+      #- name: Test with pytest
+      #  run: |
+      #    ${{ env.VENV_ACTIVATE }}
+      #    tox -e py -- -v --color=yes
+      #    deactivate
+
+      - name: Set up Poetry dependencies
+        id: setup-poetry-dependencies
+        uses: ./.github/actions/setup-poetry-dependencies
+        with:
+          cache-path: .venv
+          cache-key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
+          python-version: ${{ steps.setup-python.outputs.python-version }}
+          poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
         run: |
-          ${{ env.VENV_ACTIVATE }}
+          ${{ steps.setup-poetry-dependencies.outputs.activate-venv }}
+          # ${{ env.VENV_ACTIVATE }}
           tox -e py -- -v --color=yes
           deactivate
