@@ -135,6 +135,11 @@ jobs:
           fi
 
       - name: Test with pytest
+        shell: bash
+        run: |
+          pwd
+
+      - name: Test with pytest
         run: |
           ${{ env.VENV_ACTIVATE }}
           tox -e py -- -v --color=yes
