@@ -65,7 +65,9 @@ jobs:
         run: |
           poetry add tox-current-env@^0.0.10 --group dev
           poetry install --no-root --with dev
-          ls -la ~
+          
+          #source .venv/bin/activate
+          ls -la .venv/bin
 
           #ls -la ~/.local/share/pypoetry/venv
           #ls -la ~/.local/share/pypoetry/venv/bin
