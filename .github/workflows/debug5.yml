@@ -67,7 +67,7 @@ jobs:
           poetry install --no-root --with dev
           
           source .venv/bin/activate
-          tox -e py
+          tox -e py --current-env
           deactivate
 
           #ls -la ~/.local/share/pypoetry/venv
