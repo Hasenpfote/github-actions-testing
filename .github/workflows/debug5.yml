@@ -54,19 +54,24 @@ jobs:
 
       ###
       - name: Debug
+        id: venv
         shell: bash
         run: |
-          echo ======
           poetry config virtualenvs.in-project
           if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
-            echo 'true'              
+            echo 'path=.venv' >> $GITHUB_OUTPUT
           else
-            echo 'false'
+            #/home/runner/.cache/pypoetry/virtualenvs
+            echo "path=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
           fi
-          #poetry config virtualenvs.path
-          #/home/runner/.cache/pypoetry/virtualenvs
-          echo ======
-      
+
+      - name: Load cached venv
+        id: cached-poetry-dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.venv.outputs.path }}
+          key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
+
       - name: Set the environment used by Poetry on Windows 1/2
         if: runner.os == 'Windows'
         id: py
