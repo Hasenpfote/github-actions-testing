@@ -53,15 +53,13 @@ jobs:
       #    poetry config virtualenvs.in-project true
 
       ###
-      - name: Debug
+      - name: Path to venv
         id: venv
         shell: bash
         run: |
-          poetry config virtualenvs.in-project
           if [ $(poetry config virtualenvs.in-project) == 'true' ]; then
             echo 'path=.venv' >> $GITHUB_OUTPUT
           else
-            #/home/runner/.cache/pypoetry/virtualenvs
             echo "path=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
           fi
 
@@ -73,7 +71,7 @@ jobs:
           key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Set the environment used by Poetry on Windows 1/2
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         id: py
         shell: bash
         run: |
@@ -82,7 +80,7 @@ jobs:
           echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
 
       - name: Set the environment used by Poetry on Windows 2/2
-        if: runner.os == 'Windows'
+        if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         shell: bash
         env:
           PY_PYTHON: ${{ steps.py.outputs.tag }}
@@ -90,6 +88,7 @@ jobs:
           poetry env use py
 
       - name: Install dependencies
+        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         shell: bash
         run: |
           poetry install --no-interaction --no-root --with dev
@@ -113,15 +112,6 @@ jobs:
         shell: bash
         run: |
           echo "VENV_PATH=$(poetry env info --path)" >> $GITHUB_ENV
-
-      - name: Debug
-        shell: bash
-        run: |
-          echo ${VENV_PATH}
-          poetry config --list
-          poetry config virtualenvs.path
-          poetry env info 
-          poetry env info --path
 
       - name: Debug
         shell: bash
