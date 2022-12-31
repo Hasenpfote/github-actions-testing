@@ -53,6 +53,15 @@ jobs:
       #    poetry config virtualenvs.in-project true
 
       ###
+      - name: Debug
+        shell: bash
+        run: |
+          echo ======
+          poetry config virtualenvs.in-project
+          #poetry config virtualenvs.path
+          #/home/runner/.cache/pypoetry/virtualenvs
+          echo ======
+      
       - name: Set the environment used by Poetry on Windows 1/2
         if: runner.os == 'Windows'
         id: py
