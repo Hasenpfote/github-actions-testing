@@ -22,6 +22,10 @@ outputs:
     description: 'The output from actions/cache'
     value: ${{ steps.cached-poetry-dependencies.outputs.cache-hit }}
 
+  activate-venv:
+    description: ''
+    value: ${{ steps.activate-venv.outputs.cmd }}
+
 runs:
   using: 'composite'
   steps:
@@ -64,3 +68,14 @@ runs:
       shell: bash
       run: |
         poetry install ${{ inputs.poetry-install-args }}
+
+    - name: Command to activate venv
+      id: activate-venv
+      shell: bash
+      run: |
+        PATH=$(poetry env info --path)
+        if [ "$RUNNER_OS" == 'Windows' ]; then
+          echo "cmd=${PATH}\Scripts\activate.ps1" >> $GITHUB_OUTPUT
+        else
+          echo "cmd=. ${PATH}/bin/activate" >> $GITHUB_OUTPUT
+        fi
