@@ -141,7 +141,7 @@ jobs:
           pwd
 
       - name: Test with pytest
-        if: runner.os != 'Windows'
+        if: runner.os == 'Windows'
         shell: pwsh
         run: |
           . '${{ env.VENV_ACTIVATE }}'
