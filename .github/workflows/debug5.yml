@@ -108,18 +108,28 @@ jobs:
       #    python-version: ${{ steps.setup-python.outputs.python-version }}
       #    poetry-install-args: --no-interaction --no-root --with dev
 
-      - name: Debug
-        shell: bash
-        run: |
-          echo "VENV_PATH=$(poetry env info --path)" >> $GITHUB_ENV
+      #- name: Debug
+      #  shell: bash
+      #  run: |
+      #    echo "VENV_PATH=$(poetry env info --path)" >> $GITHUB_ENV
+
+      #- name: Debug
+      #  shell: bash
+      #  run: |
+      #    if [ "$RUNNER_OS" == 'Windows' ]; then
+      #      echo "VENV_ACTIVATE=${{ env.VENV_PATH }}\Scripts\activate.ps1" >> $GITHUB_ENV
+      #    else
+      #      echo "VENV_ACTIVATE=. ${{ env.VENV_PATH }}/bin/activate" >> $GITHUB_ENV
+      #    fi
 
       - name: Debug
         shell: bash
         run: |
+          PATH=$(poetry env info --path)
           if [ "$RUNNER_OS" == 'Windows' ]; then
-            echo "VENV_ACTIVATE=${{ env.VENV_PATH }}\Scripts\activate.ps1" >> $GITHUB_ENV
+            echo "VENV_ACTIVATE=${PATH}\Scripts\activate.ps1" >> $GITHUB_ENV
           else
-            echo "VENV_ACTIVATE=. ${{ env.VENV_PATH }}/bin/activate" >> $GITHUB_ENV
+            echo "VENV_ACTIVATE=. ${PATH}/bin/activate" >> $GITHUB_ENV
           fi
 
       - name: Test with pytest
