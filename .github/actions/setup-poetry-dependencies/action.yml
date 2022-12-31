@@ -25,6 +25,13 @@ outputs:
 runs:
   using: 'composite'
   steps:
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ inputs.cache-path }}
+        key: ${{ inputs.cache-key }}
+
     - name: Set the environment used by Poetry on Windows 1/2
       if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       id: py
@@ -47,46 +54,3 @@ runs:
       shell: bash
       run: |
         poetry install ${{ inputs.poetry-install-args }}
-
-    - name: Debug
-      shell: bash
-      run: |
-        poetry env info --path
-
-    - name: Load cached venv
-      id: cached-poetry-dependencies
-      uses: actions/cache@v3
-      with:
-        path: ${{ inputs.cache-path }}
-        key: ${{ inputs.cache-key }}
-
-  
-    #- name: Load cached venv
-    #  id: cached-poetry-dependencies
-    #  uses: actions/cache@v3
-    #  with:
-    #    path: ${{ inputs.cache-path }}
-    #    key: ${{ inputs.cache-key }}
-
-    #- name: Set the environment used by Poetry on Windows 1/2
-    #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-    #  id: py
-    #  shell: bash
-    #  run: |
-    #    VER='${{ inputs.python-version }}'
-    #    ARR=(${VER//./ })
-    #    echo "tag=${ARR[0]}.${ARR[1]}" >> $GITHUB_OUTPUT
-
-    #- name: Set the environment used by Poetry on Windows 2/2
-    #  if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-    #  shell: bash
-    #  env:
-    #    PY_PYTHON: ${{ steps.py.outputs.tag }}
-    #  run: |
-    #    poetry env use py
-
-    #- name: Install dependencies
-    #  if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-    #  shell: bash
-    #  run: |
-    #    poetry install ${{ inputs.poetry-install-args }}
