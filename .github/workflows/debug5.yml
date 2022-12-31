@@ -151,7 +151,8 @@ jobs:
       - name: Test with pytest
         if: runner.os == 'Windows'
         run: |
-          . ${{ env.VENV_ACTIVATE }}
+          #. ${{ env.VENV_ACTIVATE }}
+          ${{ env.VENV_ACTIVATE }}.ps1
           tox -e py -- -v --color=yes
           deactivate
 
