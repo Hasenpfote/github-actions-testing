@@ -46,9 +46,9 @@ jobs:
           poetry-home: ${{ env.poetry-home }}
           poetry-path: ${{ env.poetry-path }}
 
-      - name: Configure Poetry
-        run: |
-          poetry config virtualenvs.in-project true
+      #- name: Configure Poetry
+      #  run: |
+      #    poetry config virtualenvs.in-project true
 
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
