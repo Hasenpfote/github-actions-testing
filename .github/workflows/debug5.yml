@@ -69,5 +69,5 @@ jobs:
           #ls -la ~/.local/share/pypoetry/venv
           #ls -la ~/.local/share/pypoetry/venv/bin
           source ~/.local/share/pypoetry/venv/bin/activate
-          #tox -e py
+          tox -e py
           exit
