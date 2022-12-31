@@ -52,11 +52,6 @@ jobs:
         run: |
           poetry config virtualenvs.in-project true
 
-      - name: Debug
-        shell: bash
-        run: |
-          poetry env info --path
-
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
