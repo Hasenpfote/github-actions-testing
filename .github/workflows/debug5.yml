@@ -63,6 +63,7 @@ jobs:
 
       - name: Debug
         run: |
+          ls -la .venv
           poetry config --list
           poetry env info 
           poetry env info --path
