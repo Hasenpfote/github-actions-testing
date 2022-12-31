@@ -100,6 +100,7 @@ jobs:
         run: |
           echo ${VENV_PATH}
           poetry config --list
+          poetry config virtualenvs.path
           poetry env info 
           poetry env info --path
 
