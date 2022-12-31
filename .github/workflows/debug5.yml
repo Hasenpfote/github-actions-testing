@@ -64,7 +64,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           poetry add tox-current-env@^0.0.10 --group dev
-          poetry install --no-root --with dev
+          poetry install --no-root --with dev,test
           
           source .venv/bin/activate
           tox -e py --current-env
