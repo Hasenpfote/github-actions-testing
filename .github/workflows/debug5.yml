@@ -62,8 +62,9 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Debug
+        shell: bash
         run: |
-          ls -la .venv
+          realpath .venv
           poetry config --list
           poetry env info 
           poetry env info --path
