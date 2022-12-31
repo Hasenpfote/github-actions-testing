@@ -129,38 +129,14 @@ jobs:
           if [ "$RUNNER_OS" == 'Windows' ]; then
             #echo "VENV_ACTIVATE=. .venv\Scripts\activate" >> $GITHUB_ENV
             #echo "VENV_ACTIVATE=. ${VENV_PATH}\Scripts\activate" >> $GITHUB_ENV
-            echo "VENV_ACTIVATE=${{ env.VENV_PATH }}\Scripts\activate" >> $GITHUB_ENV
+            echo "VENV_ACTIVATE=${{ env.VENV_PATH }}\Scripts\activate.ps1" >> $GITHUB_ENV
           else
             #echo "VENV_ACTIVATE=. .venv/bin/activate" >> $GITHUB_ENV
-            echo "VENV_ACTIVATE=${{ env.VENV_PATH }}/bin/activate" >> $GITHUB_ENV
+            echo "VENV_ACTIVATE=. ${{ env.VENV_PATH }}/bin/activate" >> $GITHUB_ENV
           fi
 
       - name: Test with pytest
-        shell: bash
         run: |
-          pwd
-
-      #- name: Test with pytest
-      #  if: runner.os == 'Windows'
-      #  shell: pwsh
-      #  run: |
-      #    ${{ env.VENV_ACTIVATE }}.ps1
-      #    tox -e py -- -v --color=yes
-      #    deactivate
-
-      - name: Test with pytest
-        if: runner.os == 'Windows'
-        run: |
-          #. ${{ env.VENV_ACTIVATE }}
-          ${{ env.VENV_ACTIVATE }}.ps1
+          ${{ env.VENV_ACTIVATE }}
           tox -e py -- -v --color=yes
           deactivate
-
-      - name: Test with pytest
-        if: runner.os != 'Windows'
-        shell: bash
-        run: |
-          . ${{ env.VENV_ACTIVATE }}
-          tox -e py -- -v --color=yes
-          deactivate
-
