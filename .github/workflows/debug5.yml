@@ -65,13 +65,10 @@ jobs:
         run: |
           poetry add tox-current-env@^0.0.10 --group dev
           poetry install --no-root --with dev
-          #poetry shell
+          ls -la ~
+
           #ls -la ~/.local/share/pypoetry/venv
           #ls -la ~/.local/share/pypoetry/venv/bin
-          source ~/.local/share/pypoetry/venv/bin/activate
-
-      - name: Test with pytest
-        if: runner.os == 'Linux'
-        run: |
-          tox -e py
-          exit
+          #source ~/.local/share/pypoetry/venv/bin/activate
+          #tox -e py
+          #exit
