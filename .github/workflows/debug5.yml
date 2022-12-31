@@ -51,6 +51,7 @@ jobs:
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
+
       - name: Set up Poetry dependencies
         id: setup-poetry-dependencies
         uses: ./.github/actions/setup-poetry-dependencies
@@ -59,6 +60,10 @@ jobs:
           cache-key: temp-5-${{ format(matrix.venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
+
+      - name: Debug
+        run: |
+          poetry config --list
 
       - name: Debug
         shell: bash
@@ -70,16 +75,6 @@ jobs:
           fi
 
       - name: Test with pytest
-        if: runner.os == 'Windows'
-        shell: pwsh
-        run: |
-          ${{ env.VENV_ACTIVATE }}
-          tox -e py -- -v --color=yes
-          deactivate
-
-      - name: Test with pytest
-        if: runner.os != 'Windows'
-        shell: bash
         run: |
           ${{ env.VENV_ACTIVATE }}
           tox -e py -- -v --color=yes
