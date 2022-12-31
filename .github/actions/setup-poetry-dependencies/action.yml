@@ -1,9 +1,4 @@
 inputs:
-  cache-path:
-    description: 'The argument to pass to actions/cache'
-    required: false
-    default: ''
-
   cache-key:
     description: 'The argument to pass to actions/cache'
     required: true
