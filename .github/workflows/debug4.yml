@@ -40,7 +40,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.config-poetry-cache-paths }}
-          #key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
           key: ${{ format(env.config-poetry-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version) }}
 
       - name: Install Poetry for Windows
@@ -61,7 +60,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          #key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
           key: ${{ format(env.config-venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Set the environment used by Poetry on Windows 1/2
@@ -116,7 +114,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.config-poetry-cache-paths }}
-          #key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
           key: ${{ format(env.config-poetry-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version) }}
 
       # No need if you have cached Poetry.
@@ -140,7 +137,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          #key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
           key: ${{ format(env.config-venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       # No need if you have cached venv.
