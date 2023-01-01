@@ -23,8 +23,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ${{ env.config-os }} ]
-        python-version: ['3.7', ]
+        os: [windows-latest]
+        python-version: ['3.7']
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -41,10 +41,11 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: | 
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe # An error occurs.
-              ~\.local\venv
+          #path: | 
+          #    ~\.local\VERSION
+          #    #~\.local\bin\poetry.exe # An error occurs.
+          #    ~\.local\venv
+          path: ${{ env.config-poetry-cache-paths }}
           key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
 
       - name: Install Poetry for Windows
@@ -55,7 +56,8 @@ jobs:
         shell: bash
         run: |
           #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH # An error occurs.
-          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          echo "${{ env.config-poetry-path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
         run: |
@@ -119,10 +121,11 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          path: | 
-              ~\.local\VERSION
-              #~\.local\bin\poetry.exe # An error occurs.
-              ~\.local\venv
+          #path: | 
+          #    ~\.local\VERSION
+          #    #~\.local\bin\poetry.exe # An error occurs.
+          #    ~\.local\venv
+          path: ${{ env.config-poetry-cache-paths }}
           key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
 
       # No need if you have cached Poetry.
@@ -134,7 +137,8 @@ jobs:
         shell: bash
         run: |
           #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH # An error occurs.
-          echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
+          echo "${{ env.config-poetry-path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
         run: |
