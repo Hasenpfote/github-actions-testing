@@ -6,7 +6,7 @@ permissions:
   contents: read
 
 env:
-  config-poetry-version: ''
+  config-poetry-version: '' # Empty is the latest version.
   #config-poetry-path: ${USERPROFILE}\.local\bin # An error occurs.
   config-poetry-path: ${USERPROFILE}\.local\venv\Scripts
   config-poetry-cache-paths: |
