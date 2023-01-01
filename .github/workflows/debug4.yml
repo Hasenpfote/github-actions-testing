@@ -46,7 +46,7 @@ jobs:
       - name: Install Poetry for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         env:
-          VERSION: ${{ env.config-poetry-version }}
+          POETRY_VERSION: ${{ env.config-poetry-version }}
         uses: snok/install-poetry@v1
 
       - name: Add Poetry to the PATH environment variable
