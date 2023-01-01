@@ -6,14 +6,14 @@ permissions:
   contents: read
 
 env:
-  config-poetry-version: '1.3.0'
+  config-poetry-version: ''
   #config-poetry-path: ${USERPROFILE}\.local\bin # An error occurs.
   config-poetry-path: ${USERPROFILE}\.local\venv\Scripts
   config-poetry-cache-paths: |
     ~\.local\VERSION
     #~\.local\bin\poetry.exe # An error occurs.
     ~\.local\venv
-  config-poetry-cache-key-fmt: 'd-poetry-{0}-python-{1}'
+  config-poetry-cache-key-fmt: 'd-poetry-{0}-{1}-python-{2}'
   config-venv-cache-key-fmt: 'd-venv-{0}-python-{1}-{2}'
 
 jobs:
@@ -41,9 +41,9 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.config-poetry-cache-paths }}
-          key: ${{ format(env.config-poetry-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version) }}
+          key: ${{ format(env.config-poetry-cache-key-fmt, env.config-poetry-version, matrix.os, steps.setup-python.outputs.python-version) }}
 
-      - name: Install Poetry for Windows
+      - name: Install Poetry ${{ env.config-poetry-version }} for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
         env:
           POETRY_VERSION: ${{ env.config-poetry-version }}
@@ -117,11 +117,13 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ${{ env.config-poetry-cache-paths }}
-          key: ${{ format(env.config-poetry-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version) }}
+          key: ${{ format(env.config-poetry-cache-key-fmt, env.config-poetry-version, matrix.os, steps.setup-python.outputs.python-version) }}
 
       # No need if you have cached Poetry.
-      #- name: Install Poetry for Windows
+      #- name: Install Poetry ${{ env.config-poetry-version }} for Windows
       #  if: steps.cached-poetry.outputs.cache-hit != 'true'
+      #  env:
+      #    POETRY_VERSION: ${{ env.config-poetry-version }}
       #  uses: snok/install-poetry@v1
 
       - name: Add Poetry to the PATH environment variable
