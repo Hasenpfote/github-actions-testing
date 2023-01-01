@@ -6,16 +6,14 @@ permissions:
   contents: read
 
 env:
-  config-os: windows-latest
-  config-python-version: '3.7'
   #config-poetry-path: ${USERPROFILE}\.local\bin # An error occurs.
   config-poetry-path: ${USERPROFILE}\.local\venv\Scripts
   config-poetry-cache-paths: |
     ~\.local\VERSION
     #~\.local\bin\poetry.exe # An error occurs.
     ~\.local\venv
-  config-poetry-cache-key-fmt: 'poetry-{0}-python-{1}'
-  config-venv-cache-key-fmt: 'venv-{0}-python-{1}-{2}'
+  config-poetry-cache-key-fmt: 'd-poetry-{0}-python-{1}'
+  config-venv-cache-key-fmt: 'd-venv-{0}-python-{1}-{2}'
 
 jobs:
   create-cache:
@@ -41,12 +39,9 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          #path: | 
-          #    ~\.local\VERSION
-          #    #~\.local\bin\poetry.exe # An error occurs.
-          #    ~\.local\venv
           path: ${{ env.config-poetry-cache-paths }}
-          key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          #key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          key: ${{ format(env.config-poetry-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version) }}
 
       - name: Install Poetry for Windows
         if: steps.cached-poetry.outputs.cache-hit != 'true'
@@ -55,8 +50,6 @@ jobs:
       - name: Add Poetry to the PATH environment variable
         shell: bash
         run: |
-          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH # An error occurs.
-          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
           echo "${{ env.config-poetry-path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
@@ -68,7 +61,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          #key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ format(env.config-venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       - name: Set the environment used by Poetry on Windows 1/2
         if: runner.os == 'Windows' && steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
@@ -104,7 +98,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [windows-latest]
-        python-version: ['3.7', ]
+        python-version: ['3.7']
 
     runs-on: ${{ matrix.os }}
     steps:
@@ -121,12 +115,9 @@ jobs:
         id: cached-poetry
         uses: actions/cache@v3
         with:
-          #path: | 
-          #    ~\.local\VERSION
-          #    #~\.local\bin\poetry.exe # An error occurs.
-          #    ~\.local\venv
           path: ${{ env.config-poetry-cache-paths }}
-          key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          #key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
+          key: ${{ format(env.config-poetry-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version) }}
 
       # No need if you have cached Poetry.
       #- name: Install Poetry for Windows
@@ -149,7 +140,8 @@ jobs:
         uses: actions/cache@v3
         with:
           path: .venv
-          key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          #key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+          key: ${{ format(env.config-venv-cache-key-fmt, matrix.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
 
       # No need if you have cached venv.
       #- name: Install dependencies
