@@ -124,8 +124,6 @@ jobs:
       - name: Add Poetry to the PATH environment variable
         shell: bash
         run: |
-          #echo "${USERPROFILE}\.local\bin" >> $GITHUB_PATH # An error occurs.
-          #echo "${USERPROFILE}\.local\venv\Scripts" >> $GITHUB_PATH
           echo "${{ env.config-poetry-path }}" >> $GITHUB_PATH
 
       - name: Configure Poetry
