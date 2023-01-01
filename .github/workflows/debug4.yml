@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [windows-latest]
+        os: [ ${{ env.config-os }} ]
         python-version: ['3.7', ]
 
     runs-on: ${{ matrix.os }}
