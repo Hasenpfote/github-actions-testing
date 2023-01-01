@@ -5,6 +5,18 @@ on: workflow_dispatch
 permissions:
   contents: read
 
+env:
+  config-os: windows-latest
+  config-python-version: '3.7'
+  #config-poetry-path: ${USERPROFILE}\.local\bin # An error occurs.
+  config-poetry-path: ${USERPROFILE}\.local\venv\Scripts
+  config-poetry-cache-paths: |
+    ~\.local\VERSION
+    #~\.local\bin\poetry.exe # An error occurs.
+    ~\.local\venv
+  config-poetry-cache-key-fmt: 'poetry-{0}-python-{1}'
+  config-venv-cache-key-fmt: 'venv-{0}-python-{1}-{2}'
+
 jobs:
   create-cache:
     name: caching 1/2 - ${{ matrix.os }}, ${{ matrix.python-version }}
