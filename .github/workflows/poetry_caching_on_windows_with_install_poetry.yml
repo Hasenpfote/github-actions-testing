@@ -54,6 +54,11 @@ jobs:
         run: |
           echo "${{ env.config-poetry-path }}" >> $GITHUB_PATH
 
+      - name: Debug
+        shell: cmd
+        run: |
+          set PATH
+
       - name: Configure Poetry
         run: |
           poetry config virtualenvs.in-project true
@@ -146,11 +151,6 @@ jobs:
       #- name: Install dependencies
       #  if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       #  run: poetry install --no-interaction --no-root --with dev
-
-      - name: Debug
-        shell: cmd
-        run: |
-          set PATH
 
       - name: Test with pytest
         run: |
