@@ -113,6 +113,7 @@ jobs:
               ~\.local\venv
           key: debug-2-poetry-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}
 
+      # No need if you have cached Poetry.
       #- name: Install Poetry for Windows
       #  if: steps.cached-poetry.outputs.cache-hit != 'true'
       #  uses: snok/install-poetry@v1
@@ -134,6 +135,7 @@ jobs:
           path: .venv
           key: debug-2-venv-${{ matrix.os }}-python-${{ steps.setup-python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
+      # No need if you have cached venv.
       #- name: Install dependencies
       #  if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
       #  run: poetry install --no-interaction --no-root --with dev
