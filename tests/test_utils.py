@@ -5,6 +5,10 @@ def test_add():
     assert utils.add(1, 2) == 3
 
 
+def test_sub():
+    assert utils.sub(4, 3) == 1
+
+
 def test_print_greet(capfd):
     utils.print_greet()
 
