@@ -35,6 +35,17 @@ def mul(a, b):
     return a * b
 
 
+def div(a, b):
+    '''Divides two numbers.
+    Args:
+        a: The value of the left-hand side.
+        b: The value of the right-hand side.
+    Returns
+        The resulting value.
+    '''
+    return a / b
+
+
 def print_greet():
     '''Displays greeting.'''
     print('Hello, world!')
