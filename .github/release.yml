@@ -17,7 +17,7 @@ changelog:
     - title: 🧹 Chores
         - chore
 
-    - title: ⬆️ Dependencies
+    - title: 🔗 Dependencies
       labels:
         - dependencies
 
