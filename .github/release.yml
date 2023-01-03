@@ -41,6 +41,6 @@ changelog:
       labels:
         - security
 
-    - title: 💡 Other Changes
+    - title: 🔨 Other Changes
       labels:
         - "*"
