@@ -21,7 +21,7 @@ changelog:
       labels:
         - dependencies
 
-    - title: 📖 Documentation
+    - title: 📚 Documentation
       labels:
         - documentation
 
