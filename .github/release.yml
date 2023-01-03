@@ -8,7 +8,7 @@ changelog:
   categories:
     - title: 🚨 Breaking Changes
       labels:
-        - breaking-change
+        - breaking
 
     - title: 🐛 Bug Fixes
       labels:
