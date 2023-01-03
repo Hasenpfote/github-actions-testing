@@ -10,14 +10,6 @@ changelog:
       labels:
         - breaking-change
 
-    - title: 🎉 Features
-      labels:
-        - feature
-
-    - title: 🚀 Enhancements
-      labels:
-        - enhancement
-
     - title: 🐛 Bug Fixes
       labels:
         - bug
@@ -29,9 +21,17 @@ changelog:
       labels:
         - dependencies
 
-    #- title: 📖 Documentation
-    #  labels:
-    #    - dependencies
+    - title: 📖 Documentation
+      labels:
+        - documentation
+
+    - title: 🚀 Enhancements
+      labels:
+        - enhancement
+
+    - title: 🎉 Features
+      labels:
+        - feature
 
     - title: 💡 Other Changes
       labels:
