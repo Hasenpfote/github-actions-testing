@@ -21,15 +21,19 @@ changelog:
       labels:
         - dependencies
 
-    - title: 📚 Documentation
+    - title: Deprecations and Removals
+      labels:
+        - deprecation
+
+    - title: 📖 Documentation
       labels:
         - documentation
 
-    - title: 🚀 Enhancements
+    - title: 🛠️ Improvements
       labels:
-        - enhancement
+        - improvement
 
-    - title: 🎉 Features
+    - title: ✨ New Features
       labels:
         - feature
 
