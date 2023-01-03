@@ -4,15 +4,22 @@ changelog:
       - ignore-for-release
     authors:
       - octocat
+
   categories:
-    - title: Breaking Changes 🛠
+    - title: 🚀 Features
       labels:
-        - Semver-Major
-        - breaking-change
-    - title: Exciting New Features 🎉
-      labels:
-        - Semver-Minor
         - enhancement
+        - feature
+
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+        - bugfix
+        - fix
+
+    - title: 🧰 Maintenance
+        - chore
+
     - title: Other Changes
       labels:
         - "*"
