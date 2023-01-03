@@ -37,9 +37,9 @@ changelog:
       labels:
         - feature
 
-    #- title: 🔒 Security Updates
-    #  labels:
-    #    - 
+    - title: 🔒 Security Updates
+      labels:
+        - security
 
     - title: 💡 Other Changes
       labels:
