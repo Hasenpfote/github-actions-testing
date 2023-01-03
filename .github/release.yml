@@ -21,7 +21,7 @@ changelog:
       labels:
         - dependencies
 
-    - title: Deprecations and Removals
+    - title: 🔥 Deprecations and Removals
       labels:
         - deprecation
 
