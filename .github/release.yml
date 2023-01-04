@@ -49,6 +49,6 @@ changelog:
       labels:
         - testing
 
-    - title: 🔧 Other Changes
+    - title: 🔁 Other Changes
       labels:
         - "*"
