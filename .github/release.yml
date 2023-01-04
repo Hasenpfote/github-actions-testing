@@ -45,6 +45,10 @@ changelog:
       labels:
         - security
 
+    - title: Testing
+      labels:
+        - testing
+
     - title: 🔧 Other Changes
       labels:
         - "*"
