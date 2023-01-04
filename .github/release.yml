@@ -45,7 +45,7 @@ changelog:
       labels:
         - security
 
-    - title: Testing
+    - title: 🧪 Testing
       labels:
         - testing
 
