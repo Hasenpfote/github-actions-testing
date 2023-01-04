@@ -19,7 +19,7 @@ Flake8-pyproject = "^1.2.2"
 mypy = "^0.991"
 pre-commit = "^2.20.0"
 tox = "^3.27.1"
-tqdm = "^4.64.0"
+#tqdm = "^4.64.0"
 
 [tool.poetry.group.test]
 optional = true
