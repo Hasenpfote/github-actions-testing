@@ -37,6 +37,10 @@ changelog:
       labels:
         - feature
 
+    - title: ⚡️ Performance Improvements
+      labels:
+        - performance
+
     - title: 🔒 Security Updates
       labels:
         - security
