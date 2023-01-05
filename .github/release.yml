@@ -40,7 +40,7 @@ changelog:
     - title: ⚡️ Performance Improvements
       labels:
         - performance
-        - type: performance
+        - "type: performance"
 
     - title: 🔒 Security Updates
       labels:
