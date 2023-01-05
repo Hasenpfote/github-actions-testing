@@ -40,7 +40,7 @@ changelog:
         - documentation
         - 'type: documentation'
 
-    - title: Code Improvements
+    - title: ⚗️ Code Improvements
       labels:
         - refactor
         - 'type: refactor'
