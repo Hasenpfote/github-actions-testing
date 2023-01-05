@@ -53,7 +53,7 @@ changelog:
     - title: 🧹 Chores
         - chore
 
-    - title: 🔗 Dependency Updates
+    - title: ⛓️ Dependency Updates
       labels:
         - dependencies
         - 'type: dependencies'
