@@ -50,6 +50,10 @@ changelog:
         - testing
         - 'type: testing'
 
+    - title: 🔧 Maintenance
+        - maintenance
+        - 'type: maintenance'
+
     - title: ⛓️ Dependency Updates
       labels:
         - dependencies
@@ -59,9 +63,6 @@ changelog:
       labels:
         - security
         - 'type: security'
-
-    - title: 🧹 Chores
-        - chore
 
     - title: 🔄 Other Changes
       labels:
