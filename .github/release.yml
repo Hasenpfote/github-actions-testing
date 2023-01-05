@@ -40,6 +40,16 @@ changelog:
         - documentation
         - 'type: documentation'
 
+    - title: Code Improvements
+      labels:
+        - refactor
+        - 'type: refactor'
+
+    - title: 🧪 Testing Improvements
+      labels:
+        - testing
+        - 'type: testing'
+
     - title: 🧹 Chores
         - chore
 
@@ -52,11 +62,6 @@ changelog:
       labels:
         - security
         - 'type: security'
-
-    - title: 🧪 Testing
-      labels:
-        - testing
-        - 'type: testing'
 
     - title: 🔁 Other Changes
       labels:
