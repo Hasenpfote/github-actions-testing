@@ -18,7 +18,7 @@ changelog:
     - title: ✨ Features
       labels:
         - feature
-        - 'type: feature request'
+        - 'type: feature'
 
     - title: 🐛 Bug Fixes
       labels:
