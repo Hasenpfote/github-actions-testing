@@ -51,6 +51,7 @@ changelog:
         - 'type: testing'
 
     - title: 🔧 Maintenance
+      labels:
         - maintenance
         - 'type: maintenance'
 
