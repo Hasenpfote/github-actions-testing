@@ -25,7 +25,7 @@ changelog:
       labels:
         - deprecation
 
-    - title: 📚 Improved Documentation
+    - title: 📚 Documentation improvements
       labels:
         - documentation
 
