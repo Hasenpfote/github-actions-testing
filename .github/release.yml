@@ -10,47 +10,47 @@ changelog:
       labels:
         - breaking
 
-    - title: 🐛 Bug Fixes
-      labels:
-        - bug
-        - 'type: bug'
-
-    - title: 🧹 Chores
-        - chore
-
-    - title: 🔗 Dependencies
-      labels:
-        - dependencies
-
     - title: 🔥 Deprecations and Removals
       labels:
         - deprecation
         - 'type: deprecation'
-
-    - title: 📚 Documentation Improvements
-      labels:
-        - documentation
-        - 'type: documentation'
-
-    - title: 🛠️ Improvements
-      labels:
-        - improvement
-        - 'type: enhancement'
 
     - title: ✨ Features
       labels:
         - feature
         - 'type: feature request'
 
+    - title: 🐛 Bug Fixes
+      labels:
+        - bug
+        - 'type: bug'
+
+    - title: 🛠️ Improvements
+      labels:
+        - improvement
+        - 'type: enhancement'
+
     - title: ⚡️ Performance Improvements
       labels:
         - performance
         - 'type: performance'
 
+    - title: 📚 Documentation Improvements
+      labels:
+        - documentation
+        - 'type: documentation'
+
+    - title: 🧹 Chores
+        - chore
+
     - title: 🔒 Security Updates
       labels:
         - security
         - 'type: security'
+
+    - title: 🔗 Dependencies
+      labels:
+        - dependencies
 
     - title: 🧪 Testing
       labels:
@@ -59,4 +59,4 @@ changelog:
 
     - title: 🔁 Other Changes
       labels:
-        - "*"
+        - '*'
