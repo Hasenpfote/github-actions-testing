@@ -43,14 +43,14 @@ changelog:
     - title: 🧹 Chores
         - chore
 
+    - title: 🔗 Dependency Updates
+      labels:
+        - dependencies
+
     - title: 🔒 Security Updates
       labels:
         - security
         - 'type: security'
-
-    - title: 🔗 Dependencies
-      labels:
-        - dependencies
 
     - title: 🧪 Testing
       labels:
