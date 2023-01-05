@@ -40,11 +40,12 @@ changelog:
     - title: ⚡️ Performance Improvements
       labels:
         - performance
+        - type: performance
 
     - title: 🔒 Security Updates
       labels:
         - security
-        - security:testing
+        - type:security
 
     - title: 🧪 Testing
       labels:
