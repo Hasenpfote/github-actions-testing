@@ -48,7 +48,7 @@ changelog:
     - title: 🧪 Testing
       labels:
         - testing
-        - "type-testing"
+        - 'type-testing'
 
     - title: 🔁 Other Changes
       labels:
