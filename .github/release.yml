@@ -13,7 +13,6 @@ changelog:
     - title: 🐛 Bug Fixes
       labels:
         - bug
-        - type: bug
 
     - title: 🧹 Chores
         - chore
@@ -21,7 +20,6 @@ changelog:
     - title: 🔗 Dependencies
       labels:
         - dependencies
-        - type: deprecation
 
     - title: 🔥 Deprecations and Removals
       labels:
@@ -34,28 +32,23 @@ changelog:
     - title: 🛠️ Improvements
       labels:
         - improvement
-        - type: enhancement
 
     - title: ✨ Features
       labels:
         - feature
-        - type: feature request
-        - feature request
 
     - title: ⚡️ Performance Improvements
       labels:
         - performance
-        - type: performance
 
     - title: 🔒 Security Updates
       labels:
         - security
-        - type: security
 
     - title: 🧪 Testing
       labels:
         - testing
-        - type: testing
+        - type-testing
 
     - title: 🔁 Other Changes
       labels:
