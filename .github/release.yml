@@ -44,11 +44,12 @@ changelog:
     - title: 🔒 Security Updates
       labels:
         - security
+        - security:testing
 
     - title: 🧪 Testing
       labels:
         - testing
-        - 'type-testing'
+        - type-testing
 
     - title: 🔁 Other Changes
       labels:
