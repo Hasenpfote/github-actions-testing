@@ -39,7 +39,7 @@ changelog:
     - title: ✨ Features
       labels:
         - feature
-        - type: feature request
+        - 'type: feature request'
 
     - title: ⚡️ Performance Improvements
       labels:
