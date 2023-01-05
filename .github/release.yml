@@ -46,6 +46,7 @@ changelog:
     - title: 🔗 Dependency Updates
       labels:
         - dependencies
+        - 'type: dependencies'
 
     - title: 🔒 Security Updates
       labels:
