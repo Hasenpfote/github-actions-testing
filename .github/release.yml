@@ -33,7 +33,7 @@ changelog:
       labels:
         - improvement
 
-    - title: ✨ New Features
+    - title: ✨ Features
       labels:
         - feature
 
