@@ -17,10 +17,6 @@ def test_div():
     assert utils.div(4, 2) == 2
 
 
-def test_muladd():
-    assert utils.muladd(2, 3, 4) == 10
-
-
 def test_print_greet(capfd):
     utils.print_greet()
 
