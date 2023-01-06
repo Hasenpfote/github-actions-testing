@@ -1,0 +1,21 @@
+on:
+  issues:
+    types: [opened]
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            console.log(`Hello ${context.issue.number}.`)
+            console.log(`Hello ${context.repo.owner}.`)
+            console.log(`Hello ${context.repo.repo}.`)
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋 Thanks for reporting!'
+            })
