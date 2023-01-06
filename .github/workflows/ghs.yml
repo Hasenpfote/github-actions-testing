@@ -5,42 +5,27 @@ on:
     types: [opened]
 
 jobs:
-  comment:
+  initial_setting:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
         with:
           script: |
-            console.log(`Hello ${context.issue.number}.`)
-            console.log(`Hello ${context.repo.owner}.`)
-            console.log(`Hello ${context.repo.repo}.`)
-
+            # Add comment.
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: '👋 Thanks for reporting!'
             })
-
-  apply-label:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v6
-        with:
-          script: |
+            # Apply label.
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: ['needs triage']
             })
-
-  apply-assignee:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/github-script@v6
-        with:
-          script: |
+            # Apply assignee.
             github.rest.issues.addAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
