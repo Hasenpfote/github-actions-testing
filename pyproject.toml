@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "pyenv_poetry_tox_pytest_example"
+name = "github_actions_testing3"
 version = "0.0.0"
 description = ""
 authors = ["Hasenpfote <Hasenpfote36@gmail.com>"]
