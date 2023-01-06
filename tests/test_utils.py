@@ -13,6 +13,10 @@ def test_mul():
     assert utils.mul(2, 3) == 6
 
 
+def test_muladd():
+    assert utils.muladd(2, 3, 4) == 10
+
+
 def test_div():
     assert utils.div(4, 2) == 2
 
