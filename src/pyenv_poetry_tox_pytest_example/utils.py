@@ -46,6 +46,11 @@ def div(a, b):
     return a / b
 
 
+def muladd(a, b, c):
+    '''Performs the fused multiply-add operation.'''
+    return a * b + c
+
+
 def print_greet():
     '''Displays greeting.'''
     print('Hello, world!')
