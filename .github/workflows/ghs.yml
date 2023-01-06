@@ -11,21 +11,21 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            # Add comment.
+            // Add comment.
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: '👋 Thanks for reporting!'
             })
-            # Apply label.
+            // Apply label.
             github.rest.issues.addLabels({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               labels: ['needs triage']
             })
-            # Apply assignee.
+            // Apply assignee.
             github.rest.issues.addAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
