@@ -33,7 +33,7 @@ jobs:
             const event_name = `${{ github.event_name }}`;
             let body;
             if (event_name == 'pull_request') {
-              body = `Hi, @${{ github.actor }} 👋\nThanks for the PR!`
+              body = `Hi, @${{ github.actor }} 👋\nThanks for your PR!`
             } else {
               body = `Hi, @${{ github.actor }} 👋\nThanks for reporting the issue!`
             }
