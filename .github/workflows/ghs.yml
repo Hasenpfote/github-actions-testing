@@ -26,10 +26,7 @@ jobs:
               });
               console.log(ret2)
             } catch(e) {
-              if (e instanceof HttpError) {
-                console.log('HttpErrorHttpErrorHttpError')
-                console.log(e)
-              }
+              console.log(e.name)
               console.log(e.message)
             }
           
