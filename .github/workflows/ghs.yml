@@ -20,6 +20,7 @@ jobs:
             });
 
   apply-labels:
+    needs: [add-comment]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -42,6 +43,7 @@ jobs:
             });
 
   assign-assignee:
+    needs: [add-comment]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
