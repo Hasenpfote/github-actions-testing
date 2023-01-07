@@ -12,6 +12,9 @@ jobs:
         timeout-minutes: 5
         with:
           script: |
+          
+            console.log(github.repository_owner)
+          
             // Add comment.
             github.rest.issues.createComment({
               issue_number: context.issue.number,
