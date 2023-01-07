@@ -6,6 +6,7 @@ on:
 
 jobs:
   add-comment:
+    if: github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -19,7 +20,7 @@ jobs:
               body: '👋 Thanks for reporting!'
             });
 
-  apply-labels:
+  apply-label:
     needs: [add-comment]
     runs-on: ubuntu-latest
     steps:
@@ -69,7 +70,6 @@ jobs:
             } catch (e) {
               assignee = `${{ github.repository_owner }}`;
             }
-            // console.log('assignee:', assignee)
             github.rest.issues.addAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
