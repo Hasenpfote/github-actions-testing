@@ -27,6 +27,7 @@ jobs:
               console.log(ret2)
             } catch(e) {
               console.log(typeof e)
+              console.log(e instanceof Error)
               console.log(e.name)
               console.log(e.message)
             }
