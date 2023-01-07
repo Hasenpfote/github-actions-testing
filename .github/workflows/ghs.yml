@@ -14,7 +14,7 @@ jobs:
           echo ${{ github.event.label.name }}
           echo ${{ github.event.issue.labels }}
           echo ${{ join(github.event.issue.labels) }}
-          echo ${{ join(github.event.issue.labels[0] ) }}
+          echo ${{ join(github.event.issue.labels[0].name ) }}
           #join(github.event.issue.labels) == ''
 
       - uses: actions/github-script@v6
