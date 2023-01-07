@@ -14,7 +14,8 @@ jobs:
       - shell: bash
         run: |
           echo ${{ github.event_name }}
-          echo ${{ github.event.pull_request.merged }}  
+          echo ${{ github.event.pull_request.merged }}
+          echo ${{ github.event.pull_request.merged == true }}
 
   add-comment:
     if: github.event.action == 'opened' && github.actor != 'dependabot[bot]'
