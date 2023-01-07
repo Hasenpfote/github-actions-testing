@@ -18,9 +18,9 @@ jobs:
             const event_name = `${{ github.event_name }}`;
             let body;
             if (event_name == 'pull_request') {
-              body = '👋 Thanks for the PR!';
+              body = `Hi, @${{ github.actor }} 👋\nThanks for the PR!`
             } else {
-              body = '👋 Thanks for reporting!';
+              body = `Hi, @${{ github.actor }} 👋\nThanks for reporting the issue!`
             }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
