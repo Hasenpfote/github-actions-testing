@@ -8,11 +8,6 @@ jobs:
   initial_setting:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo ${{ github.repository_owner }}
-
       - uses: actions/github-script@v6
         timeout-minutes: 5
         with:
@@ -37,7 +32,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 issue_number: context.issue.number,
-                assignees: `${{ github.actor }}`
+                assignees: `${{ github.repository_owner }}`
               });
             }
             // Apply label if needed.
