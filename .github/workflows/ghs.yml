@@ -28,6 +28,7 @@ jobs:
               issue_number: context.issue.number
             })
             console.log(ret)
+            console.log(ret.length)
             
             // Add comment.
             github.rest.issues.createComment({
