@@ -17,13 +17,17 @@ jobs:
               repo: context.repo.repo,
               assignee: `${{ github.repository_owner }}`
             });
-            const ret2 = await github.rest.issues.checkUserCanBeAssigned({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              assignee: `${{ github.actor }}`
-            });
             console.log(ret1)
-            console.log(ret2)
+            try {
+              const ret2 = await github.rest.issues.checkUserCanBeAssigned({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                assignee: `${{ github.actor }}`
+              });
+              console.log(ret2)
+            } catch(err) {
+              console.log(err.message)
+            }
           
             // Add comment.
             github.rest.issues.createComment({
