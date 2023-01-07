@@ -26,6 +26,9 @@ jobs:
               });
               console.log(ret2)
             } catch(e) {
+              if (e instanceof github.rest.issues.checkUserCanBeAssigned.HttpError) {
+                console.log(e.name)
+              }
               console.log(e.name)
               console.log(e.message)
             }
