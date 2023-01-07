@@ -15,11 +15,18 @@ jobs:
         timeout-minutes: 5
         with:
           script: |
+            const event_name = `${{ github.event_name }}`;
+            let body;
+            if (event_name == 'pull_request') {
+              body = '👋 Thanks for the PR!';
+            } else {
+              body = '👋 Thanks for reporting!';
+            }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '👋 Thanks for reporting!'
+              body: body
             });
 
   apply-label:
