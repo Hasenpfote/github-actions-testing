@@ -5,7 +5,36 @@ on:
     types: [opened]
 
 jobs:
+  assign-assignee:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        timeout-minutes: 5
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            if (issue.data.assignees.length > 0) {
+              return;
+            }
+            let assignee;
+            try {
+              const ret = await github.rest.issues.checkUserCanBeAssigned({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                assignee: `${{ github.actor }}`
+              });
+              assignee = `${{ github.actor }}`
+            } catch (e) {
+              assignee = `${{ github.repository_owner }}`
+            }
+            console.log('assignee:', assignee)
+
   initial_setting:
+    if: false
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
