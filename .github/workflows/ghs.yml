@@ -8,47 +8,10 @@ jobs:
   initial_setting:
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo ${{ github.event.label.name }}
-          echo ${{ github.event.issue.labels }}
-          echo ${{ join(github.event.issue.labels) }}
-          echo ${{ join(github.event.issue.labels.*.name) }}
-          echo ${{ github.event.issue.labels.length }}
-          echo ${{ github.event.issue.assignees }}
-          echo ${{ join(github.event.issue.assignees.*.name) }}
-          #join(github.event.issue.labels) == ''
-
-      - name: Debug2
-        uses: actions/github-script@v6
-        timeout-minutes: 5
-        with:
-          script: |
-            const issue = await github.rest.issues.get({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            });
-            console.log(issue)
-            console.log(issue.data.title)
-            console.log(issue.data.labels)
-            console.log(issue.data.assignees)
-            console.log(issue.data.assignees.length)
-
       - uses: actions/github-script@v6
         timeout-minutes: 5
         with:
           script: |
-            const labels = await github.rest.issues.listLabelsOnIssue({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              issue_number: context.issue.number
-            })
-            console.log(labels)
-            console.log(labels.data.length)
-            console.log(labels.data.length > 0)
-            
             // Add comment.
             github.rest.issues.createComment({
               issue_number: context.issue.number,
@@ -56,17 +19,27 @@ jobs:
               repo: context.repo.repo,
               body: '👋 Thanks for reporting!'
             })
-            // Apply assignee.
-            github.rest.issues.addAssignees({
+            // Get the current issue.
+            const issue = await github.rest.issues.get({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number,
-              assignees: `${{ github.actor }}`
-            })
-            // Apply label.
-            github.rest.issues.addLabels({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              labels: ['needs triage']
-            })
+              issue_number: context.issue.number
+            });
+            // Apply assignee if needed.
+            if (github.event.issue.assignees.length == 0) {
+              github.rest.issues.addAssignees({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                assignees: `${{ github.actor }}`
+              });
+            }
+            // Apply label if needed.
+            if (issue.data.labels.length == 0) {
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['needs triage']
+              });
+            }
