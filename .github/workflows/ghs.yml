@@ -5,6 +5,29 @@ on:
     types: [opened]
 
 jobs:
+
+  apply-labels:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        timeout-minutes: 5
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            if (issue.data.labels.length > 0) {
+              return;
+            }
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['needs triage']
+            });
+
   assign-assignee:
     runs-on: ubuntu-latest
     steps:
