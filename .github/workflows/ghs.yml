@@ -12,12 +12,12 @@ jobs:
         timeout-minutes: 5
         with:
           script: |
-            const ret1 = await octokit.rest.issues.checkUserCanBeAssigned({
+            const ret1 = await github.rest.issues.checkUserCanBeAssigned({
               owner: context.repo.owner,
               repo: context.repo.repo,
               assignee: `${{ github.repository_owner }}`
             });
-            const ret2 = await octokit.rest.issues.checkUserCanBeAssigned({
+            const ret2 = await github.rest.issues.checkUserCanBeAssigned({
               owner: context.repo.owner,
               repo: context.repo.repo,
               assignee: `${{ github.actor }}`
