@@ -2,20 +2,25 @@ name: Test ghs
 
 on:
   issues:
-    types: [opened, closed]
+    types: [opened]
   pull_request:
     types: [opened, closed]
 
 jobs:
-  debug:
-    if: github.event.action == 'closed'
+  if-merged:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
-      - shell: bash
-        run: |
-          echo ${{ github.event_name }}
-          echo ${{ github.event.pull_request.merged }}
-          echo ${{ github.event.pull_request.merged == true }}
+      - uses: actions/github-script@v6
+        timeout-minutes: 5
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '👋👋👋👋👋👋👋👋👋👋'
+            });
 
   add-comment:
     if: github.event.action == 'opened' && github.actor != 'dependabot[bot]'
