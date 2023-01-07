@@ -22,13 +22,14 @@ jobs:
         timeout-minutes: 5
         with:
           script: |
-            const ret = await github.rest.issues.listLabelsOnIssue({
+            const labels = await github.rest.issues.listLabelsOnIssue({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number
             })
-            console.log(ret)
-            console.log(ret.data.length)
+            console.log(labels)
+            console.log(labels.data.length)
+            console.log(labels.data.length > 0)
             
             // Add comment.
             github.rest.issues.createComment({
