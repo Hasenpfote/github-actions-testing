@@ -4,11 +4,20 @@ on:
   issues:
     types: [opened]
   pull_request:
-    types: [opened]
+    types: [opened, closed]
 
 jobs:
+  debug:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          echo ${{ github.event_name }}
+          echo ${{ github.event.pull_request.merged }}  
+
   add-comment:
-    if: github.actor != 'dependabot[bot]'
+    if: github.event.action == 'opened' && github.actor != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
