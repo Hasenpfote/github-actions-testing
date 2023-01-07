@@ -13,6 +13,8 @@ jobs:
         run: |
           echo ${{ github.event.label.name }}
           echo ${{ github.event.issue.labels }}
+          echo ${{ join(github.event.issue.labels) }}
+          #join(github.event.issue.labels) == ''
 
       - uses: actions/github-script@v6
         timeout-minutes: 5
