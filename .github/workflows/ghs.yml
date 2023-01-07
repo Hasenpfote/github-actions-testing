@@ -12,6 +12,18 @@ jobs:
         timeout-minutes: 5
         with:
           script: |
+            const ret1 = await octokit.rest.issues.checkUserCanBeAssigned({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              assignee: `${{ github.repository_owner }}`
+            });
+            const ret2 = await octokit.rest.issues.checkUserCanBeAssigned({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              assignee: `${{ github.actor }}`
+            });
+            console.log(ret1)
+            console.log(ret2)
           
             // Add comment.
             github.rest.issues.createComment({
