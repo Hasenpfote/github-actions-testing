@@ -69,11 +69,17 @@ jobs:
           tox -e py -- -v --color=yes
           deactivate
 
-      - name: Debug
-        if: matrix.os == 'ubuntu-20.04' && matrix.python-version == '3.8'
-        run: |
-          poetry run tox -e report
+      #- name: Debug
+      #  if: matrix.os == 'ubuntu-20.04' && matrix.python-version == '3.8'
+      #  run: |
+      #    poetry run tox -e report
 
-      - name: Report Coverage
-        if: matrix.os == 'ubuntu-20.04' && matrix.python-version == '3.8'
-        uses: codecov/codecov-action@v2
+      #- name: Report Coverage
+      #  if: matrix.os == 'ubuntu-20.04' && matrix.python-version == '3.8'
+      #  uses: codecov/codecov-action@v2
+
+      - name: Upload coverage data
+        uses: actions/upload-artifact@v3
+        with:
+          name: covdata
+          path: .coverage.*
