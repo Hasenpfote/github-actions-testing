@@ -1,0 +1,65 @@
+name: Coverage
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  env_prep:
+    if: |
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.read-file.outputs.content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read JSON file
+        id: read-file
+        uses: ./.github/actions/read-file
+        with:
+          path: .github/workflows/env.json
+
+  build:
+    needs: env_prep
+    env: ${{ fromJson(needs.env_prep.outputs.env) }}
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Python ${{ env.python-version }}
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.python-version }}
+
+      - name: Set up Poetry ${{ env.poetry-version }}
+        id: setup-poetry
+        uses: ./.github/actions/setup-poetry
+        with:
+          cache-path: ${{ env.poetry-cache-paths }}
+          cache-key: ${{ format(env.poetry-cache-key-fmt, env.poetry-version, runner.os, steps.setup-python.outputs.python-version) }}
+          poetry-version: ${{ env.poetry-version }}
+          poetry-home: ${{ env.poetry-home }}
+          poetry-path: ${{ env.poetry-path }}
+
+      - name: Set up Poetry dependencies
+        id: setup-poetry-dependencies
+        uses: ./.github/actions/setup-poetry-dependencies
+        with:
+          cache-key: ${{ format(env.venv-cache-key-fmt, runner.os, steps.setup-python.outputs.python-version, hashFiles('**/poetry.lock')) }}
+          python-version: ${{ steps.setup-python.outputs.python-version }}
+          poetry-install-args: --no-interaction --no-root --with dev
+
+      - name: Download coverage data
+        uses: actions/download-artifact@v3
+        with:
+          name: covdata
