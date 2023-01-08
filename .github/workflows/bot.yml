@@ -1,4 +1,4 @@
-name: Test ghs
+name: github-actions bot
 
 on:
   issues:
