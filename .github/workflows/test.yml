@@ -70,6 +70,7 @@ jobs:
           deactivate
 
       - name: Upload coverage data
+        if: runner.os == 'Linux'
         uses: actions/upload-artifact@v3
         with:
           name: coverage-reports
