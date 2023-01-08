@@ -72,7 +72,7 @@ jobs:
       - name: Debug
         if: matrix.os == 'ubuntu-20.04' && matrix.python-version == '3.8'
         run: |
-          poetry run -e report
+          poetry run tox -e report
 
       - name: Report Coverage
         if: matrix.os == 'ubuntu-20.04' && matrix.python-version == '3.8'
