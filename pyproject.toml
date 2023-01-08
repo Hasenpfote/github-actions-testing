@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "github_actions_testing3"
+name = "github-actions-testing"
 version = "0.0.0"
 description = ""
 authors = ["Hasenpfote <Hasenpfote36@gmail.com>"]
 readme = "README.md"
-packages = [{include = "pyenv_poetry_tox_pytest_example", from = "src"}]
+packages = [{include = "github_actions_testing", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.7"
