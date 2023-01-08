@@ -38,9 +38,7 @@ def test_print_python_version(capfd):
 
 
 def test_print_with_delay(capfd, mocker):
-    m = mocker.patch(
-        'github_actions_testing.utils.time.sleep', return_value=None
-    )
+    m = mocker.patch('github_actions_testing.utils.time.sleep', return_value=None)
 
     text = 'Hello, world!'
     utils.print_with_delay(text)
