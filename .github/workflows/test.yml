@@ -5,8 +5,8 @@ on:
   push:
   pull_request:
 
-#permissions:
-#  contents: read
+permissions:
+  contents: read
 
 jobs:
   matrix_prep:
