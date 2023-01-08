@@ -83,3 +83,11 @@ jobs:
         with:
           name: covdata
           path: .coverage.*
+
+  coverage:
+    needs: [build]
+    #permissions:
+    #  contents: read
+    #  pages: write
+    #  id-token: write
+    uses: ./.github/workflows/cov.yml
