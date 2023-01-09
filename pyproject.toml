@@ -85,3 +85,20 @@ addopts = [
   "--import-mode=importlib",
 ]
 pythonpath = "src"
+
+[tool.coverage.paths]
+source = [
+  "src/",
+  "/Users/runner/work/*/*/src",
+]
+
+[tool.coverage.run]
+relative_files = true
+source = [
+  "src/",
+]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+#fail_under = 100
