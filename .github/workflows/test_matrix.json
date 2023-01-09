@@ -37,6 +37,6 @@
     "venv-{0}-python-{1}-{2}",
   ],
   "enable-coverage": [
-    "true"
+    "false"
   ],
 }
