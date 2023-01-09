@@ -35,6 +35,8 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     name: ${{ format('build ({0}, {1})', matrix.os, matrix.python-version) }}
+    outputs:
+      enable-coverage: ${{ matrix.enable-coverage }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -78,4 +80,5 @@ jobs:
 
   upload-coverage:
     needs: [build]
+    if: needs.build.outputs.enable-coverage == 'true'
     uses: ./.github/workflows/codecov_upload.yml
