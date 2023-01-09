@@ -75,6 +75,7 @@ jobs:
           echo ${{ matrix.enable-coverage }}
 
       - name: Upload coverage data
+        if: matrix.enable-coverage == true
         uses: actions/upload-artifact@v3
         with:
           name: coverage-reports
