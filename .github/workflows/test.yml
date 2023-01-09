@@ -69,6 +69,11 @@ jobs:
           tox -e py -- -v --color=yes
           deactivate
 
+      - name: Debug
+        shell: bash
+        run: |
+          echo ${{ matrix.enable-coverage }}
+
       - name: Upload coverage data
         uses: actions/upload-artifact@v3
         with:
