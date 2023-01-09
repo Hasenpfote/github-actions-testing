@@ -1,3 +1,4 @@
+import platform
 import sys
 import time
 
@@ -56,15 +57,29 @@ def print_greet():
     print('Hello, world!')
 
 
+def print_mascot():
+    '''Displays mascot.'''
+    runner_os = platform.system()
+    if runner_os == 'Linux':
+        print('Tux')
+    elif runner_os == 'Darwin':
+        print('Dogcow')
+    else:
+        print('Unknown')
+
+
+def is_py38_or_higher():
+    '''Check if python 3.8 or higher.'''
+    if sys.version_info < (3, 8):
+        return False
+    else:
+        return True
+
+
 def print_python_version():
     '''Displays python version.'''
-    if sys.version_info < (3, 8):
-        print(f"sys.version={sys.version}")
-    else:
-        print(f"sys.version={sys.version}")
-
     # print(f"{sys.version=}")  # Syntax for Python 3.8 or higher.
-    # print(f"sys.version={sys.version}")
+    print(f"sys.version={sys.version}")
     # print(sys.version)
 
 
