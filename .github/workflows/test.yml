@@ -71,7 +71,7 @@ jobs:
           tox -e py -- -v --color=yes
           deactivate
 
-      - name: Upload coverage data
+      - name: Upload coverage reports
         if: matrix.enable-coverage == 'true'
         uses: actions/upload-artifact@v3
         with:
