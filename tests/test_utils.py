@@ -48,9 +48,9 @@ def test_is_py38_or_higher():
     assert utils.is_py38_or_higher() == is_py38_or_higher
 
 
-def test_is_py39_or_higher():
-    is_py39_or_higher = False if sys.version_info < (3, 9) else True
-    assert utils.is_py39_or_higher() == is_py39_or_higher
+def test_is_py38():
+    is_py38 = False if sys.version_info != (3, 8) else True
+    assert utils.is_py38() == is_py38
 
 
 def test_print_python_version(capfd):

@@ -76,9 +76,9 @@ def is_py38_or_higher():
         return True
 
 
-def is_py39_or_higher():
-    '''Check if python 3.9 or higher.'''
-    if sys.version_info < (3, 9):
+def is_py38():
+    '''Check if python 3.8.'''
+    if sys.version_info != (3, 8):
         return False
     else:
         return True
