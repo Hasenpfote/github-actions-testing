@@ -38,7 +38,7 @@ jobs:
       - name: Debug yq
         shell: bash
         run: |
-          cat file.yaml | yq '.default'
+          cat .github/temp.yml | yq '.default'
         
       - name: Run read-yaml action
         id: yaml-data
