@@ -75,12 +75,15 @@ jobs:
       ######
       - name: Read YAML file
         id: read-file2
-        shell: bash
-        run: |
-          CONTENT="$(cat .github/settings/env.yml | yq -o=json '.')"
-          echo 'content<<EOF' >> $GITHUB_OUTPUT
-          echo "${CONTENT}" >> $GITHUB_OUTPUT
-          echo 'EOF' >> $GITHUB_OUTPUT
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/workflows/env.json
+          filter: '.'
+      #  run: |
+      #    CONTENT="$(cat .github/settings/env.yml | yq -o=json '.')"
+      #    echo 'content<<EOF' >> $GITHUB_OUTPUT
+      #    echo "${CONTENT}" >> $GITHUB_OUTPUT
+      #    echo 'EOF' >> $GITHUB_OUTPUT
       ######
 
   build:
