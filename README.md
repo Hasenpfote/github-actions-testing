@@ -5,3 +5,4 @@
 This repository is only for checking the behavior of GitHub Actions.  
 Please forgive us for being a very dirty repository.  
 All knowledge gained here is returned to [python-poetry-example](https://github.com/Hasenpfote/python-poetry-example).  
+
