@@ -39,7 +39,7 @@ jobs:
         id: yq1
         shell: bash
         run: |
-          #cat .github/temp.yml | yq '.default'
+          #cat .github/temp.yml | yq -o=json '.default'
           CONTENT="$(cat .github/temp.yml | yq '.default')"
           echo 'content<<EOF' >> $GITHUB_OUTPUT
           echo "${CONTENT}" >> $GITHUB_OUTPUT
@@ -50,8 +50,7 @@ jobs:
           echo "${{ steps.yq1.outputs.content }}"
       - name: Debug yq 3/3
         shell: bash
-        #env: ${{ fromJson(steps.yq1.outputs.content) }}
-        env: ${{ steps.yq1.outputs.content }}
+        env: ${{ fromJson(steps.yq1.outputs.content) }}
         run: |
           printenv
 
