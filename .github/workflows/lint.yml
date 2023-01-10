@@ -28,6 +28,10 @@ jobs:
   debug:
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        shell: bash
+        run: |
+          python -V
       - name: Checkout
         uses: actions/checkout@v3
       - name: Run read-yaml action
