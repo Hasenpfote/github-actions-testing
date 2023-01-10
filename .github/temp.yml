@@ -1,2 +1,3 @@
-- DEBUG_VAR1: abc
-- DEBUG_VAR2: def
+default:
+  - DEBUG_VAR1: abc
+  - DEBUG_VAR2: def
