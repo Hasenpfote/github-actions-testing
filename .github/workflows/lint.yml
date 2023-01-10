@@ -43,7 +43,7 @@ jobs:
           echo "${{ steps.yaml-data.outputs.data }}"
       - name: Debug
         shell: bash
-        env: "${{ fromJson(steps.yaml-data.outputs.data) }}"
+        env: ${{ fromJson(steps.yaml-data.outputs.data) }}
         run: |
           printenv
 
