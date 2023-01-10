@@ -50,7 +50,8 @@ jobs:
           echo "${{ steps.yq1.outputs.content }}"
       - name: Debug yq 3/3
         shell: bash
-        env: ${{ fromJson(steps.yq1.outputs.content) }}
+        #env: ${{ fromJson(steps.yq1.outputs.content) }}
+        env: ${{ steps.yq1.outputs.content }}
         run: |
           printenv
 
