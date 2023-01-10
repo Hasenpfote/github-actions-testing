@@ -33,6 +33,7 @@ jobs:
         run: |
           python -V
           which yq
+          yq --help
       - name: Checkout
         uses: actions/checkout@v3
       - name: Run read-yaml action
