@@ -3,6 +3,10 @@ inputs:
     description: 'Path to file'
     required: true
 
+  filter:
+    description: 'The JMESPath JSON query to apply to the input file.'
+    required: true
+
 outputs:
   content:
     description: 'File content'
@@ -15,7 +19,7 @@ runs:
       id: read-file
       shell: bash
       run: |
-        CONTENT=$(cat ${{ inputs.path }})
+        CONTENT="$(cat ${{ inputs.path }} | yq -o=json ${{ inputs.filter }})"
         echo 'content<<EOF' >> $GITHUB_OUTPUT
         echo "${CONTENT}" >> $GITHUB_OUTPUT
         echo 'EOF' >> $GITHUB_OUTPUT
