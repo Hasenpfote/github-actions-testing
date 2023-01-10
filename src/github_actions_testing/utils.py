@@ -79,8 +79,8 @@ def is_py38_or_higher():
 def print_python_version():
     '''Displays python version.'''
     # print(f"{sys.version=}")  # Syntax for Python 3.8 or higher.
-    print(f"sys.version={sys.version}")
-    # print(sys.version)
+    # print(f"sys.version={sys.version}")
+    print(sys.version)
 
 
 def print_with_delay(text):
