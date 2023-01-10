@@ -35,7 +35,8 @@ jobs:
         uses: jbutcher5/read-yaml@main
         with:
           file: '.github/temp.yml'
-          key-path: '["default"]'
+          #key-path: '["default"]'
+          key-path: '["case-1"]'
       - name: Debug
         shell: bash
         run: |
