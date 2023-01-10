@@ -25,6 +25,21 @@ permissions:
   contents: read
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Run read-yaml action
+        id: yaml-data
+        uses: jbutcher5/read-yaml@main
+        with:
+          file: './.github/temp.yml'
+      - name: Debug
+        shell: bash
+        run: |
+          run: echo "${{ steps.yaml-data.outputs.data }}"
+
   env_prep:
     if: |
       github.event_name != 'pull_request' ||
