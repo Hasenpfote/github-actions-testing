@@ -4,7 +4,7 @@ inputs:
     required: true
 
   filter:
-    description: 'The JMESPath JSON query to apply to the input file.'
+    description: 'JMESPath query to be applied to the input file'
     required: true
 
 outputs:
