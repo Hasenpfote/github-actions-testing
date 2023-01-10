@@ -35,7 +35,7 @@ jobs:
           yq --help
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Debug yq 1/2
+      - name: Debug yq 1/3
         id: yq1
         shell: bash
         run: |
@@ -44,7 +44,11 @@ jobs:
           echo 'content<<EOF' >> $GITHUB_OUTPUT
           echo "${CONTENT}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
-      - name: Debug yq 2/2
+      - name: Debug yq 2/3
+        shell: bash
+        run: |
+          echo ${{ steps.yq1.outputs.content }}
+      - name: Debug yq 3/3
         shell: bash
         env: ${{ fromJson(steps.yq1.outputs.content) }}
         run: |
