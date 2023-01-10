@@ -1,5 +1,9 @@
 matrix:
-  os: [ubuntu-20.04, macos-latest, windows-latest]
+  os: [
+    ubuntu-20.04,
+    macos-latest,
+    windows-latest
+  ]
   python-version: [3.7, 3.8]
   include:
     - os: ubuntu-20.04
@@ -26,6 +30,6 @@ matrix:
         ~\AppData\Roaming\pypoetry
         ~\AppData\Roaming\Python\Scripts\poetry.exe
 
-  poetry-cache-key-fmt: poetry-{0}-{1}-python-{2}
-  venv-cache-key-fmt: venv-{0}-python-{1}-{2}
-  enable-coverage: true
+  poetry-cache-key-fmt: [poetry-{0}-{1}-python-{2}]
+  venv-cache-key-fmt: [venv-{0}-python-{1}-{2}]
+  enable-coverage: [true]
