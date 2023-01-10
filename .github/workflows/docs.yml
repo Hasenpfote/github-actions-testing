@@ -24,7 +24,7 @@ jobs:
         uses: ./.github/actions/read-yaml
         with:
           path: .github/settings/env.yml
-          filter: '.'
+          filter: '.env'
 
   # Build the documentation and upload the static HTML files as an artifact.
   build:
