@@ -34,8 +34,8 @@ jobs:
         id: yaml-data
         uses: jbutcher5/read-yaml@main
         with:
-          file: .github/temp.yml
-          key-path: '["default",]'
+          file: '.github/temp.yml'
+          key-path: '["default"]'
       - name: Debug
         shell: bash
         run: |
