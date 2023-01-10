@@ -31,11 +31,15 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          python -V
           which yq
           yq --help
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Debug yq
+        shell: bash
+        run: |
+          echo cat .github/temp.yml | yq '.[]'
+        
       - name: Run read-yaml action
         id: yaml-data
         uses: jbutcher5/read-yaml@main
