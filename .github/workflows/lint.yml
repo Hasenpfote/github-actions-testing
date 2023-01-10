@@ -39,7 +39,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          run: echo "${{ steps.yaml-data.outputs.data }}"
+          echo "${{ steps.yaml-data.outputs.data }}"
 
   env_prep:
     if: |
