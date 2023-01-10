@@ -21,7 +21,7 @@ jobs:
         uses: ./.github/actions/read-yaml
         with:
           path: .github/settings/env.yml
-          filter: '.'
+          filter: '.env'
 
   build:
     needs: env_prep
