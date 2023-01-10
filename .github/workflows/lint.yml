@@ -3,7 +3,23 @@ name: Lint
 on:
   workflow_dispatch:
   push:
+    paths:
+      - '.github/workflows/lint.yml'
+      - 'src/**'
+      - 'tests/**'
+      - 'docs/make.py'
+      - 'poetry.lock'
+      - 'pyproject.toml'
+      - 'tox.ini'
   pull_request:
+    paths:
+      - '.github/workflows/lint.yml'
+      - 'src/**'
+      - 'tests/**'
+      - 'docs/make.py'
+      - 'poetry.lock'
+      - 'pyproject.toml'
+      - 'tox.ini'
 
 permissions:
   contents: read
