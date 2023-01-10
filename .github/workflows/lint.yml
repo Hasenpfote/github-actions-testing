@@ -3,28 +3,52 @@ name: Lint
 on:
   workflow_dispatch:
   push:
-    paths:
-      - '.github/workflows/lint.yml'
-      - 'src/**'
-      - 'tests/**'
-      - 'docs/make.py'
-      - 'poetry.lock'
-      - 'pyproject.toml'
-      - 'tox.ini'
+    #paths:
+    #  - '.github/workflows/lint.yml'
+    #  - 'src/**'
+    #  - 'tests/**'
+    #  - 'docs/make.py'
+    #  - 'poetry.lock'
+    #  - 'pyproject.toml'
+    #  - 'tox.ini'
   pull_request:
-    paths:
-      - '.github/workflows/lint.yml'
-      - 'src/**'
-      - 'tests/**'
-      - 'docs/make.py'
-      - 'poetry.lock'
-      - 'pyproject.toml'
-      - 'tox.ini'
+    #paths:
+    #  - '.github/workflows/lint.yml'
+    #  - 'src/**'
+    #  - 'tests/**'
+    #  - 'docs/make.py'
+    #  - 'poetry.lock'
+    #  - 'pyproject.toml'
+    #  - 'tox.ini'
 
 permissions:
   contents: read
 
 jobs:
+  determine-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      src: ${{ steps.filter.outputs.src }}
+    steps:
+      - name: Categorize changed files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            src:
+              - '.github/workflows/lint.yml'
+              - 'src/**'
+              - 'tests/**'
+              - 'docs/make.py'
+              - 'poetry.lock'
+              - 'pyproject.toml'
+              - 'tox.ini'
+
+      - name: Debug
+        shell: bash
+        run: |
+          echo ${{ steps.filter.outputs.src }}
+
   env_prep:
     if: |
       github.event_name != 'pull_request' ||
