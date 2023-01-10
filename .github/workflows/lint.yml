@@ -3,29 +3,17 @@ name: Lint
 on:
   workflow_dispatch:
   push:
-    #paths:
-    #  - '.github/workflows/lint.yml'
-    #  - 'src/**'
-    #  - 'tests/**'
-    #  - 'docs/make.py'
-    #  - 'poetry.lock'
-    #  - 'pyproject.toml'
-    #  - 'tox.ini'
   pull_request:
-    #paths:
-    #  - '.github/workflows/lint.yml'
-    #  - 'src/**'
-    #  - 'tests/**'
-    #  - 'docs/make.py'
-    #  - 'poetry.lock'
-    #  - 'pyproject.toml'
-    #  - 'tox.ini'
 
 permissions:
   contents: read
 
 jobs:
   determine-changes:
+    if: |
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+
     runs-on: ubuntu-latest
     outputs:
       src: ${{ steps.filter.outputs.src }}
@@ -53,10 +41,8 @@ jobs:
           echo ${{ steps.filter.outputs.src }}
 
   env_prep:
-    if: |
-      github.event_name != 'pull_request' ||
-      github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
-
+    needs: determine-changes
+    if: needs.determine-changes.outputs.src == 'true'
     runs-on: ubuntu-latest
     outputs:
       env: ${{ steps.read-file.outputs.content }}
