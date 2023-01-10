@@ -54,27 +54,6 @@ jobs:
         run: |
           printenv
 
-      - name: Run read-yaml action
-        id: yaml-data
-        uses: jbutcher5/read-yaml@main
-        with:
-          file: '.github/temp.yml'
-          #key-path: '["default"]'
-          key-path: '["case-1"]'
-      - name: Debug
-        shell: bash
-        run: |
-          echo "${{ steps.yaml-data.outputs.data }}"
-      - name: Debug
-        shell: bash
-        run: |
-          echo "${{ fromJson(steps.yaml-data.outputs.data) }}"
-      - name: Debug
-        shell: bash
-        env: ${{ fromJson(steps.yaml-data.outputs.data) }}
-        run: |
-          printenv
-
   env_prep:
     if: |
       github.event_name != 'pull_request' ||
@@ -82,7 +61,8 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      env: ${{ steps.read-file.outputs.content }}
+      #env: ${{ steps.read-file.outputs.content }}
+      env: ${{ steps.read-file2.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -92,6 +72,16 @@ jobs:
         uses: ./.github/actions/read-file
         with:
           path: .github/workflows/env.json
+      ######
+      - name: Read YAML file
+        id: read-file2
+        shell: bash
+        run: |
+          CONTENT="$(cat .github/settings/env.yml | yq -o=json '.')"
+          echo 'content<<EOF' >> $GITHUB_OUTPUT
+          echo "${CONTENT}" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      ######
 
   build:
     needs: env_prep
