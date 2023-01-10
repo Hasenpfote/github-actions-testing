@@ -1,3 +1,7 @@
 default:
   - DEBUG_VAR1: abc
   - DEBUG_VAR2: def
+case-1:
+  - DEBUG_VAR1: 123
+  - DEBUG_VAR2: 456
+  #- DEBUG_VAR3: 789
