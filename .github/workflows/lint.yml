@@ -35,11 +35,21 @@ jobs:
           yq --help
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Debug yq
+      - name: Debug yq 1/2
+        id: yq1
         shell: bash
         run: |
-          cat .github/temp.yml | yq '.default'
-        
+          #cat .github/temp.yml | yq '.default'
+          CONTENT=$(cat .github/temp.yml | yq '.default')
+          echo 'content<<EOF' >> $GITHUB_OUTPUT
+          echo "${CONTENT}" >> $GITHUB_OUTPUT
+          echo 'EOF' >> $GITHUB_OUTPUT
+      - name: Debug yq 2/2
+        shell: bash
+        env: ${{ fromJson(steps.yq1.outputs.content) }}
+        run: |
+          printenv
+
       - name: Run read-yaml action
         id: yaml-data
         uses: jbutcher5/read-yaml@main
