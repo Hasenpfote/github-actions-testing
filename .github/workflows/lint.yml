@@ -40,7 +40,7 @@ jobs:
         shell: bash
         run: |
           #cat .github/temp.yml | yq '.default'
-          CONTENT='$(cat .github/temp.yml | yq '.default')'
+          CONTENT="$(cat .github/temp.yml | yq '.default')"
           echo 'content<<EOF' >> $GITHUB_OUTPUT
           echo "${CONTENT}" >> $GITHUB_OUTPUT
           echo 'EOF' >> $GITHUB_OUTPUT
