@@ -18,7 +18,7 @@ jobs:
         id: read-file
         uses: ./.github/actions/read-yaml
         with:
-          path: .github/workflows/env.json
+          path: .github/settings/env.yml
           filter: '.'
 
   deploy:
