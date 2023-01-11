@@ -18,6 +18,8 @@ jobs:
         run: |
           echo "${{ github.actor }}"
           echo "${{ github.triggering_actor }}"
+          echo "${{ github.event.issue.user.login }}"
+          echo "${{ github.event.pull_request.user.login }}"
 
       - name: Dump context
         uses: crazy-max/ghaction-dump-context@v1
