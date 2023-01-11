@@ -7,8 +7,8 @@ on:
   workflow_call:
 
 # security: restrict permissions for CI jobs.
-permissions:
-  contents: read
+#permissions:
+#  contents: read
 
 jobs:
   env_prep:
