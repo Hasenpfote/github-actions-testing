@@ -39,10 +39,10 @@ jobs:
           script: |
             const event_name = `${{ github.event_name }}`;
             let body;
-            if (event_name == 'pull_request') {
-              body = `Hi, @${{ github.actor }} 👋\nThanks for your PR!`
-            } else {
+            if (event_name == 'issues') {
               body = `Hi, @${{ github.actor }} 👋\nThanks for reporting the issue!`
+            } else {
+              body = `Hi, @${{ github.actor }} 👋\nThanks for your PR!`
             }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
