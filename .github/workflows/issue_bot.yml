@@ -1,0 +1,91 @@
+name: Issue-bot
+
+on:
+  issues:
+    types: [opened]
+
+jobs:
+#          echo "${{ github.event.issue.user.login }}"
+#          echo "${{ github.event.pull_request.user.login }}"
+
+  reply-to:
+    #if: github.event.action == 'opened'
+    #permissions:
+    #  issues: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        timeout-minutes: 3
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Hi, @${{ github.event.issue.user.login }} 👋\nThanks for reporting the issue!`
+            });
+
+  apply-label:
+    needs: [reply-to]
+    #permissions:
+    #  issues: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        timeout-minutes: 3
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            if (issue.data.labels.length > 0) {
+              return;
+            }
+            github.rest.issues.addLabels({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              labels: ['needs triage']
+            });
+
+  assign-assignee:
+    needs: [reply-to]
+    #permissions:
+    #  issues: write
+    #  pull-requests: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        timeout-minutes: 3
+        with:
+          script: |
+            const issue = await github.rest.issues.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            if (issue.data.assignees.length > 0) {
+              return;
+            }
+            let assignee;
+            try {
+              const ret = await github.rest.issues.checkUserCanBeAssigned({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                assignee: `${{ github.event.issue.user.login }}`
+              });
+              assignee = `${{ github.event.issue.user.login }}`;
+            } catch (e) {
+              assignee = `${{ github.repository_owner }}`;
+            }
+            github.rest.issues.addAssignees({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              assignees: assignee
+            });
