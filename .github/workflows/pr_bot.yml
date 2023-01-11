@@ -86,14 +86,13 @@ jobs:
             if (issue.data.assignees.length > 0) {
               return;
             }
-            let assignee;
+            let assignee = `${{ github.event.pull_request.user.login }}`;
             try {
               const ret = await github.rest.issues.checkUserCanBeAssigned({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                assignee: `${{ github.event.pull_request.user.login }}`
+                assignee: assignee
               });
-              assignee = `${{ github.event.pull_request.user.login }}`;
             } catch (e) {
               assignee = `${{ github.repository_owner }}`;
             }
