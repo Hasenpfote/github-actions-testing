@@ -16,7 +16,9 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      src: ${{ steps.filter.outputs.src }}
+      shared: ${{ steps.filter.outputs.shared }}
+      py: ${{ steps.filter.outputs.py }}
+      all-changes: ${{ steps.filter.outputs.all-changes }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -26,23 +28,27 @@ jobs:
         id: filter
         with:
           filters: |
-            src:
+            shared: &shared
               - '.github/workflows/lint.yml'
-              - 'src/**'
-              - 'tests/**'
-              - 'docs/make.py'
               - 'poetry.lock'
               - 'pyproject.toml'
               - 'tox.ini'
+            py: &py
+              - added|modified: '**/*.py'
+            all-changes:
+              - *shared
+              - *py
 
       - name: Debug
         shell: bash
         run: |
-          echo ${{ steps.filter.outputs.src }}
+          echo ${{ steps.filter.outputs.shared }}
+          echo ${{ steps.filter.outputs.py }}
+          echo ${{ steps.filter.outputs.all-changes }}
 
   env_prep:
     needs: determine-changes
-    if: needs.determine-changes.outputs.src == 'true'
+    if: needs.determine-changes.outputs.all-changes == 'true'
     runs-on: ubuntu-latest
     outputs:
       env: ${{ steps.read-file.outputs.content }}
@@ -58,9 +64,9 @@ jobs:
           filter: '.env'
 
   build:
-    needs: env_prep
+    needs: [determine-changes, env_prep]
+    if: needs.determine-changes.outputs.py == 'true'    
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
-
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
