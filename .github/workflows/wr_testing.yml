@@ -3,7 +3,7 @@ name: Workflow Run Trigger
 on:
   workflow_run:
     workflows:
-      - Lint
+      - github-actions bot
     types:
       - completed
 
