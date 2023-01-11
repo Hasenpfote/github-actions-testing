@@ -7,14 +7,12 @@ on:
   pull_request_target:
     types: [opened, closed]
 
-permissions:
-  #contents: read
-  issues: write
-  pull-requests: write
-
 jobs:
   if-merged:
     if: github.event.pull_request.merged == true
+    permissions:
+      pull-requests: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -30,12 +28,16 @@ jobs:
 
   add-comment:
     if: github.event.action == 'opened' && github.actor != 'dependabot[bot]'
+    permissions:
+      issues: write
+      pull-requests: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
         timeout-minutes: 5
         with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          #github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const event_name = `${{ github.event_name }}`;
             let body;
@@ -53,12 +55,16 @@ jobs:
 
   apply-label:
     needs: [add-comment]
+    permissions:
+      issues: write
+      pull-requests: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
         timeout-minutes: 5
         with:
-          github-token: ${{ secrets.GH_PAT }}
+          #github-token: ${{ secrets.GH_PAT }}
           script: |
             const issue = await github.rest.issues.get({
               owner: context.repo.owner,
@@ -77,6 +83,10 @@ jobs:
 
   assign-assignee:
     needs: [add-comment]
+    permissions:
+      issues: write
+      pull-requests: read
+    
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
