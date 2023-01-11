@@ -47,10 +47,8 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo ${{ steps.filter.outputs.shared }}
-          echo ${{ steps.filter.outputs.tox }}
-          echo ${{ steps.filter.outputs.py }}
-          echo ${{ steps.filter.outputs.all-changes }}
+          echo ${{ steps.filter.outputs.changes }}
+          echo ${{ join(steps.filter.outputs.changes) }}
 
   env_prep:
     needs: determine-changes
