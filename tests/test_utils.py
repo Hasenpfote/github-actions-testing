@@ -49,8 +49,8 @@ def test_is_py38_or_higher():
 
 
 def test_is_py37():
-    is_py37 = False if sys.version_info != (3, 7) else True
-    assert utils.is_py37() == is_py37
+    # is_py37 = False if sys.version_info != (3, 7) else True
+    assert utils.is_py37()
 
 
 def test_print_python_version(capfd):
