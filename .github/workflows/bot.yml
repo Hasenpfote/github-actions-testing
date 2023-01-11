@@ -37,7 +37,6 @@ jobs:
       - uses: actions/github-script@v6
         timeout-minutes: 5
         with:
-          #github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const event_name = `${{ github.event_name }}`;
             let body;
@@ -64,7 +63,6 @@ jobs:
       - uses: actions/github-script@v6
         timeout-minutes: 5
         with:
-          #github-token: ${{ secrets.GH_PAT }}
           script: |
             const issue = await github.rest.issues.get({
               owner: context.repo.owner,
@@ -85,8 +83,8 @@ jobs:
     needs: [add-comment]
     permissions:
       issues: write
-      pull-requests: read
-    
+      pull-requests: write
+
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
