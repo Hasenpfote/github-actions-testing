@@ -1,11 +1,8 @@
-name: github-actions bot
+name: pr-bot
 
 on:
-  workflow_dispatch:
-  #issues:
-  #  types: [opened]
-  #pull_request_target:
-  #  types: [opened, closed]
+  pull_request_target:
+    types: [opened, closed]
 
 jobs:
   if-merged:
@@ -16,52 +13,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
-        timeout-minutes: 5
+        timeout-minutes: 3
         with:
           script: |
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `@${{ github.actor }}, your PR has been merged into the main repository.\nMany thanks for your valuable contribution!`
+              body: `@${{ github.event.pull_request.user.login }}, your PR has been merged into the main repository.\nMany thanks for your valuable contribution!`
             });
 
-  add-comment:
-    if: github.event.action == 'opened' && github.actor != 'dependabot[bot]'
+  reply-to:
+    if: github.event.action == 'opened' && github.event.pull_request.user.login != 'dependabot[bot]'
     permissions:
-      issues: write
       pull-requests: write
 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
-        timeout-minutes: 5
+        timeout-minutes: 3
         with:
           script: |
-            const event_name = `${{ github.event_name }}`;
-            let body;
-            if (event_name == 'issues') {
-              body = `Hi, @${{ github.actor }} 👋\nThanks for reporting the issue!`
-            } else {
-              body = `Hi, @${{ github.actor }} 👋\nThanks for your PR!`
-            }
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: body
+              body: `Hi, @${{ github.event.pull_request.user.login }} 👋\nThanks for your PR!`
             });
 
   apply-label:
-    needs: [add-comment]
+    needs: [reply-to]
     permissions:
-      issues: write
       pull-requests: write
 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
-        timeout-minutes: 5
+        timeout-minutes: 3
         with:
           script: |
             const issue = await github.rest.issues.get({
@@ -80,9 +68,8 @@ jobs:
             });
 
   assign-assignee:
-    needs: [add-comment]
+    needs: [reply-to]
     permissions:
-      issues: write
       pull-requests: write
 
     runs-on: ubuntu-latest
@@ -99,14 +86,13 @@ jobs:
             if (issue.data.assignees.length > 0) {
               return;
             }
-            let assignee;
+            let assignee = `${{ github.event.pull_request.user.login }}`;
             try {
               const ret = await github.rest.issues.checkUserCanBeAssigned({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                assignee: `${{ github.actor }}`
+                assignee: assignee
               });
-              assignee = `${{ github.actor }}`;
             } catch (e) {
               assignee = `${{ github.repository_owner }}`;
             }
