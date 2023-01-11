@@ -47,8 +47,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "${{ steps.filter.outputs.changes }}"
-          echo "${{ join(steps.filter.outputs.changes, ',') }}"
+          echo "${{ steps.filter.outputs.changes[0] }}"
 
   env_prep:
     needs: determine-changes
