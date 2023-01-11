@@ -5,14 +5,7 @@ on:
     types: [opened]
 
 jobs:
-#          echo "${{ github.event.issue.user.login }}"
-#          echo "${{ github.event.pull_request.user.login }}"
-
   reply-to:
-    #if: github.event.action == 'opened'
-    #permissions:
-    #  issues: write
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -28,9 +21,6 @@ jobs:
 
   apply-label:
     needs: [reply-to]
-    #permissions:
-    #  issues: write
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -54,10 +44,6 @@ jobs:
 
   assign-assignee:
     needs: [reply-to]
-    #permissions:
-    #  issues: write
-    #  pull-requests: write
-
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
@@ -72,14 +58,13 @@ jobs:
             if (issue.data.assignees.length > 0) {
               return;
             }
-            let assignee;
+            let assignee = `${{ github.event.issue.user.login }}`;
             try {
               const ret = await github.rest.issues.checkUserCanBeAssigned({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
-                assignee: `${{ github.event.issue.user.login }}`
+                assignee: assignee
               });
-              assignee = `${{ github.event.issue.user.login }}`;
             } catch (e) {
               assignee = `${{ github.repository_owner }}`;
             }
