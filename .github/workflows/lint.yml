@@ -16,6 +16,9 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
+      shared: ${{ steps.filter.outputs.shared }}
+      tox: ${{ steps.filter.outputs.tox }}
+      py: ${{ steps.filter.outputs.py }}
       all-changes: ${{ steps.filter.outputs.all-changes }}
     steps:
       - name: Checkout
@@ -32,17 +35,20 @@ jobs:
               - '.github/workflows/lint.yml'
               - 'poetry.lock'
               - 'pyproject.toml'
+            tox: &tox
               - 'tox.ini'
             py: &py
               - added|modified: '**/*.py'
             all-changes:
               - *shared
+              - *tox
               - *py
 
       - name: Debug
         shell: bash
         run: |
           echo ${{ steps.filter.outputs.shared }}
+          echo ${{ steps.filter.outputs.tox }}
           echo ${{ steps.filter.outputs.py }}
           echo ${{ steps.filter.outputs.all-changes }}
 
@@ -64,7 +70,7 @@ jobs:
           filter: '.env'
 
   build:
-    needs: env_prep
+    needs: [determine-changes, env_prep]
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
     runs-on: ubuntu-latest
     steps:
@@ -96,5 +102,8 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Lint with tox
+        if: |
+          needs.determine-changes.outputs.tox == 'true' ||
+          needs.determine-changes.outputs.py == 'true'
         run: |
           poetry run tox -e black,isort,flake8,mypy -p all -q
