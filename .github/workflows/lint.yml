@@ -48,6 +48,7 @@ jobs:
         shell: bash
         run: |
           echo "${{ steps.filter.outputs.changes[0] }}"
+          echo "${{ fromJson(steps.filter.outputs.changes)[0] }}"
 
   env_prep:
     needs: determine-changes
