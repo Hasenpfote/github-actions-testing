@@ -16,8 +16,6 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      shared: ${{ steps.filter.outputs.shared }}
-      py: ${{ steps.filter.outputs.py }}
       all-changes: ${{ steps.filter.outputs.all-changes }}
     steps:
       - name: Checkout
@@ -29,6 +27,8 @@ jobs:
         with:
           filters: |
             shared: &shared
+              - '.github/actions/read-yaml/action.yml'
+              - '.github/settings/env.yml'
               - '.github/workflows/lint.yml'
               - 'poetry.lock'
               - 'pyproject.toml'
@@ -64,8 +64,7 @@ jobs:
           filter: '.env'
 
   build:
-    needs: [determine-changes, env_prep]
-    if: needs.determine-changes.outputs.py == 'true'    
+    needs: env_prep
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
     runs-on: ubuntu-latest
     steps:
