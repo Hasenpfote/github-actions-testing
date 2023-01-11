@@ -1,6 +1,7 @@
 name: Workflow Run Trigger
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows:
       - github-actions bot
