@@ -13,7 +13,7 @@ jobs:
     # 呼び元のworkflowの結果がsuccessであればmain jobを実行
     #if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-    - name: Debug:
+    - name: Debug
       shell: bash
       run: |
         echo ${{ github.event }}
