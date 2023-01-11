@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
   workflow_call:
 
-permissions:
-  contents: read
+#permissions:
+#  contents: read
 
 jobs:
   env_prep:
