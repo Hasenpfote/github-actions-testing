@@ -47,8 +47,8 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "${{ steps.filter.outputs.changes[0] }}"
           echo "${{ fromJson(steps.filter.outputs.changes)[0] }}"
+          echo "${{ fromJson(steps.filter.outputs.changes)[0] != null }}"
 
   env_prep:
     needs: determine-changes
