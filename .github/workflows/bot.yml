@@ -3,10 +3,8 @@ name: github-actions bot
 on:
   issues:
     types: [opened]
-  pull_request:
+  pull_request_target:
     types: [opened, closed]
-  #pull_request_target:
-  #  types: [opened, closed]
 
 jobs:
   if-merged:
