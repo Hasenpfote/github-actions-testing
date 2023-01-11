@@ -20,6 +20,7 @@ jobs:
       tox: ${{ steps.filter.outputs.tox }}
       py: ${{ steps.filter.outputs.py }}
       all-changes: ${{ steps.filter.outputs.all-changes }}
+      has-changes: ${{ fromJson(steps.filter.outputs.changes)[0] != null }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -39,16 +40,21 @@ jobs:
               - 'tox.ini'
             py: &py
               - added|modified: '**/*.py'
-            all-changes:
-              - *shared
-              - *tox
-              - *py
 
       - name: Debug
         shell: bash
         run: |
           echo "${{ fromJson(steps.filter.outputs.changes)[0] }}"
           echo "${{ fromJson(steps.filter.outputs.changes)[0] != null }}"
+
+  debug:
+    needs: determine-changes
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        shell: bash
+        run: |
+          echo "${{ needs.determine-changes.outputs.has-changes }}"
 
   env_prep:
     needs: determine-changes
