@@ -113,31 +113,18 @@ jobs:
           path: .coverage.*
 
       #########
-      - name: Download result.txt
-        id: download-result
-        continue-on-error: true
-        uses: actions/download-artifact@v3
-        with:
-          name: result
-
-      - name: Proc
+      - name: Debug
+        id: debug
         shell: bash
         run: |
-          echo "result: $(cat result.txt)"
-          PATHS="${{ steps.download-result.outputs.download-path }}"
-          if [ -z "$var" ]; then
-            echo 1 > result.txt
-          else
-            value=`cat result.txt`
-            expr ${value} + 1 > result.txt
-          fi
-          echo "result: $(cat result.txt)"
+          filename=$(echo .coverage.*)
+          touch "dummy-${filename}"
 
       - name: Upload result.txt
         uses: actions/upload-artifact@v3
         with:
           name: result
-          path: result.txt
+          path: dummy-*
       #########
 
   upload-coverage:
