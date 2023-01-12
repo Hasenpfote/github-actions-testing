@@ -21,23 +21,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Read YAML file
+        id: read-file
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/settings/filters.yml
+          filter: '.test'
+
       - name: Categorize changed files
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: |
-            shared: &shared
-              - '.github/actions/read-yaml/action.yml'
-              - '.github/actions/setup-poetry/action.yml'
-              - '.github/actions/setup-poetry-dependencies/action.yml'
-              - '.github/settings/test_matrix.yml'
-              - '.github/workflows/test.yml'
-              - 'poetry.lock'
-              - 'pyproject.toml'
-            tox: &tox
-              - 'tox.ini'
-            py: &py
-              - added|modified: '**/*.py'
+          filters: ${{ steps.read-file.outputs.content }}
 
   matrix_prep:
     needs: determine-changes
