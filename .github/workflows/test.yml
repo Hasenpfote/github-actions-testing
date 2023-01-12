@@ -104,6 +104,8 @@ jobs:
           ${{ steps.setup-poetry-dependencies.outputs.venv-activate }}
           tox -e py -- -v --color=yes
           deactivate
+          # Create a dummy file.
+          touch "dummy-$(echo .coverage.*)"
 
       - name: Upload coverage reports
         #if: steps.test-with-pytest.conclusion != 'skipped' && matrix.enable-coverage == 'true'
@@ -112,20 +114,11 @@ jobs:
           name: coverage-reports
           path: .coverage.*
 
-      #########
-      - name: Debug
-        id: debug
-        shell: bash
-        run: |
-          filename=$(echo .coverage.*)
-          touch "dummy-${filename}"
-
-      - name: Upload result.txt
+      - name: Upload dummy files
         uses: actions/upload-artifact@v3
         with:
-          name: result
+          name: dummy-files
           path: dummy-*
-      #########
 
   upload-coverage:
     needs: [build]
