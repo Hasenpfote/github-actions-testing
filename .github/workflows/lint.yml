@@ -32,7 +32,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "${{ steps.read-file.outputs.content }}"
+          echo "${{ fromJson(steps.read-file.outputs.content) }}"
       ######
 
       - name: Categorize changed files
