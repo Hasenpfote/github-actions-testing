@@ -2,8 +2,8 @@ name: Poetry caching on Windows with install-poetry
 
 on: workflow_dispatch
 
-permissions:
-  contents: read
+#permissions:
+#  contents: read
 
 env:
   config-poetry-version: '' # Empty is the latest version.
