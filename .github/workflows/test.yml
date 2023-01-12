@@ -97,9 +97,9 @@ jobs:
 
       - name: Test with pytest
         id: test-with-pytest
-        #if: |
-        #  needs.determine-changes.outputs.tox == 'true' ||
-        #  needs.determine-changes.outputs.py == 'true'
+        if: |
+          needs.determine-changes.outputs.tox == 'true' ||
+          needs.determine-changes.outputs.py == 'true'
         run: |
           ${{ steps.setup-poetry-dependencies.outputs.venv-activate }}
           tox -e py -- -v --color=yes
@@ -108,7 +108,7 @@ jobs:
           touch "dummy-$(echo .coverage.*)"
 
       - name: Upload coverage reports
-        #if: steps.test-with-pytest.conclusion != 'skipped' && matrix.enable-coverage == 'true'
+        if: steps.test-with-pytest.conclusion != 'skipped'
         uses: actions/upload-artifact@v3
         with:
           name: coverage-reports
@@ -116,6 +116,7 @@ jobs:
           retention-days: 1
 
       - name: Upload dummy files
+        if: steps.test-with-pytest.conclusion != 'skipped'
         uses: actions/upload-artifact@v3
         with:
           name: dummy-files
