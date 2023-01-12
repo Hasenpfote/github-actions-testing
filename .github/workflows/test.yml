@@ -112,16 +112,31 @@ jobs:
           name: coverage-reports
           path: .coverage.*
 
-      - name: Debug
-        id: debug
-        shell: bash
-        run: |
-          echo "report-filename=$(echo .coverage.*)" >> $GITHUB_OUTPUT
+      #########
+      - name: Download result.txt
+        uses: actions/download-artifact@v3
+        with:
+          name: result
 
       - name: Debug
+        if: success()
         shell: bash
         run: |
-          echo "${{ steps.debug.outputs.report-filename }}"
+          value=`cat result.txt`
+          expr $value \+ 1 > result.txt
+
+      - name: Debug
+        if: failure()
+        shell: bash
+        run: |
+          echo 1 > result.txt
+
+      - name: Upload result.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: result
+          path: result.txt
+      #########
 
   upload-coverage:
     needs: [build]
