@@ -122,9 +122,12 @@ jobs:
           path: dummy-*
           retention-days: 1
 
-  debug:
+  check:
     needs: [build]
     runs-on: ubuntu-latest
+    outputs:
+      needs-upload: ${{ needs.build.outputs.enable-coverage == 'true' &&
+                        steps.download.outputs.download-path != '' }}
     steps:
       - name: Download dummy files
         id: download
@@ -133,13 +136,7 @@ jobs:
         with:
           name: dummy-files
 
-      - name: Debug
-        shell: bash
-        run: |
-          echo "${{ steps.download.outputs.download-path }}"
-          echo "${{ steps.download.outputs.download-path != '' }}"
-
   upload-coverage:
-    needs: [build]
-    if: needs.build.outputs.enable-coverage == 'true'
+    needs: [check]
+    if: needs.check.outputs.needs-upload == 'true'
     uses: ./.github/workflows/codecov_upload.yml
