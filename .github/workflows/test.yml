@@ -104,16 +104,8 @@ jobs:
           tox -e py -- -v --color=yes
           deactivate
 
-      - name: Debug
-        shell: bash
-        run: |
-          echo "${{ success() }}"
-          echo "${{ failure() }}"
-          echo "${{ cancelled() }}"
-          echo "${{ always() }}"
-
       - name: Upload coverage reports
-        if: matrix.enable-coverage == 'true'
+        if: success() && matrix.enable-coverage == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: coverage-reports
