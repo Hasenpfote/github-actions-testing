@@ -1,3 +1,6 @@
+# This is used by the action below.
+# https://github.com/dorny/paths-filter
+
 lint:
   shared: &shared
     - '.github/actions/read-yaml/action.yml'
