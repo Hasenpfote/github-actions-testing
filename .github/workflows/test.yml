@@ -114,23 +114,21 @@ jobs:
 
       #########
       - name: Download result.txt
+        id: download-result
         continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: result
 
-      - name: Debug
-        if: success()
+      - name: Proc
         shell: bash
         run: |
-          value=`cat result.txt`
-          expr $value \+ 1 > result.txt
-
-      - name: Debug
-        if: failure()
-        shell: bash
-        run: |
-          echo 1 > result.txt
+          PATHS="${{ steps.download-result.outputs.download-path }}"
+          if [ -z "$var" ]; then
+            echo 1 > result.txt
+          else
+            expr $(cat result.txt) \+ 1 > result.txt
+          fi
 
       - name: Upload result.txt
         uses: actions/upload-artifact@v3
