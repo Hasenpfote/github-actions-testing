@@ -129,7 +129,7 @@ jobs:
             echo 1 > result.txt
           else
             value=`cat result.txt`
-            expr ${value} \+ 1 > result.txt
+            expr ${value} + 1 > result.txt
           fi
           echo "result: $(cat result.txt)"
 
