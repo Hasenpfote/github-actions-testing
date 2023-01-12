@@ -2,7 +2,7 @@
 # https://github.com/dorny/paths-filter
 
 lint:
-  shared: &shared
+  shared: &lint-shared
     - '.github/actions/read-yaml/action.yml'
     - '.github/actions/setup-poetry/action.yml'
     - '.github/actions/setup-poetry-dependencies/action.yml'
@@ -11,13 +11,13 @@ lint:
     - '.github/workflows/lint.yml'
     - 'poetry.lock'
     - 'pyproject.toml'
-  tox: &tox
+  tox: &lint-tox
     - 'tox.ini'
-  py: &py
+  py: &lint-py
     - added|modified: '**/*.py'
 
 test:
-  shared: &shared
+  shared: &test-shared
     - '.github/actions/read-yaml/action.yml'
     - '.github/actions/setup-poetry/action.yml'
     - '.github/actions/setup-poetry-dependencies/action.yml'
@@ -26,7 +26,7 @@ test:
     - '.github/workflows/test.yml'
     - 'poetry.lock'
     - 'pyproject.toml'
-  tox: &tox
+  tox: &test-tox
     - 'tox.ini'
-  py: &py
+  py: &test-py
     - added|modified: '**/*.py'
