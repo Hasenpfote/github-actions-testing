@@ -128,7 +128,7 @@ jobs:
           if [ -z "$var" ]; then
             echo 1 > result.txt
           else
-            value=$(cat result.txt)
+            value=`cat result.txt`
             expr ${value} \+ 1 > result.txt
           fi
           echo "result: $(cat result.txt)"
