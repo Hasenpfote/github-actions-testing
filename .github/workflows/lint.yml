@@ -13,6 +13,7 @@ jobs:
     if: |
       github.event_name != 'pull_request' ||
       github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+
     runs-on: ubuntu-latest
     outputs:
       shared: ${{ steps.filter.outputs.shared }}
@@ -42,6 +43,7 @@ jobs:
   env_prep:
     needs: determine-changes
     if: needs.determine-changes.outputs.has-changes == 'true'
+
     runs-on: ubuntu-latest
     outputs:
       env: ${{ steps.read-file.outputs.content }}
@@ -59,6 +61,7 @@ jobs:
   build:
     needs: [determine-changes, env_prep]
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
