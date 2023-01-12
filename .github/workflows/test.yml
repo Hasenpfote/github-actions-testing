@@ -123,12 +123,14 @@ jobs:
       - name: Proc
         shell: bash
         run: |
+          echo "result: $(cat result.txt)"
           PATHS="${{ steps.download-result.outputs.download-path }}"
           if [ -z "$var" ]; then
             echo 1 > result.txt
           else
             expr $(cat result.txt) \+ 1 > result.txt
           fi
+          echo "result: $(cat result.txt)"
 
       - name: Upload result.txt
         uses: actions/upload-artifact@v3
