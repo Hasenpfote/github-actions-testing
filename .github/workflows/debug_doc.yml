@@ -5,8 +5,8 @@ on:
 
 jobs:
   docs:
-    permissions:
-      #contents: read
-      #pages: write
-      #id-token: write
+    #permissions:
+    #  contents: read
+    #  pages: write
+    #  id-token: write
     uses: ./.github/workflows/docs.yml
