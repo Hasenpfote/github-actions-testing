@@ -2,8 +2,8 @@ name: Poetry caching feature
 
 on: workflow_dispatch
 
-permissions:
-  contents: read
+#permissions:
+#  contents: read
 
 jobs:
   matrix_prep:
