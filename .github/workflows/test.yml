@@ -6,10 +6,42 @@ on:
   pull_request:
 
 jobs:
-  matrix_prep:
+  determine-changes:
     if: |
       github.event_name != 'pull_request' ||
       github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+
+    runs-on: ubuntu-latest
+    outputs:
+      shared: ${{ steps.filter.outputs.shared }}
+      tox: ${{ steps.filter.outputs.tox }}
+      py: ${{ steps.filter.outputs.py }}
+      has-changes: ${{ fromJson(steps.filter.outputs.changes)[0] != null }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Categorize changed files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            shared: &shared
+              - '.github/actions/read-yaml/action.yml'
+              - '.github/actions/setup-poetry/action.yml'
+              - '.github/actions/setup-poetry-dependencies/action.yml'
+              - '.github/settings/test_matrix.yml'
+              - '.github/workflows/test.yml'
+              - 'poetry.lock'
+              - 'pyproject.toml'
+            tox: &tox
+              - 'tox.ini'
+            py: &py
+              - added|modified: '**/*.py'
+
+  matrix_prep:
+    needs: determine-changes
+    if: needs.determine-changes.outputs.has-changes == 'true'
 
     runs-on: ubuntu-latest
     outputs:
@@ -26,7 +58,7 @@ jobs:
           filter: '.matrix'
 
   build:
-    needs: matrix_prep
+    needs: [determine-changes, matrix_prep]
     strategy:
       fail-fast: false
       matrix: ${{ fromJson(needs.matrix_prep.outputs.matrix) }}
@@ -64,6 +96,9 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
+        if: |
+          needs.determine-changes.outputs.tox == 'true' ||
+          needs.determine-changes.outputs.py == 'true'
         run: |
           ${{ steps.setup-poetry-dependencies.outputs.venv-activate }}
           tox -e py -- -v --color=yes
