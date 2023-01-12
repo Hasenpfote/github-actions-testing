@@ -96,6 +96,7 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Test with pytest
+        id: test-with-pytest
         if: |
           needs.determine-changes.outputs.tox == 'true' ||
           needs.determine-changes.outputs.py == 'true'
@@ -105,7 +106,8 @@ jobs:
           deactivate
 
       - name: Upload coverage reports
-        if: success() && matrix.enable-coverage == 'true'
+        #if: success() && matrix.enable-coverage == 'true'
+        if: steps.test-with-pytest.conclusion != 'skipped' && matrix.enable-coverage == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: coverage-reports
