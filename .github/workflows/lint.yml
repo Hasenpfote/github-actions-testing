@@ -5,9 +5,6 @@ on:
   push:
   pull_request:
 
-#permissions:
-#  contents: read
-
 jobs:
   determine-changes:
     if: |
@@ -23,7 +20,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-    
+
       - name: Categorize changed files
         uses: dorny/paths-filter@v2
         id: filter

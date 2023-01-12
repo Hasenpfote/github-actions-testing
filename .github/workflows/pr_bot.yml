@@ -75,7 +75,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/github-script@v6
-        timeout-minutes: 5
+        timeout-minutes: 3
         with:
           script: |
             const issue = await github.rest.issues.get({
