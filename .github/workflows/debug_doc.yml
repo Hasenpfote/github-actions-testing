@@ -1,4 +1,4 @@
-name: test-doc
+name: debug-doc
 
 on:
   workflow_dispatch:
@@ -7,6 +7,6 @@ jobs:
   docs:
     permissions:
       #contents: read
-      pages: write
-      id-token: write
+      #pages: write
+      #id-token: write
     uses: ./.github/workflows/docs.yml
