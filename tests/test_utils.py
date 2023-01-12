@@ -13,6 +13,7 @@ def test_sub():
 
 
 def test_mul():
+    ###
     assert utils.mul(2, 3) == 6
 
 
