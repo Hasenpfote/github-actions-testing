@@ -28,6 +28,11 @@ jobs:
         with:
           path: .github/settings/filters.yml
           filter: '.lint'
+
+      - name: Debug
+        shell: bash
+        run: |
+          echo "${{ steps.read-file.outputs.content }}"
       ######
 
       - name: Categorize changed files
