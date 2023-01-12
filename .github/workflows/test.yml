@@ -113,9 +113,15 @@ jobs:
           path: .coverage.*
 
       - name: Debug
+        id: debug
         shell: bash
         run: |
-          echo .coverage.*
+          echo "report-filename=$(echo .coverage.*)" >> $GITHUB_OUTPUT
+
+      - name: Debug
+        shell: bash
+        run: |
+          echo "${{ steps.debug.outputs.report-filename }}"
 
   upload-coverage:
     needs: [build]
