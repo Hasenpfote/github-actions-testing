@@ -21,21 +21,31 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      ######
+      - name: Read YAML file
+        id: read-file
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/settings/filters.yml
+          filter: '.lint'
+      ######
+
       - name: Categorize changed files
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: |
-            shared: &shared
-              - '.github/actions/read-yaml/action.yml'
-              - '.github/settings/env.yml'
-              - '.github/workflows/lint.yml'
-              - 'poetry.lock'
-              - 'pyproject.toml'
-            tox: &tox
-              - 'tox.ini'
-            py: &py
-              - added|modified: '**/*.py'
+          filters: ${{ fromJson(steps.read-file.outputs.content) }}
+          #filters: |
+          #  shared: &shared
+          #    - '.github/actions/read-yaml/action.yml'
+          #    - '.github/settings/env.yml'
+          #    - '.github/workflows/lint.yml'
+          #    - 'poetry.lock'
+          #    - 'pyproject.toml'
+          #  tox: &tox
+          #    - 'tox.ini'
+          #  py: &py
+          #    - added|modified: '**/*.py'
 
   env_prep:
     needs: determine-changes
