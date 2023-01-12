@@ -13,7 +13,6 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      shared: ${{ steps.filter.outputs.shared }}
       tox: ${{ steps.filter.outputs.tox }}
       py: ${{ steps.filter.outputs.py }}
       has-changes: ${{ fromJson(steps.filter.outputs.changes)[0] != null }}
