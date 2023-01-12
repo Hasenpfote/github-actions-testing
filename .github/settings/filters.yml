@@ -1,0 +1,25 @@
+lint:
+  shared: &shared
+    - '.github/actions/read-yaml/action.yml'
+    - '.github/settings/env.yml'
+    - '.github/workflows/lint.yml'
+    - 'poetry.lock'
+    - 'pyproject.toml'
+  tox: &tox
+    - 'tox.ini'
+  py: &py
+    - added|modified: '**/*.py'
+
+test:
+  shared: &shared
+    - '.github/actions/read-yaml/action.yml'
+    - '.github/actions/setup-poetry/action.yml'
+    - '.github/actions/setup-poetry-dependencies/action.yml'
+    - '.github/settings/test_matrix.yml'
+    - '.github/workflows/test.yml'
+    - 'poetry.lock'
+    - 'pyproject.toml'
+  tox: &tox
+    - 'tox.ini'
+  py: &py
+    - added|modified: '**/*.py'
