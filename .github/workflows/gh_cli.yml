@@ -27,7 +27,7 @@ jobs:
 
               let expiry_date = new Date(last_access_date);
               expiry_date.setDate(expiry_date.getDate() + validity_days)
-              console.log(expiry_date);
+              console.log('expiry_date', expiry_date);
             }
     
       #- name: cmd
