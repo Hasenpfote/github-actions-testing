@@ -36,8 +36,6 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     name: ${{ format('build ({0}, {1})', matrix.os, matrix.python-version) }}
-    outputs:
-      enable-coverage: ${{ matrix.enable-coverage }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -77,7 +75,7 @@ jobs:
           touch "dummy-$(echo .coverage.*)"
 
       - name: Upload coverage reports
-        if: steps.test-with-pytest.conclusion != 'skipped'
+        if: steps.test-with-pytest.conclusion != 'skipped' && matrix.enable-coverage == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: coverage-reports
@@ -85,7 +83,7 @@ jobs:
           retention-days: 1
 
       - name: Upload dummy files
-        if: steps.test-with-pytest.conclusion != 'skipped'
+        if: steps.test-with-pytest.conclusion != 'skipped' && matrix.enable-coverage == 'true'
         uses: actions/upload-artifact@v3
         with:
           name: dummy-files
@@ -96,8 +94,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     outputs:
-      has-coverage-reports: ${{ needs.build.outputs.enable-coverage == 'true' &&
-                                steps.download.outputs.download-path != '' }}
+      has-coverage-reports: ${{ steps.download.outputs.download-path != '' }}
     steps:
       - name: Download dummy files
         id: download
