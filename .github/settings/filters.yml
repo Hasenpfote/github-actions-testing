@@ -32,14 +32,20 @@ lint:
 test:
   shared: &test-shared
     - '.github/actions/read-yaml/action.yml'
+    - '.github/settings/filters.yml'
+    - '.github/workflows/test.yml'
+  # python scripts
+  py-shared: &test-py-shared
     - '.github/actions/setup-poetry/action.yml'
     - '.github/actions/setup-poetry-dependencies/action.yml'
-    - '.github/settings/filters.yml'
     - '.github/settings/test_matrix.yml'
-    - '.github/workflows/test.yml'
+    - '.github/workflows/py_test.yml'
     - 'poetry.lock'
     - 'pyproject.toml'
-  tox: &test-tox
+  py-test: &test-py-test
     - 'tox.ini'
-  py: &test-py
     - added|modified: '**/*.py'
+  py:
+    - *test-shared
+    - *test-py-shared
+    - *test-py-test
