@@ -44,7 +44,6 @@ jobs:
   md-lint:
     needs: determine-changes
     if: needs.determine-changes.outputs.md == 'true'
-
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
