@@ -8,9 +8,9 @@ on:
         type: boolean
 
     outputs:
-      needs-upload:
-        description: ''
-        value: ${{ jobs.check.outputs.needs-upload }}
+      has-coverage-reports:
+        description: 'This test has coverage reports or not'
+        value: ${{ jobs.check.outputs.has-coverage-reports }}
 
 jobs:
   matrix_prep:
@@ -96,8 +96,8 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     outputs:
-      needs-upload: ${{ needs.build.outputs.enable-coverage == 'true' &&
-                        steps.download.outputs.download-path != '' }}
+      has-coverage-reports: ${{ needs.build.outputs.enable-coverage == 'true' &&
+                                steps.download.outputs.download-path != '' }}
     steps:
       - name: Download dummy files
         id: download
