@@ -1,4 +1,4 @@
-name: Lint2
+name: Lint
 
 on:
   workflow_dispatch:
