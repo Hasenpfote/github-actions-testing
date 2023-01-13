@@ -3,7 +3,7 @@
 
 shared: &shared
   - '.github/actions/read-yaml/action.yml'
-  - '.github/settings/filters.yml'
+  - '.github/settings/lint_filters.yml'
   - '.github/workflows/lint.yml'
 
 # python scripts
