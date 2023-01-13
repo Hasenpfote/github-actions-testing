@@ -11,6 +11,7 @@ lint:
     - '.github/actions/setup-poetry/action.yml'
     - '.github/actions/setup-poetry-dependencies/action.yml'
     - '.github/settings/env.yml'
+    - '.github/workflows/py_lint.yml'
     - 'poetry.lock'
     - 'pyproject.toml'
   py-lint: &lint-py-lint
