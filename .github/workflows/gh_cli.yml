@@ -9,5 +9,7 @@ jobs:
     steps:
       - name: cmd
         shell: bash
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        
         run: |
           gh api -X GET repos/{org}/{repo}/actions/caches/{CACHE_ID}
