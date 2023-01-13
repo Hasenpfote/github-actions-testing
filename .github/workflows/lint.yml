@@ -91,6 +91,15 @@ jobs:
         run: |
           poetry run tox -e black,isort,flake8,mypy -p all -q
 
+  docs:
+    needs: determine-changes
+    if: needs.determine-changes.outputs.has-changes == 'true'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Lint all markdown files
         uses: DavidAnson/markdownlint-cli2-action@v9
         with:

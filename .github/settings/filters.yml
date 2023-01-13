@@ -9,12 +9,15 @@ lint:
     - '.github/settings/env.yml'
     - '.github/settings/filters.yml'
     - '.github/workflows/lint.yml'
+    - '.markdownlint.yml'
     - 'poetry.lock'
     - 'pyproject.toml'
   tox: &lint-tox
     - 'tox.ini'
   py: &lint-py
     - added|modified: '**/*.py'
+  md: &lint-md
+    - added|modified: '**/*.md'
 
 test:
   shared: &test-shared
