@@ -1,0 +1,57 @@
+name: Lint2
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+jobs:
+  determine-changes:
+    if: |
+      github.event_name != 'pull_request' ||
+      github.event.pull_request.head.repo.full_name != github.event.pull_request.base.repo.full_name
+    runs-on: ubuntu-latest
+    outputs:
+      has-changes: ${{ fromJson(steps.filter.outputs.changes)[0] != null }}
+      py: ${{ steps.filter.outputs.py }}
+      py-lint: ${{ steps.filter.outputs.py-lint }}
+      md: ${{ steps.filter.outputs.md }}
+      md-lint: ${{ steps.filter.outputs.md-lint }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read YAML file
+        id: read-file
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/settings/filters.yml
+          filter: '.lint'
+
+      - name: Categorize changed files
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: ${{ steps.read-file.outputs.content }}
+
+  py-lint:
+    needs: determine-changes
+    if: needs.determine-changes.outputs.py == 'true'
+    uses: ./.github/workflows/py_lint.yml
+    with:
+      enable-lint: ${{ needs.determine-changes.outputs.py-lint }}
+
+  docs:
+    needs: determine-changes
+    if: needs.determine-changes.outputs.md == 'true'
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Lint all markdown files
+        if: needs.determine-changes.outputs.md-lint == 'true'
+        uses: DavidAnson/markdownlint-cli2-action@v9
+        with:
+          globs: '**/*.md'
