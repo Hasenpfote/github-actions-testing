@@ -21,6 +21,8 @@ jobs:
             for (const cache of caches.data.actions_caches) {
               console.log(cache);
             }
+            const date1 = new Date('2022-04-16T06:55:31.820Z');
+            console.log(date1);
     
       #- name: cmd
       #  shell: bash
