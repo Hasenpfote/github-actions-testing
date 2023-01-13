@@ -13,9 +13,11 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      tox: ${{ steps.filter.outputs.tox }}
-      py: ${{ steps.filter.outputs.py }}
       has-changes: ${{ fromJson(steps.filter.outputs.changes)[0] != null }}
+      py: ${{ steps.filter.outputs.py }}
+      py-lint: ${{ steps.filter.outputs.py-lint }}
+      md: ${{ steps.filter.outputs.md }}
+      md-lint: ${{ steps.filter.outputs.md-lint }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,7 +37,7 @@ jobs:
 
   env_prep:
     needs: determine-changes
-    if: needs.determine-changes.outputs.has-changes == 'true'
+    if: needs.determine-changes.outputs.py == 'true'
 
     runs-on: ubuntu-latest
     outputs:
@@ -85,15 +87,13 @@ jobs:
           poetry-install-args: --no-interaction --no-root --with dev
 
       - name: Lint all python scripts
-        if: |
-          needs.determine-changes.outputs.tox == 'true' ||
-          needs.determine-changes.outputs.py == 'true'
+        if: needs.determine-changes.outputs.py-lint == 'true'
         run: |
           poetry run tox -e black,isort,flake8,mypy -p all -q
 
   docs:
     needs: determine-changes
-    if: needs.determine-changes.outputs.has-changes == 'true'
+    if: needs.determine-changes.outputs.md == 'true'
 
     runs-on: ubuntu-latest
     steps:
@@ -101,6 +101,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Lint all markdown files
+        if: needs.determine-changes.outputs.md-lint == 'true'
         uses: DavidAnson/markdownlint-cli2-action@v9
         with:
           globs: '**/*.md'
