@@ -19,7 +19,9 @@ jobs:
           
             const date = new Date();
             console.log('date:', date);
-          
+            console.log(date.toString());
+            console.log(date.getTimezoneOffset());
+
             const validity_days = 7;
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
