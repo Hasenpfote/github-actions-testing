@@ -27,7 +27,7 @@ jobs:
               if (current_date > expiry_date) {
                 console.log('expired', new Date(cache.last_accessed_at));
               } else {
-                console.log('expired', new Date(cache.last_accessed_at));
+                console.log('not expired', new Date(cache.last_accessed_at));
               }
             }
 
