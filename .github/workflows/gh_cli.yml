@@ -19,7 +19,6 @@ jobs:
               repo: context.repo.repo,
             });
             for (const cache of caches.data.actions_caches) {
-              #console.log(cache);
               console.log(cache.created_at);
               const date = new Date(cache.created_at);
               console.log(date);
