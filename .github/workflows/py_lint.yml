@@ -23,7 +23,7 @@ jobs:
           path: .github/settings/env.yml
           filter: '.env'
 
-build:
+  build:
     needs: env_prep
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
 
