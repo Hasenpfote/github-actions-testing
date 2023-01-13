@@ -39,7 +39,7 @@ jobs:
     with:
       enable-test: ${{ fromJson(needs.determine-changes.outputs.py-test) }}
 
-  upload-coverage:
+  codecov_upload:
     needs: py-test
     if: needs.py-test.outputs.needs-upload == 'true'
     uses: ./.github/workflows/codecov_upload.yml
