@@ -1,0 +1,13 @@
+name: gh-cli
+
+on:
+  workflow_dispatch:
+
+jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: cmd
+        shell: bash
+        run: |
+          gh api -X GET repos/{org}/{repo}/actions/caches/{CACHE_ID}
