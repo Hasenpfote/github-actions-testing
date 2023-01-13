@@ -14,16 +14,20 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const validity_days = 7;
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
             for (const cache of caches.data.actions_caches) {
               console.log(cache.created_at);
-              const date = new Date(cache.created_at);
-              console.log(date);
-              date.setDate(date.getDate() + 7)
-              console.log(date);
+
+              const last_access_date = new Date(cache.last_accessed_at);
+              console.log('last_access_date:', last_access_date);
+
+              let expiry_date = new Date(last_access_date);
+              expiry_date.setDate(expiry_date.getDate() + validity_days)
+              console.log(expiry_date);
             }
     
       #- name: cmd
