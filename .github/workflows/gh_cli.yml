@@ -22,8 +22,8 @@ jobs:
               console.log(cache.created_at);
               const date = new Date(cache.created_at);
               console.log(date);
-              const date2 = new Date(date.getDate() + 7);
-              console.log(date2);
+              date.setDate(date.getDate() + 7)
+              console.log(date);
             }
     
       #- name: cmd
