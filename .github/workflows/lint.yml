@@ -84,9 +84,14 @@ jobs:
           python-version: ${{ steps.setup-python.outputs.python-version }}
           poetry-install-args: --no-interaction --no-root --with dev
 
-      - name: Lint with tox
+      - name: Lint all python scripts
         if: |
           needs.determine-changes.outputs.tox == 'true' ||
           needs.determine-changes.outputs.py == 'true'
         run: |
           poetry run tox -e black,isort,flake8,mypy -p all -q
+
+      - name: Lint all markdown files
+        uses: DavidAnson/markdownlint-cli2-action@v9
+        with:
+          globs: '**/*.md'
