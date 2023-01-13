@@ -41,7 +41,7 @@ jobs:
     with:
       enable-lint: ${{ needs.determine-changes.outputs.py-lint }}
 
-  docs:
+  md-lint:
     needs: determine-changes
     if: needs.determine-changes.outputs.md == 'true'
 
