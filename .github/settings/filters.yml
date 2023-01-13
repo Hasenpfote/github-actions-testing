@@ -39,6 +39,7 @@ test:
     - '.github/actions/setup-poetry/action.yml'
     - '.github/actions/setup-poetry-dependencies/action.yml'
     - '.github/settings/test_matrix.yml'
+    - '.github/workflows/codecov_upload.yml'
     - '.github/workflows/py_test.yml'
     - 'poetry.lock'
     - 'pyproject.toml'
