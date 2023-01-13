@@ -7,6 +7,12 @@ on:
         required: false
         type: boolean
 
+      artifact-name:
+        description: 'Artifact name'
+        default: 'coverage-reports'
+        required: false
+        type: string
+
     outputs:
       has-coverage-reports:
         description: 'This test has coverage reports or not'
@@ -78,7 +84,7 @@ jobs:
         if: steps.test-with-pytest.conclusion != 'skipped' && matrix.enable-coverage == 'true'
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-reports
+          name: ${{ inputs.artifact-name }}
           path: .coverage.*
           retention-days: 1
 
