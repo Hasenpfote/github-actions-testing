@@ -2,7 +2,7 @@ on:
   workflow_call:
     inputs:
       enable-lint:
-        description: ''
+        description: 'Enable lint'
         default: true
         required: false
         type: boolean
