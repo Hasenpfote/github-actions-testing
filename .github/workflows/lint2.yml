@@ -39,7 +39,7 @@ jobs:
     if: needs.determine-changes.outputs.py == 'true'
     uses: ./.github/workflows/py_lint.yml
     with:
-      enable-lint: ${{ needs.determine-changes.outputs.py-lint }}
+      enable-lint: ${{ fromJson(needs.determine-changes.outputs.py-lint) }}
 
   md-lint:
     needs: determine-changes
