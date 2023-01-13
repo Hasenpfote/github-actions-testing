@@ -14,39 +14,22 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-            console.log(timezone);
-          
-            const date = new Date();
-            console.log('date:', date);
-            console.log(date.toString());
-            console.log(date.getTimezoneOffset());
-
             const validity_days = 7;
+            const current_date = new Date();
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
             for (const cache of caches.data.actions_caches) {
-              console.log(cache.created_at);
-
-              const last_access_date = new Date(cache.last_accessed_at);
-              console.log('last_access_date:', last_access_date);
-
-              let expiry_date = new Date(last_access_date);
+              const expiry_date = new Date(cache.last_accessed_at);
               expiry_date.setDate(expiry_date.getDate() + validity_days)
-              console.log('expiry_date', expiry_date);
+
+              if (current_date > expiry_date) {
+                console.log('expired', new Date(cache.last_accessed_at));
+              } else {
+                console.log('expired', new Date(cache.last_accessed_at));
+              }
             }
-    
-      #- name: cmd
-      #  shell: bash
-      #  env:
-      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #    OWNER: ${{ github.repository_owner }}
-      #    REPO: ${{ github.event.repository.name }}          
-      #  run: |
-      #    #gh api -X GET repos/${OWNER}/${REPO}/actions/caches/{CACHE_ID}
-      #    gh api -X GET repos/${OWNER}/${REPO}/actions/caches
 
 ###
 #jobs:
