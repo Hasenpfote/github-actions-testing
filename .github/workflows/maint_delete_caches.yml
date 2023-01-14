@@ -43,11 +43,11 @@ jobs:
             const re = new RegExp('${{ inputs.key-pattern }}');
             const current_date = new Date();
 
+            let num_deleted_caches = 0;
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            let num_deleted_caches = 0;
             for (const cache of caches.data.actions_caches) {
               const expiry_date = new Date(cache.last_accessed_at);
               expiry_date.setDate(expiry_date.getDate() + validity_days);
