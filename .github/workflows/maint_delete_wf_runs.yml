@@ -41,9 +41,10 @@ jobs:
                   per_page: 30,
                   page: num_pages,
                 });
-                console.debug(wf_runs.data.total_count);
-                console.debug(++num_pages);
-              } while(num_pages < 40);
+                //console.debug(wf_runs.data.total_count);
+                //console.debug(++num_pages);
+                console.debug(wf_runs.data.workflow_runs);
+              } while(num_pages < 3);
             } catch(e) {
               console.debug(e.name + ': ' + e.message)
             }
