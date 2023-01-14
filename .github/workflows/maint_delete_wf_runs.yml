@@ -46,7 +46,7 @@ jobs:
                     console.debug(wf_run.id, '#', wf_run.run_number);
                   }
                   console.debug('*********')
-                } while(num_pages < 3);
+                } while(num_pages++ < 3);
               };
               exec();
             } catch (e) {
