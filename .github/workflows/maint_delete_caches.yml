@@ -27,7 +27,7 @@ jobs:
         with:
           script: |
             //let pattern = /^\d{3}-?\d{4}$/g;
-            const re = `/${{ inputs.pattern }}/`
+            const re = /`${{ inputs.pattern }}`/
             const postcode = '121-4440';
             const result = re.test(postcode)
             console.debug(result)
