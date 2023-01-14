@@ -27,6 +27,17 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const wf_runs = github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'maint_delete_caches.yml',
+            });
+            console.debug(wf_runs);
+          
       - name: Delete caches
         uses: actions/github-script@v6
         with:
