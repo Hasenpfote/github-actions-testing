@@ -27,7 +27,7 @@ jobs:
               repo: context.repo.repo,
             });
             
-            console.output('lenght', caches.data.actions_caches.length)
+            console.log('lenght', caches.data.actions_caches.length)
             
             for (const cache of caches.data.actions_caches) {
               console.log('cache.id', cache.id);
