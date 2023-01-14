@@ -58,7 +58,8 @@ jobs:
               return total_count;
             }
 
-            async function deleteWorkflowRuns(workflow_id, max_pages) {
+            async function deleteWorkflowRuns(workflow_id, num_wf_runs) {
+              const max_pages = Math.ceil(num_wf_runs / 30);
               let num_deleted_wf_runs = 0;
               try {
                 let num_pages = 1;
@@ -93,8 +94,7 @@ jobs:
               } catch (e) {
                 console.error(e.name + ': ' + e.message);
               }
-              console.debug('num_deleted_wf_runs=', num_deleted_wf_runs)
-              //console.info(`[${basename}] ${num_deleted_wf_runs}/${wf_runs.data.workflow_runs.length} workflow runs have been deleted.`);
+              console.info(`[${workflow_id}] ${num_deleted_wf_runs}/${num_wf_runs} workflow runs have been deleted.`);
             }
 
             const num_wf_runs = await numWorkflowRuns('lint.yml');
