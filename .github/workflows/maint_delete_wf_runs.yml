@@ -39,9 +39,9 @@ jobs:
                   repo: context.repo.repo,
                   workflow_id: 'lint.yml',
                 });
-                console.debug(wf_runs.total_count);
+                console.debug(wf_runs.data.total_count);
                 console.debug(num_pages++);
-              } while(num_pages < 30);
+              } while(num_pages < 40);
             } catch(e) {
               console.debug(e.name + ': ' + e.message)
             }
