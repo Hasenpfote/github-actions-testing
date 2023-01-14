@@ -38,6 +38,7 @@ jobs:
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   workflow_id: 'lint.yml',
+                  per_page: 30,
                   page: num_pages,
                 });
                 console.debug(wf_runs.data.total_count);
