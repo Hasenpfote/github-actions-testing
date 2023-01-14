@@ -97,7 +97,7 @@ jobs:
               //console.info(`[${basename}] ${num_deleted_wf_runs}/${wf_runs.data.workflow_runs.length} workflow runs have been deleted.`);
             }
 
-            const num_wf_runs = numWorkflowRuns('lint.yml');
+            const num_wf_runs = await numWorkflowRuns('lint.yml');
             console.log('num_wf_runs', num_wf_runs);
             console.log('max_pages', Math.ceil(num_wf_runs / 30));
             
