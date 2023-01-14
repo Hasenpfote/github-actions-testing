@@ -32,25 +32,7 @@ jobs:
         with:
           script: |
             const exec = async() => {
-              try {
-                let num_pages = 1;
-                do {
-                  const wf_runs = await github.rest.actions.listWorkflowRuns({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    workflow_id: 'lint.yml',
-                    per_page: 30,
-                    page: num_pages,
-                  });
-                  console.debug(wf_runs.data.workflow_runs[0].id, '#', wf_runs.data.workflow_runs[0].run_number);
-                  for (const wf_run of wf_runs.data.workflow_runs) {
-                    //console.debug(wf_run.id, '#', wf_run.run_number);
-                  }
-                  console.debug('*********')
-                } while(num_pages++ < 30);
-              } catch (e) {
-                console.error(e.name + ': ' + e.message);
-              }
+              console.log('aaaa')
             };
             exec();
 
