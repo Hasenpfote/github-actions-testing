@@ -37,6 +37,7 @@ jobs:
               workflow_id: 'maint_delete_caches.yml',
             });
             console.debug(wf_runs);
+            console.debug(wf_runs.data.workflow_runs[0]);
           
       - name: Delete caches
         uses: actions/github-script@v6
