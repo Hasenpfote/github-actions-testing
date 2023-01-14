@@ -1,4 +1,4 @@
-name: '🧰 Delete caches'
+name: 🧰 Delete caches
 
 on:
   workflow_dispatch:
