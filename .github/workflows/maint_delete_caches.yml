@@ -31,19 +31,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            //////
-            //let fn = (owner, repo, cache_id) => a + 100;
-            //github.rest.actions.deleteActionsCacheById
-            
-            let fn1 = (owner, repo) => undefined;
-            let fn2 = github.rest.actions.getActionsCacheList
-            console.debug(fn1);
-            console.debug(fn2);
-            //const ret = await fn2({owner: context.repo.owner, repo: context.repo.repo,})
-            const ret = fn1({owner: context.repo.owner, repo: context.repo.repo,})
-            console.debug('aaa', ${{ inputs.dry-run }} == true);
-            
-            //////
+            let deleteActionsCacheById;
+            if (${{ inputs.dry-run }} == true) {
+              deleteActionsCacheById = (owner, repo, cache_id) => undefined;
+            } else {
+              deleteActionsCacheById = github.rest.actions.deleteActionsCacheById;
+            }
             const validity_days = parseInt(`${{ inputs.validity-days }}`, 10);
             const re = new RegExp('${{ inputs.key-pattern }}');
             const current_date = new Date();
@@ -58,13 +51,11 @@ jobs:
               const has_expired = current_date.getTime() > expiry_date.getTime();
               const has_matched = re.test(cache.key);
               if (has_expired && has_matched) {
-                if (!${{ inputs.dry-run }}) {
-                  github.rest.actions.deleteActionsCacheById({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    cache_id: cache.id,
-                  });
-                }
+                deleteActionsCacheById({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  cache_id: cache.id,
+                });
                 num_deleted_caches++;
               }
             }
