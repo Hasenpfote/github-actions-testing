@@ -21,6 +21,22 @@ on:
         type: boolean
 
 jobs:
+  sub:
+    permissions:
+      actions: read
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const ret = await octokit.rest.actions.getAllowedActionsRepository({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            console.debug(ret);
+
   main:
     permissions:
       actions: write
