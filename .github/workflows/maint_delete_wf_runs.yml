@@ -49,6 +49,8 @@ jobs:
                 } while(num_pages < 3);
               };
               exec();
+            } catch (e) {
+              console.error(e.name + ': ' + e.message);
             }
 
   main:
