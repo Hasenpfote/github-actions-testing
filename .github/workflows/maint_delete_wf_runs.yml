@@ -32,7 +32,8 @@ jobs:
         with:
           script: |
             const max_pages = 30;
-            (async() => {
+
+            async function fn() {
               try {
                 let num_pages = 1;
                 do {
@@ -52,7 +53,11 @@ jobs:
               } catch (e) {
                 console.error(e.name + ': ' + e.message);
               }
-            })();
+            }
+            fn();
+            
+            //(async() => {
+            //})();
 
   main:
     permissions:
