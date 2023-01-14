@@ -31,32 +31,12 @@ jobs:
               const expiry_date = new Date(cache.last_accessed_at);
               expiry_date.setDate(expiry_date.getDate() + validity_days)
               if (current_date.getTime() > expiry_date.getTime()) {
-                console.log('expired', new Date(cache.last_accessed_at));
+                github.rest.actions.deleteActionsCacheById({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  cache_id: cache.id,
+                });
                 num_deleted_caches++;
               }
             }
             console.info(`${num_deleted_caches}/${caches.data.actions_caches.length} caches have been deleted.`);
-
-###
-#jobs:
-#  clear-cache:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Clear cache
-#        uses: actions/github-script@v6
-#        with:
-#          script: |
-#            console.log("About to clear")
-#            const caches = await github.rest.actions.getActionsCacheList({
-#              owner: context.repo.owner,
-#              repo: context.repo.repo,
-#            })
-#            for (const cache of caches.data.actions_caches) {
-#              console.log(cache)
-#              github.rest.actions.deleteActionsCacheById({
-#                owner: context.repo.owner,
-#                repo: context.repo.repo,
-#                cache_id: cache.id,
-#              })
-#            }
-#            console.log("Clear completed")
