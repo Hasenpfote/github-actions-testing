@@ -32,15 +32,16 @@ jobs:
         with:
           script: |
             try {
-              let num_pages = 1;
+              let num_pages = 0;
               do {
                 const wf_runs = await github.rest.actions.listWorkflowRuns({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   workflow_id: 'lint.yml',
+                  page: num_pages,
                 });
                 console.debug(wf_runs.data.total_count);
-                console.debug(num_pages++);
+                console.debug(++num_pages);
               } while(num_pages < 40);
             } catch(e) {
               console.debug(e.name + ': ' + e.message)
