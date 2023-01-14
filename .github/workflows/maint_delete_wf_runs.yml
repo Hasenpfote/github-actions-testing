@@ -71,7 +71,6 @@ jobs:
                 if (!has_expired) {
                   continue;
                 }
-                console.debug(wf_run.updated_at)
 
                 deleteWorkflowRun({
                   owner: context.repo.owner,
