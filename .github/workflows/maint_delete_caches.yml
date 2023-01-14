@@ -21,8 +21,9 @@ jobs:
         with:
           script: |
             const validity_days = `${{ inputs.validity_days }}`;
-            console.log('validity days', validity_days)
+            console.log('validity days', validity_days);
             const current_date = new Date();
+            console.log('current date', current_date);
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
               repo: context.repo.repo,
