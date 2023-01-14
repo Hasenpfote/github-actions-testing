@@ -1,4 +1,4 @@
-name: 🚧🧰 Maint - Delete caches
+name: 🧰 Maint - Delete caches
 
 on:
   workflow_dispatch:
@@ -39,7 +39,6 @@ jobs:
               expiry_date.setDate(expiry_date.getDate() + validity_days);
               const has_expired = current_date.getTime() > expiry_date.getTime();
               const has_matched = re.test(cache.key);
-              console.log('has_matched:', has_matched);
               if (current_date.getTime() > expiry_date.getTime()) {
                 github.rest.actions.deleteActionsCacheById({
                   owner: context.repo.owner,
