@@ -10,13 +10,13 @@ on:
         options: ['0', '1', '2', '3', '4', '5', '6', '7']
 
 jobs:
-  debug:
+  main:
     permissions:
       actions: write
 
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
+      - name: Delete caches
         uses: actions/github-script@v6
         with:
           script: |
@@ -33,6 +33,13 @@ jobs:
               expiry_date.setDate(expiry_date.getDate() + validity_days)
               if (current_date.getTime() > expiry_date.getTime()) {
                 console.log('expired', new Date(cache.last_accessed_at));
+/*                
+                github.rest.actions.deleteActionsCacheById({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  cache_id: cache.id,
+                });
+*/
               }
             }
 
