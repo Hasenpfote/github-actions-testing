@@ -53,7 +53,7 @@ jobs:
                   per_page: 1,
                 });
                 total_count = wf_runs.data.total_count;
-              catch (e) {
+              } catch (e) {
               }
               return total_count;
             }
