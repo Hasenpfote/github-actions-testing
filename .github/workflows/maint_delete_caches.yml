@@ -35,10 +35,12 @@ jobs:
             //let fn = (owner, repo, cache_id) => a + 100;
             //github.rest.actions.deleteActionsCacheById
             
-            let fn1 = (owner, repo, cache_id) => undefined;
-            let fn2 = github.rest.actions.deleteActionsCacheById
+            let fn1 = (owner, repo) => undefined;
+            let fn2 = github.rest.actions.getActionsCacheList
             console.debug(fn1);
             console.debug(fn2);
+            const ret = fn2({owner: context.repo.owner, repo: context.repo.repo,})
+            console.debug(ret);
             
             //////
             const validity_days = parseInt(`${{ inputs.validity-days }}`, 10);
