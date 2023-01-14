@@ -98,11 +98,8 @@ jobs:
             }
 
             const num_wf_runs = await numWorkflowRuns('lint.yml');
-            console.log('num_wf_runs', num_wf_runs);
-            console.log('max_pages', Math.ceil(num_wf_runs / 30));
-            
-
-            //deleteWorkflowRuns('lint.yml', 20);
+            const max_pages = Math.ceil(num_wf_runs / 30);
+            deleteWorkflowRuns('lint.yml', max_pages);
 
   main:
     permissions:
