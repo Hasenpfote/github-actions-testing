@@ -32,7 +32,7 @@ jobs:
         with:
           script: |
             try {
-              let num_pages = 0;
+              let num_pages = 1;
               do {
                 console.debug('num_pages=', num_pages)
                 const wf_runs = await github.rest.actions.listWorkflowRuns({
@@ -40,9 +40,8 @@ jobs:
                   repo: context.repo.repo,
                   workflow_id: 'lint.yml',
                   per_page: 30,
-                  page: parseInt(num_pages),
+                  page: num_pages,
                 });
-                num_pages++;
                 //console.debug(wf_runs.data.total_count);
                 //console.debug(++num_pages);
                 //console.debug(wf_runs.data.workflow_runs);
@@ -50,7 +49,7 @@ jobs:
                   console.debug(wf_run.id, '#', wf_run.run_number);
                 }
                 console.debug('*********')
-              } while(num_pages < 3);
+              } while(num_pages++ < 3);
             } catch(e) {
               console.debug(e.name + ': ' + e.message)
             }
