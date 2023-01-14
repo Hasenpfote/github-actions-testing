@@ -31,16 +31,16 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const max_pages = 30;
+            //const max_pages = 30;
 
-            async function fn() {
+            async function fn(workflow_id, max_pages) {
               try {
                 let num_pages = 1;
                 do {
                   const wf_runs = await github.rest.actions.listWorkflowRuns({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
-                    workflow_id: 'lint.yml',
+                    workflow_id: workflow_id,
                     per_page: 30,
                     page: num_pages,
                   });
@@ -54,10 +54,7 @@ jobs:
                 console.error(e.name + ': ' + e.message);
               }
             }
-            fn();
-            
-            //(async() => {
-            //})();
+            fn('lint.yml', 20);
 
   main:
     permissions:
