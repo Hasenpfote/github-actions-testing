@@ -20,7 +20,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const validity_days = `${{ inputs.validity_days }}`;
+            const validity_days = parseInt(`${{ inputs.validity_days }}`, 10);
             console.log('validity days', validity_days);
             const current_date = new Date();
             console.log('current date', current_date);
