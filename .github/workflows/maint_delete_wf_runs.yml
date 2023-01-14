@@ -31,6 +31,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            //async function           
+          
             let deleteWorkflowRun;
             if (${{ inputs.dry-run }} == true) {
               console.warn('Running in dry-run mode.');
@@ -55,6 +57,7 @@ jobs:
                     per_page: 30,
                     page: num_pages,
                   });
+                  console.log(wf_runs.data)
                   for (const wf_run of wf_runs.data.workflow_runs) {
                     if (wf_run.status != 'completed') {
                       continue;
