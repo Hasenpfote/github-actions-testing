@@ -64,16 +64,20 @@ jobs:
                 if (wf_run.status != 'completed') {
                   continue;
                 }
+
                 const expiry_date = new Date(wf_run.updated_at);
                 expiry_date.setDate(expiry_date.getDate() + validity_days);
                 const has_expired = current_date.getTime() > expiry_date.getTime();
-                if (has_expired) {
-                  deleteWorkflowRun({
-                    owner: context.repo.owner,
-                    repo: context.repo.repo,
-                    run_id: wf_run.id,
-                  });
+                if (!has_expired) {
+                  continue;
                 }
+                console.debug(wf_run.updated_at)
+
+                deleteWorkflowRun({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  run_id: wf_run.id,
+                });
                 num_deleted_wf_runs++;
               }
               console.info(`[${basename}] ${num_deleted_wf_runs}/${wf_runs.data.workflow_runs.length} workflow runs have been deleted.`);
