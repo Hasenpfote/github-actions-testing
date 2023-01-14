@@ -40,7 +40,7 @@ jobs:
                   repo: context.repo.repo,
                   workflow_id: 'lint.yml',
                   per_page: 30,
-                  page: num_pages,
+                  page: parseInt(num_pages),
                 });
                 num_pages++;
                 //console.debug(wf_runs.data.total_count);
