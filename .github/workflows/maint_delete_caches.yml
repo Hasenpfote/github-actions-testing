@@ -28,16 +28,16 @@ jobs:
             });
             
             console.log('lenght', caches.data.actions_caches.length)
-            
+            let num_deleted_caches = 0;
             for (const cache of caches.data.actions_caches) {
-              console.log('cache.id', cache.id);
-
               const expiry_date = new Date(cache.last_accessed_at);
               expiry_date.setDate(expiry_date.getDate() + validity_days)
               if (current_date.getTime() > expiry_date.getTime()) {
                 console.log('expired', new Date(cache.last_accessed_at));
+                num_deleted_caches++;
               }
             }
+            console.log(`${num_deleted_caches}/${caches.data.actions_caches.length} caches have been deleted.`);
 
 ###
 #jobs:
