@@ -41,7 +41,8 @@ jobs:
             
             for (const wf of wfs.data.workflows) {
               //const has_matched = re.test(cache.key);
-              console.debug(wf)
+              //console.debug(wf)
+              console.debug(path.basename(wf.path))
             }
             
             //console.debug(wfs);
