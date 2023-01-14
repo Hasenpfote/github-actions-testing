@@ -23,7 +23,7 @@ on:
 jobs:
   sub:
     permissions:
-      repository-projects: read
+      actions: read
 
     runs-on: ubuntu-latest
     steps:
@@ -31,7 +31,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const ret = await github.rest.actions.getAllowedActionsRepository({
+            const ret = await github.rest.actions.listRepoWorkflows({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
