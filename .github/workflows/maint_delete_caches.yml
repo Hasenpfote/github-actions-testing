@@ -31,6 +31,7 @@ jobs:
             for (const cache of caches.data.actions_caches) {
               const expiry_date = new Date(cache.last_accessed_at);
               expiry_date.setDate(expiry_date.getDate() + validity_days)
+              console.log('expiry date', expiry_date);
 
               console.log('src', current_date.getTime());
               console.log('dst', expiry_date.getTime());
