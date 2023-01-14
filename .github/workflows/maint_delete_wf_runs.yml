@@ -38,7 +38,8 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            for (const wf of wf_runs.data.wfs) {
+            
+            for (const wf of wfs.data.workflows) {
               //const has_matched = re.test(cache.key);
               console.debug(wf)
             }
