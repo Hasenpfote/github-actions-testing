@@ -31,10 +31,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const exec = async() => {
-              console.log('aaaa')
-            };
-            exec();
+            try {
+              const exec = async() => {
+                console.log('aaaa')
+              };
+              exec();
+            } catch (e) {
+            }
 
   main:
     permissions:
