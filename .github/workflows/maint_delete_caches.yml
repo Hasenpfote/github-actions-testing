@@ -23,7 +23,7 @@ on:
 jobs:
   sub:
     permissions:
-      actions: read
+      repository-projects: read
 
     runs-on: ubuntu-latest
     steps:
