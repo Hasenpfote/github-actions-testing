@@ -1,4 +1,4 @@
-name: py-test
+name: 🧪 py-test
 
 on:
   workflow_call:
