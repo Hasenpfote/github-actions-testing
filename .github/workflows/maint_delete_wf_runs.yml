@@ -34,7 +34,7 @@ jobs:
             const wf_runs = await github.rest.actions.listWorkflowRuns({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              workflow_id: 'lint.yml',
+              workflow_id: 'py-lint.yml',
             });
             console.debug(wf_runs.total_count);
 
