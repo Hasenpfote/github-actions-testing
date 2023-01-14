@@ -20,7 +20,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const validity_days = 7;
+            const validity_days = `${{ inputs.validity_days }}`;
             const current_date = new Date();
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
