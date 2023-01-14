@@ -31,13 +31,9 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            try {
-              const exec = async() => {
-                console.log('aaaa')
-              };
-              exec();
-            } catch (e) {
-            }
+            (async() => {
+              console.log('aaaa')
+            })();
 
   main:
     permissions:
