@@ -42,11 +42,12 @@ jobs:
                     per_page: 30,
                     page: num_pages,
                   });
+                  console.debug(wf_runs.data.workflow_runs[0].id, '#', wf_runs.data.workflow_runs[0].run_number);
                   for (const wf_run of wf_runs.data.workflow_runs) {
-                    console.debug(wf_run.id, '#', wf_run.run_number);
+                    //console.debug(wf_run.id, '#', wf_run.run_number);
                   }
                   console.debug('*********')
-                } while(num_pages++ < 3);
+                } while(num_pages++ < 30);
               };
               exec();
             } catch (e) {
