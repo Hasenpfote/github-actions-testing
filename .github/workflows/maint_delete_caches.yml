@@ -1,4 +1,4 @@
-name: 🐛🧰 Delete caches
+name: 🚧🧰 Maint - Delete caches
 
 on:
   workflow_dispatch:
