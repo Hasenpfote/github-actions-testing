@@ -39,7 +39,7 @@ jobs:
             let fn2 = github.rest.actions.getActionsCacheList
             console.debug(fn1);
             console.debug(fn2);
-            const ret = fn2({owner: context.repo.owner, repo: context.repo.repo,})
+            const ret = await fn2({owner: context.repo.owner, repo: context.repo.repo,})
             console.debug(ret);
             
             //////
