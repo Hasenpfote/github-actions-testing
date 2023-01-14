@@ -39,6 +39,7 @@ jobs:
         with:
           script: |
             const validity_days = parseInt(`${{ inputs.validity_days }}`, 10);
+            const re = new RegExp('${{ inputs.pattern }}');
             const current_date = new Date();
             const caches = await github.rest.actions.getActionsCacheList({
               owner: context.repo.owner,
@@ -47,7 +48,12 @@ jobs:
             let num_deleted_caches = 0;
             for (const cache of caches.data.actions_caches) {
               const expiry_date = new Date(cache.last_accessed_at);
-              expiry_date.setDate(expiry_date.getDate() + validity_days)
+              expiry_date.setDate(expiry_date.getDate() + validity_days);
+              
+              const has_expired = current_date.getTime() > expiry_date.getTime();
+              console.log(cache);
+              //const has_matched = re.test(postcode);
+
               if (current_date.getTime() > expiry_date.getTime()) {
                 github.rest.actions.deleteActionsCacheById({
                   owner: context.repo.owner,
