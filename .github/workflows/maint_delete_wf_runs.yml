@@ -34,4 +34,4 @@ jobs:
               workflow_id: workflow_id,
             });
             console.debug(wf_runs.data.workflow_runs.length);
-            //console.debug(wf_runs.data.workflow_runs[0]);
+            console.debug(wf_runs.data.workflow_runs[0]);
