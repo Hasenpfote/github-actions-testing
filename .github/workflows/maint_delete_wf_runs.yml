@@ -31,12 +31,16 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const wf_runs = await github.rest.actions.listWorkflowRuns({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'py-lint.yml',
-            });
-            console.debug(wf_runs.total_count);
+            try {
+              const wf_runs = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'py-lint.yml',
+              });
+              console.debug(wf_runs.total_count);
+            } catch(e) {
+              console.debug(e.name + ': ' + e.message)
+            }
 
   main:
     permissions:
