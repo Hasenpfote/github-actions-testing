@@ -35,7 +35,7 @@ jobs:
             //let fn = (owner, repo, cache_id) => a + 100;
             //github.rest.actions.deleteActionsCacheById
             
-            let fn1 = (owner, repo, cache_id) => ;
+            let fn1 = (owner, repo, cache_id) => undefined;
             let fn2 = github.rest.actions.deleteActionsCacheById
             console.debug(fn1);
             console.debug(fn2);
