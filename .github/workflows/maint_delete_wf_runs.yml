@@ -21,6 +21,27 @@ on:
         type: boolean
 
 jobs:
+  sub:
+    permissions:
+      actions: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: actions/github-script@v6
+        with:
+          script: |
+            for (let page=0; page < 3; page++) {
+              const wf_runs = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: 'lint.yml',
+                page: page,
+              });
+              console.debug('page=', page);
+              console.debug(wf_runs);
+            }
+
   main:
     permissions:
       actions: write
