@@ -32,12 +32,16 @@ jobs:
         with:
           script: |
             try {
-              const wf_runs = await github.rest.actions.listWorkflowRuns({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'py-lint.yml',
-              });
-              console.debug(wf_runs.total_count);
+              let num_pages = 1;
+              do {
+                const wf_runs = await github.rest.actions.listWorkflowRuns({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: 'lint.yml',
+                });
+                console.debug(wf_runs.total_count);
+                console.debug(num_pages++);
+              } while(num_pages < 30);
             } catch(e) {
               console.debug(e.name + ': ' + e.message)
             }
