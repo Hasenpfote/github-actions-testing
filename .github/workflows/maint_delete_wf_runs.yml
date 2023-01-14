@@ -44,7 +44,7 @@ jobs:
                 num_pages++;
                 //console.debug(wf_runs.data.total_count);
                 //console.debug(++num_pages);
-                console.debug(wf_runs.data.workflow_runs);
+                //console.debug(wf_runs.data.workflow_runs);
                 for (const wf_run of wf_runs.data.workflow_runs) {
                   console.debug(wf_run.id, '#', wf_run.run_number);
                 }
