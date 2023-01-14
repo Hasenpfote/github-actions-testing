@@ -33,7 +33,7 @@ jobs:
           script: |
             let deleteActionsCacheById;
             if (${{ inputs.dry-run }} == true) {
-              console.warn('Running in dry-run mode.');
+              console.warn('Running in dry-run mode.', 'color: red');
               deleteActionsCacheById = (owner, repo, cache_id) => undefined;
             } else {
               deleteActionsCacheById = github.rest.actions.deleteActionsCacheById;
