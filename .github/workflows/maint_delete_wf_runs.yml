@@ -37,5 +37,5 @@ jobs:
             console.debug(wf_runs.data.workflow_runs[0]);
 
             for (const wf_run of wf_runs.data.workflow_runs) {
-              console.debug(wf_run.status);
+              console.debug(wf_run.status == 'completed');
             }
