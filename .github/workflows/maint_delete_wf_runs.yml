@@ -31,6 +31,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            const max_pages = 30;
             (async() => {
               try {
                 let num_pages = 1;
@@ -47,7 +48,7 @@ jobs:
                     //console.debug(wf_run.id, '#', wf_run.run_number);
                   }
                   console.debug('*********')
-                } while(num_pages++ < 30);
+                } while(num_pages++ < max_pages);
               } catch (e) {
                 console.error(e.name + ': ' + e.message);
               }
