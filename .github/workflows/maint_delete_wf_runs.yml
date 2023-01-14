@@ -32,7 +32,7 @@ jobs:
         with:
           script: |
             try {
-              const exec = async() () => {
+              const exec = async() => {
                 let num_pages = 1;
                 do {
                   const wf_runs = await github.rest.actions.listWorkflowRuns({
