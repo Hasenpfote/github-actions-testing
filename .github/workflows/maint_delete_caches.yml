@@ -31,7 +31,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const ret = await octokit.rest.actions.getAllowedActionsRepository({
+            const ret = await github.rest.actions.getAllowedActionsRepository({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
