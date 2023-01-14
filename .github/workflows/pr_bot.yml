@@ -1,4 +1,4 @@
-name: pr-bot
+name: 🤖 pr-bot
 
 on:
   pull_request_target:
