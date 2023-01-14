@@ -3,6 +3,11 @@ name: 🧰 Maint - Delete caches
 on:
   workflow_dispatch:
     inputs:
+      dry-run:
+        required: false
+        default: true
+        type: boolean
+
       validity-days:
         description: 'Validity days'
         default: '7'
@@ -14,10 +19,6 @@ on:
         required: false
         default: ''
         type: string
-
-      #
-      #dry-run
-      #
 
 jobs:
   main:
