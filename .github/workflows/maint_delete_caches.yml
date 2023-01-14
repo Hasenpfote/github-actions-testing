@@ -4,18 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       validity_days:
-        description: Make a choice
-        #default: 7
+        description: 'Validity days'
+        default: '7'
         type: choice
-        options:
-        - '0'
-        - '1'
-        - '2'
-        - '3'
-        - '4'
-        - '5'
-        - '6'
-        - '7'
+        options: ['0', '1', '2', '3', '4', '5', '6', '7']
 
 jobs:
   debug:
