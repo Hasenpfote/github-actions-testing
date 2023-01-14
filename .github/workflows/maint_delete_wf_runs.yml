@@ -54,6 +54,7 @@ jobs:
                 continue;
               }
 
+              let num_deleted_wf_runs = 0;
               const wf_runs = await github.rest.actions.listWorkflowRuns({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
@@ -71,7 +72,9 @@ jobs:
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     run_id: wf_run.id,
-                  });                  
+                  });
                 }
+                num_deleted_wf_runs++;
               }
+              console.info(`[basename] ${num_deleted_wf_runs}/${wf_runs.data.workflow_runs.length} workflow runs have been deleted.`);
             }
