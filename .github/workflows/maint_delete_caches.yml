@@ -27,9 +27,9 @@ jobs:
         with:
           script: |
             //let pattern = /^\d{3}-?\d{4}$/g;
-            let pattern = `${{ inputs.pattern }}`
-            let postcode = '121-4440';
-            let result = postcode.match(pattern);
+            const re = `/${{ inputs.pattern }}/`
+            const postcode = '121-4440';
+            const result = re.test(postcode)
             console.debug(result)
 
       - name: Delete caches
