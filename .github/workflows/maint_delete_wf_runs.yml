@@ -31,9 +31,20 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            //const max_pages = 30;
+            let deleteWorkflowRun;
+            if (${{ inputs.dry-run }} == true) {
+              console.warn('Running in dry-run mode.');
+              deleteWorkflowRun = (owner, repo, run_id) => undefined;
+            } else {
+              deleteWorkflowRun = github.rest.actions.deleteWorkflowRun;
+            }
+
+            const validity_days = parseInt('${{ inputs.validity-days }}', 10);
+            const re = new RegExp('${{ inputs.name-pattern }}');
+            const current_date = new Date();
 
             async function fn(workflow_id, max_pages) {
+              let num_deleted_wf_runs = 0;
               try {
                 let num_pages = 1;
                 do {
@@ -44,15 +55,31 @@ jobs:
                     per_page: 30,
                     page: num_pages,
                   });
-                  console.debug(wf_runs.data.workflow_runs[0].id, '#', wf_runs.data.workflow_runs[0].run_number);
                   for (const wf_run of wf_runs.data.workflow_runs) {
-                    //console.debug(wf_run.id, '#', wf_run.run_number);
+                    if (wf_run.status != 'completed') {
+                      continue;
+                    }
+
+                    const expiry_date = new Date(wf_run.updated_at);
+                    expiry_date.setDate(expiry_date.getDate() + validity_days);
+                    const has_expired = current_date.getTime() > expiry_date.getTime();
+                    if (!has_expired) {
+                      continue;
+                    }
+
+                    deleteWorkflowRun({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      run_id: wf_run.id,
+                    });
+                    num_deleted_wf_runs++;
                   }
-                  console.debug('*********')
                 } while(num_pages++ < max_pages);
               } catch (e) {
                 console.error(e.name + ': ' + e.message);
               }
+              console.debug('num_deleted_wf_runs=', num_deleted_wf_runs)
+              //console.info(`[${basename}] ${num_deleted_wf_runs}/${wf_runs.data.workflow_runs.length} workflow runs have been deleted.`);
             }
             fn('lint.yml', 20);
 
