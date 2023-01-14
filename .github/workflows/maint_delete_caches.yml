@@ -1,4 +1,4 @@
-name: '🔧[MAINT] Delete caches'
+name: '⚠️[MAINT] Delete caches'
 
 on:
   workflow_dispatch:
