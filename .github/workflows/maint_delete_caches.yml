@@ -53,13 +53,15 @@ jobs:
               expiry_date.setDate(expiry_date.getDate() + validity_days);
               const has_expired = current_date.getTime() > expiry_date.getTime();
               const has_matched = re.test(cache.key);
-              if (has_expired && has_matched) {
-                deleteActionsCacheById({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  cache_id: cache.id,
-                });
-                num_deleted_caches++;
+              if (!has_expired || !has_matched) {
+                continue;
               }
+              
+              deleteActionsCacheById({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                cache_id: cache.id,
+              });
+              num_deleted_caches++;
             }
             console.info(`${num_deleted_caches}/${caches.data.actions_caches.length} caches have been deleted.`);
