@@ -31,36 +31,47 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            let deleteWorkflowRun;
+            if (${{ inputs.dry-run }} == true) {
+              console.warn('Running in dry-run mode.');
+              deleteWorkflowRun = (owner, repo, run_id) => undefined;
+            } else {
+              deleteWorkflowRun = github.rest.actions.deleteWorkflowRun;
+            }
+
             const validity_days = parseInt('${{ inputs.validity-days }}', 10);
             const re = new RegExp('${{ inputs.name-pattern }}');
+            const current_date = new Date();
 
             const wfs = await github.rest.actions.listRepoWorkflows({
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            
             for (const wf of wfs.data.workflows) {
-              //const has_matched = re.test(cache.key);
-              //console.debug(wf)
-              const basename = wf.path.split("/").reverse()[0]
-              console.debug(basename)
-              
-            }
-            
-            //console.debug(wfs);
-            //console.debug(wfs.data.workflows[0].id);
-            const workflow_id = 'maint_delete_wf_runs.yml';
-            //const workflow_id = wfs.data.workflows[0].id;
+              const basename = wf.path.split("/").reverse()[0];
+              const has_matched = re.test(basename);
+              if (!has_matched) {
+                continue;
+              }
 
-            const wf_runs = await github.rest.actions.listWorkflowRuns({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: workflow_id,
-            });
-            console.debug(wf_runs.data.workflow_runs.length);
-            console.debug(wf_runs.data.workflow_runs[0]);
-
-            for (const wf_run of wf_runs.data.workflow_runs) {
-              console.debug(wf_run.status == 'completed');
-              //updated_at
+              const wf_runs = await github.rest.actions.listWorkflowRuns({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                workflow_id: wf.id,
+              });
+              for (const wf_run of wf_runs.data.workflow_runs) {
+                if (wf_run.status != 'completed') {
+                  continue;
+                }
+                const expiry_date = new Date(wf_run.updated_at);
+                expiry_date.setDate(expiry_date.getDate() + validity_days);
+                const has_expired = current_date.getTime() > expiry_date.getTime();
+                if (has_expired) {
+                  deleteWorkflowRun({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    run_id: wf_run.id,
+                  });                  
+                }
+              }
             }
