@@ -59,6 +59,7 @@ jobs:
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 workflow_id: wf.id,
+                per_page: 100,
               });
               for (const wf_run of wf_runs.data.workflow_runs) {
                 if (wf_run.status != 'completed') {
