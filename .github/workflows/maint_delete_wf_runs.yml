@@ -31,8 +31,6 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            //async function           
-          
             let deleteWorkflowRun;
             if (${{ inputs.dry-run }} == true) {
               console.warn('Running in dry-run mode.');
@@ -45,7 +43,22 @@ jobs:
             const re = new RegExp('${{ inputs.name-pattern }}');
             const current_date = new Date();
 
-            async function fn(workflow_id, max_pages) {
+            async function numWorkflowRuns(workflow_id) {
+              let total_count = 0
+              try {
+                const wf_runs = await github.rest.actions.listWorkflowRuns({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: workflow_id,
+                  per_page: 1,
+                });
+                total_count = wf_runs.data.total_count;
+              catch (e) {
+              }
+              return total_count;
+            }
+
+            async function deleteWorkflowRuns(workflow_id, max_pages) {
               let num_deleted_wf_runs = 0;
               try {
                 let num_pages = 1;
@@ -57,7 +70,6 @@ jobs:
                     per_page: 30,
                     page: num_pages,
                   });
-                  console.log(wf_runs.data)
                   for (const wf_run of wf_runs.data.workflow_runs) {
                     if (wf_run.status != 'completed') {
                       continue;
@@ -84,7 +96,13 @@ jobs:
               console.debug('num_deleted_wf_runs=', num_deleted_wf_runs)
               //console.info(`[${basename}] ${num_deleted_wf_runs}/${wf_runs.data.workflow_runs.length} workflow runs have been deleted.`);
             }
-            fn('lint.yml', 20);
+
+            const num_wf_runs = numWorkflowRuns('lint.yml');
+            console.log('num_wf_runs', num_wf_runs);
+            console.log('max_pages', Math.ceil(num_wf_runs / 30));
+            
+
+            //deleteWorkflowRuns('lint.yml', 20);
 
   main:
     permissions:
