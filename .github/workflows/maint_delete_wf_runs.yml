@@ -31,16 +31,12 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            for (let page=0; page < 3; page++) {
-              const wf_runs = await github.rest.actions.listWorkflowRuns({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                workflow_id: 'lint.yml',
-                page: page,
-              });
-              console.debug('page=', page);
-              console.debug(wf_runs);
-            }
+            const wf_runs = await github.rest.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'lint.yml',
+            });
+            console.debug(wf_runs.total_count);
 
   main:
     permissions:
