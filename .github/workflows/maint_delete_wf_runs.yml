@@ -41,6 +41,7 @@ jobs:
                   per_page: 30,
                   page: num_pages,
                 });
+                num_pages++;
                 //console.debug(wf_runs.data.total_count);
                 //console.debug(++num_pages);
                 //console.debug(wf_runs.data.workflow_runs);
