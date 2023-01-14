@@ -16,6 +16,15 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let pattern = /^\d{3}-?\d{4}$/g;
+            let postcode = '121-4440';
+            let result = postcode.match(pattern);
+            console.debug(result)
+
       - name: Delete caches
         uses: actions/github-script@v6
         with:
