@@ -3,11 +3,6 @@ name: 🧰 Maint - Delete caches
 on:
   workflow_dispatch:
     inputs:
-      dry-run:
-        required: false
-        default: true
-        type: boolean
-
       validity-days:
         description: 'Validity days'
         default: '7'
@@ -19,6 +14,11 @@ on:
         required: false
         default: ''
         type: string
+
+      dry-run:
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   main:
@@ -44,12 +44,14 @@ jobs:
               expiry_date.setDate(expiry_date.getDate() + validity_days);
               const has_expired = current_date.getTime() > expiry_date.getTime();
               const has_matched = re.test(cache.key);
-              if (current_date.getTime() > expiry_date.getTime()) {
-                github.rest.actions.deleteActionsCacheById({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  cache_id: cache.id,
-                });
+              if (has_expired && has_matched) {
+                if (!${{ inputs.dry-run }}) {
+                  github.rest.actions.deleteActionsCacheById({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    cache_id: cache.id,
+                  });
+                }
                 num_deleted_caches++;
               }
             }
