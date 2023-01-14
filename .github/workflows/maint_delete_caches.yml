@@ -26,8 +26,6 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
             });
-            
-            console.log('lenght', caches.data.actions_caches.length)
             let num_deleted_caches = 0;
             for (const cache of caches.data.actions_caches) {
               const expiry_date = new Date(cache.last_accessed_at);
@@ -37,7 +35,7 @@ jobs:
                 num_deleted_caches++;
               }
             }
-            console.log(`${num_deleted_caches}/${caches.data.actions_caches.length} caches have been deleted.`);
+            console.info(`${num_deleted_caches}/${caches.data.actions_caches.length} caches have been deleted.`);
 
 ###
 #jobs:
