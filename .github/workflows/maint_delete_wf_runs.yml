@@ -37,9 +37,5 @@ jobs:
             console.debug(wf_runs.data.workflow_runs[0]);
 
             for (const wf_run of wf_runs.data.workflow_runs) {
-              github.rest.actions.deleteWorkflowRun({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                run_id: wf_run.id,
-              });
+              console.debug(wf_run.status);
             }
