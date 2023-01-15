@@ -107,6 +107,7 @@ jobs:
                 continue;
               }
 
+              let num_deleted_wf_runs = 0;
               const num_wf_runs = await numWorkflowRuns(wf.id);
               const wf_run_ids = await validWorkflowRunIds(wf.id, num_wf_runs);
               for (const wf_run_id of wf_run_ids) {
@@ -115,6 +116,7 @@ jobs:
                   repo: context.repo.repo,
                   run_id: wf_run_id,
                 });
+                num_deleted_wf_runs++;
               }
-              console.info(`[${basename}] ${wf_run_ids.length}/${num_wf_runs} workflow runs have been deleted.`);
+              console.info(`[${basename}] ${num_deleted_wf_runs}/${num_wf_runs} workflow runs have been deleted.`);
             }
