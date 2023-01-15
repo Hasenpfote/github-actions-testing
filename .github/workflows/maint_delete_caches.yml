@@ -97,6 +97,11 @@ jobs:
 
             let num_deleted_caches = 0;
             const num_caches = await numCaches();
+            if (num_caches == 0) {
+              console.info('No caches');
+              return;
+            }
+
             const cache_ids = await validCacheIds(num_caches);
             for (const cache_id of cache_ids) {
               deleteActionsCacheById({
