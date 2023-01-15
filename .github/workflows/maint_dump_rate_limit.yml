@@ -1,4 +1,4 @@
-name: 🚧🧰 Maint - Display rate limit
+name: 🚧🧰 Maint - Dump rate limit
 
 on:
   workflow_dispatch:
@@ -10,9 +10,9 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Display rate limit 
+      - name: Dump rate limit 
         uses: actions/github-script@v6
         with:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
-            console.debug(rate_limit);
+            console.info(rate_limit);
