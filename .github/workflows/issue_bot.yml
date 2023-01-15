@@ -1,4 +1,4 @@
-name: '🤖 Bot: issues'
+name: '🤖 Bot: Issues'
 
 on:
   issues:
