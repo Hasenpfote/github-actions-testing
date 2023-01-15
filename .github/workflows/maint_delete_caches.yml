@@ -98,7 +98,7 @@ jobs:
             let num_deleted_caches = 0;
             const num_caches = await numCaches();
             if (num_caches == 0) {
-              console.info('No caches');
+              console.info('No caches.');
               return;
             }
 
