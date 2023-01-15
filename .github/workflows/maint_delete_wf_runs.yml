@@ -119,6 +119,7 @@ jobs:
                   run_id: wf_run_id,
                 });
               }
+              console.info(`[${basename}] ${wf_run_ids.length}/${num_wf_runs} workflow runs have been deleted.`);
             }
 
   main:
