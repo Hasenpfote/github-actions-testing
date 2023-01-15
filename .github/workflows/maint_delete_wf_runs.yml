@@ -31,13 +31,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.info('validity-days:', '${{ inputs.validity-days }}');
-            console.info('name-pattern:', '${{ inputs.name-pattern }}');
-            console.info('dry-run:', '${{ inputs.dry-run }}');
+            core.info('validity-days: ${{ inputs.validity-days }}');
+            core.info('name-pattern: ${{ inputs.name-pattern }}');
+            core.info('dry-run: ${{ inputs.dry-run }}');
 
             let deleteWorkflowRun;
             if (${{ inputs.dry-run }} == true) {
-              console.warn('Running in dry-run mode.');
+              core.warning('Running in dry-run mode.');
               deleteWorkflowRun = (owner, repo, run_id) => undefined;
             } else {
               deleteWorkflowRun = github.rest.actions.deleteWorkflowRun;
@@ -110,13 +110,13 @@ jobs:
               let num_deleted_wf_runs = 0;
               const num_wf_runs = await numWorkflowRuns(wf.id);
               if (!num_wf_runs) {
-                console.info(`[${basename}] This workflow has no runs yet.`);
+                core.notice(`[${basename}] This workflow has no runs yet.`);
                 continue;
               }
 
               const wf_run_ids = await validWorkflowRunIds(wf.id, num_wf_runs);
               if (!wf_run_ids.length) {
-                console.info(`[${basename}] Nothing matches the given conditions.`);
+                core.notice(`[${basename}] Nothing matches the given conditions.`);
                 continue;
               }
 
@@ -128,5 +128,5 @@ jobs:
                 });
                 num_deleted_wf_runs++;
               }
-              console.info(`[${basename}] ${num_deleted_wf_runs}/${num_wf_runs} workflow runs have been deleted.`);
+              core.notice(`[${basename}] ${num_deleted_wf_runs}/${num_wf_runs} workflow runs have been deleted.`);
             }
