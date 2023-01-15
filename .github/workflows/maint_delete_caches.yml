@@ -95,6 +95,7 @@ jobs:
               return ids;
             }
 
+            let num_deleted_caches = 0;
             const num_caches = await numCaches();
             const cache_ids = await validCacheIds(num_caches);
             for (const cache_id of cache_ids) {
@@ -103,5 +104,6 @@ jobs:
                 repo: context.repo.repo,
                 cache_id: cache_id,
               });
+              num_deleted_caches++;
             }
-            console.info(`${cache_ids.length}/${num_caches} caches have been deleted.`);
+            console.info(`${num_deleted_caches}/${num_caches} caches have been deleted.`);
