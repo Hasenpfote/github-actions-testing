@@ -31,6 +31,10 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            console.info('validity-days:', '${{ inputs.validity-days }}');
+            console.info('name-pattern:', '${{ inputs.name-pattern }}');
+            console.info('dry-run:', '${{ inputs.dry-run }}');
+
             let deleteWorkflowRun;
             if (${{ inputs.dry-run }} == true) {
               console.warn('Running in dry-run mode.');
