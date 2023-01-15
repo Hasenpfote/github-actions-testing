@@ -110,13 +110,13 @@ jobs:
               let num_deleted_wf_runs = 0;
               const num_wf_runs = await numWorkflowRuns(wf.id);
               if (!num_wf_runs) {
-                core.notice(`[${basename}] This workflow has no runs yet.`);
+                core.info(`[${basename}] This workflow has no runs yet.`);
                 continue;
               }
 
               const wf_run_ids = await validWorkflowRunIds(wf.id, num_wf_runs);
               if (!wf_run_ids.length) {
-                core.notice(`[${basename}] Nothing matches the given conditions.`);
+                core.info(`[${basename}] Nothing matches the given conditions.`);
                 continue;
               }
 
