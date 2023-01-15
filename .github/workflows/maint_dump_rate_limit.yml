@@ -16,3 +16,8 @@ jobs:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
             console.info(rate_limit);
+
+      - name: Debug
+        shell: bash
+        run: |
+          echo "::notice file={name},line={line},endLine={endLine},title={title}::{message}"
