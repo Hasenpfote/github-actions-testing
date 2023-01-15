@@ -63,8 +63,8 @@ jobs:
               const max_pages = Math.ceil(num_wf_runs / per_page);
               let ids = []
               try {
+                let num_pages = 1;
                 do {
-                  let num_pages = 1;
                   const wf_runs = await github.rest.actions.listWorkflowRuns({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
