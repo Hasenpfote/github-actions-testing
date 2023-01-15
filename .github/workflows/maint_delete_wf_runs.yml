@@ -91,12 +91,35 @@ jobs:
               }
               return ids;
             }
-            const basename = 'lint.yml'
-            const num_wf_runs = await numWorkflowRuns(basename);
-            console.debug(num_wf_runs);
-            const wf_run_ids = await validWorkflowRunIds(basename, num_wf_runs);
-            console.debug(wf_run_ids.length);
-            console.debug(wf_run_ids);
+
+            //const basename = 'lint.yml'
+            //const num_wf_runs = await numWorkflowRuns(basename);
+            //console.debug(num_wf_runs);
+            //const wf_run_ids = await validWorkflowRunIds(basename, num_wf_runs);
+            //console.debug(wf_run_ids.length);
+            //console.debug(wf_run_ids);
+
+            const wfs = await github.rest.actions.listRepoWorkflows({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            for (const wf of wfs.data.workflows) {
+              const basename = wf.path.split("/").reverse()[0];
+              const has_matched = re.test(basename);
+              if (!has_matched) {
+                continue;
+              }
+
+              const num_wf_runs = await numWorkflowRuns(basename);
+              const wf_run_ids = await validWorkflowRunIds(basename, num_wf_runs);
+              for (const wf_run_id of wf_run_ids) {
+                deleteWorkflowRun({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  run_id: wf_run_id,
+                });
+              }
+            }
 
   main:
     if: false
