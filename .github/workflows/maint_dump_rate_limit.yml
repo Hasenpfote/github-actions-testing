@@ -22,3 +22,6 @@ jobs:
         with:
           script: |
             core.notice('This is a message that will also emit an annotation');
+            core.info('Output to the actions build log')
+            core.error('This is a bad error, action may still succeed though.')
+            core.warning('Something went wrong, but it\'s not bad enough to fail the build.')
