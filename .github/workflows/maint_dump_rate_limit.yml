@@ -16,6 +16,7 @@ jobs:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
             console.info(rate_limit);
+            core.notice(rate_limit.resources.core);
 
       - name: Debug
         uses: actions/github-script@v6
