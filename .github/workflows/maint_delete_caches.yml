@@ -32,7 +32,7 @@ jobs:
         with:
           script: |
             console.info('validity-days:', '${{ inputs.validity-days }}');
-            console.info('key-pattern:', '${{ inputs.key-pattern }}');
+            console.info('key-pattern:', '\'${{ inputs.key-pattern }}\'');
             console.info('dry-run:', '${{ inputs.dry-run }}');
 
             let deleteActionsCacheById;
