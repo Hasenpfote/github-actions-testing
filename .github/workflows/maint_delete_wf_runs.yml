@@ -109,6 +109,10 @@ jobs:
 
               let num_deleted_wf_runs = 0;
               const num_wf_runs = await numWorkflowRuns(wf.id);
+              if (num_wf_runs == 0) {
+                continue;
+              }
+
               const wf_run_ids = await validWorkflowRunIds(wf.id, num_wf_runs);
               for (const wf_run_id of wf_run_ids) {
                 deleteWorkflowRun({
