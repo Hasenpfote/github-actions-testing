@@ -97,12 +97,17 @@ jobs:
 
             let num_deleted_caches = 0;
             const num_caches = await numCaches();
-            if (num_caches == 0) {
+            if (!num_caches) {
               console.info('No caches.');
               return;
             }
 
             const cache_ids = await validCacheIds(num_caches);
+            if (!cache_ids.length) {
+              console.info('Nothing matches the given conditions.');
+              return;
+            }
+
             for (const cache_id of cache_ids) {
               deleteActionsCacheById({
                 owner: context.repo.owner,
