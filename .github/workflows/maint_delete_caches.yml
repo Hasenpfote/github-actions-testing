@@ -31,6 +31,10 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
+            console.info('validity-days:', '${{ inputs.validity-days }}');
+            console.info('key-pattern:', '${{ inputs.key-pattern }}');
+            console.info('dry-run:', '${{ inputs.dry-run }}');
+
             let deleteActionsCacheById;
             if (${{ inputs.dry-run }} == true) {
               console.warn('Running in dry-run mode.');
