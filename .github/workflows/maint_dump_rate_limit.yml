@@ -1,4 +1,4 @@
-name: 🚧🧰 Maint - Dump rate limit
+name: 🧰 Maint - Dump rate limit
 
 on:
   workflow_dispatch:
