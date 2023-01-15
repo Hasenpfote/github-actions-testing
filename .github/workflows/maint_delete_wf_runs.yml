@@ -109,12 +109,17 @@ jobs:
 
               let num_deleted_wf_runs = 0;
               const num_wf_runs = await numWorkflowRuns(wf.id);
-              if (num_wf_runs == 0) {
+              if (!num_wf_runs) {
                 console.info(`[${basename}] This workflow has no runs yet.`);
                 continue;
               }
 
               const wf_run_ids = await validWorkflowRunIds(wf.id, num_wf_runs);
+              if (!wf_run_ids.length) {
+                console.info(`[${basename}] Nothing matches the given conditions.`);
+                continue;
+              }
+
               for (const wf_run_id of wf_run_ids) {
                 deleteWorkflowRun({
                   owner: context.repo.owner,
