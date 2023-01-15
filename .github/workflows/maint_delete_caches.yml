@@ -98,13 +98,13 @@ jobs:
             let num_deleted_caches = 0;
             const num_caches = await numCaches();
             if (!num_caches) {
-              console.info('No caches.');
+              core.notice('No caches.');
               return;
             }
 
             const cache_ids = await validCacheIds(num_caches);
             if (!cache_ids.length) {
-              console.info('Nothing matches the given conditions.');
+              core.notice('Nothing matches the given conditions.');
               return;
             }
 
@@ -116,4 +116,4 @@ jobs:
               });
               num_deleted_caches++;
             }
-            console.info(`${num_deleted_caches}/${num_caches} caches have been deleted.`);
+            core.notice(`${num_deleted_caches}/${num_caches} caches have been deleted.`);
