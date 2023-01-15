@@ -31,13 +31,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            console.info('validity-days:', '${{ inputs.validity-days }}');
-            console.info('key-pattern:', '${{ inputs.key-pattern }}');
-            console.info('dry-run:', '${{ inputs.dry-run }}');
+            core.info('validity-days:', '${{ inputs.validity-days }}');
+            core.info('key-pattern:', '${{ inputs.key-pattern }}');
+            core.info('dry-run:', '${{ inputs.dry-run }}');
 
             let deleteActionsCacheById;
             if (${{ inputs.dry-run }} == true) {
-              console.warn('Running in dry-run mode.');
+              core.warning('Running in dry-run mode.');
               deleteActionsCacheById = (owner, repo, cache_id) => undefined;
             } else {
               deleteActionsCacheById = github.rest.actions.deleteActionsCacheById;
