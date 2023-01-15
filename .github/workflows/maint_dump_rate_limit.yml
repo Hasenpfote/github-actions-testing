@@ -18,6 +18,7 @@ jobs:
             console.info(rate_limit);
 
       - name: Debug
-        shell: bash
-        run: |
-          echo "::notice file={name},line={line},endLine={endLine},title={title}::{message}"
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.notice('This is a message that will also emit an annotation');
