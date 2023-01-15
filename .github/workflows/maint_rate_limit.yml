@@ -1,0 +1,18 @@
+name: 🚧🧰 Maint - Display rate limit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  main:
+    #permissions:
+    #  actions: read
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Display rate limit 
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const rate_limit = await octokit.request('GET /rate_limit', {});
+            console.debug(rate_limit);
