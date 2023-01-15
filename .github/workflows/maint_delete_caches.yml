@@ -75,6 +75,7 @@ jobs:
                     if (!has_matched) {
                       continue;
                     }
+                    console.log(cache);
 
                     const expiry_date = new Date(cache.last_accessed_at);
                     expiry_date.setDate(expiry_date.getDate() + validity_days);
