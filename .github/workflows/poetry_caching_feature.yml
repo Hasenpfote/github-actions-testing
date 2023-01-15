@@ -1,4 +1,4 @@
-name: 🧰 Poetry caching feature
+name: Poetry caching feature
 
 on: workflow_dispatch
 
