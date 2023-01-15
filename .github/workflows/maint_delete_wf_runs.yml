@@ -84,14 +84,11 @@ jobs:
                       continue;
                     }
 
-                    //
-                    console.debug('aaaa', wf_run.id);
                     ids.push(wf_run.id);
                   }
                 } while(num_pages++ < max_pages);
               } catch (e) {
               }
-              console.debug('bbbb', ids.length);
               return ids;
             }
             const basename = 'lint.yml'
