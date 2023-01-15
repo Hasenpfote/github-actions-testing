@@ -5,9 +5,6 @@ on:
 
 jobs:
   main:
-    #permissions:
-    #  actions: read
-
     runs-on: ubuntu-latest
     steps:
       - name: Dump rate limit 
@@ -15,15 +12,5 @@ jobs:
         with:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
-            console.info(rate_limit);
-            //core.notice(rate_limit.data.resources.core);
+            core.notice(JSON.stringify(rate_limit.data.rate, undefined, 2));
             core.notice(JSON.stringify(rate_limit.data.resources, undefined, 2));
-
-      - name: Debug
-        uses: actions/github-script@v6
-        with:
-          script: |
-            core.notice('This is a message that will also emit an annotation');
-            core.info('Output to the actions build log')
-            core.error('This is a bad error, action may still succeed though.')
-            core.warning('Something went wrong, but it\'s not bad enough to fail the build.')
