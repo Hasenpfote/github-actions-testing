@@ -64,7 +64,8 @@ jobs:
               let ids = []
               try {
                 do {
-                 const wf_runs = await github.rest.actions.listWorkflowRuns({
+                  let num_pages = 1;
+                  const wf_runs = await github.rest.actions.listWorkflowRuns({
                     owner: context.repo.owner,
                     repo: context.repo.repo,
                     workflow_id: workflow_id,
