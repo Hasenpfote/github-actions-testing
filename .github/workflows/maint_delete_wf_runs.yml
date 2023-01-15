@@ -110,6 +110,7 @@ jobs:
               let num_deleted_wf_runs = 0;
               const num_wf_runs = await numWorkflowRuns(wf.id);
               if (num_wf_runs == 0) {
+                console.info(`[${basename}] This workflow has no runs yet.`);
                 continue;
               }
 
