@@ -21,7 +21,37 @@ on:
         type: boolean
 
 jobs:
+  sub:
+    permissions:
+      actions: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete caches
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let deleteActionsCacheById;
+            if (${{ inputs.dry-run }} == true) {
+              console.warn('Running in dry-run mode.');
+              deleteActionsCacheById = (owner, repo, cache_id) => undefined;
+            } else {
+              deleteActionsCacheById = github.rest.actions.deleteActionsCacheById;
+            }
+
+            const validity_days = parseInt('${{ inputs.validity-days }}', 10);
+            const re = new RegExp('${{ inputs.key-pattern }}');
+            const current_date = new Date();
+
+            const caches = await github.rest.actions.getActionsCacheList({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+            });
+            console.debug(caches);
+
+
   main:
+    if: false
     permissions:
       actions: write
 
