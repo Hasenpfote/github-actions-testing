@@ -84,17 +84,18 @@ jobs:
                     }
 
                     //
-                    console.debug(wf_run.id);
+                    console.debug('aaaa', wf_run.id);
                     ids.push(wf_run.id);
                   }
                 } while(num_pages++ < max_pages);
               } catch (e) {
               }
-              console.debug(ids.length);
+              console.debug('bbbb', ids.length);
               return ids;
             }
             const basename = 'lint.yml'
             const num_wf_runs = await numWorkflowRuns(basename);
+            console.debug(num_wf_runs);
             const wf_run_ids = await validWorkflowRunIds(basename, num_wf_runs);
             console.debug(wf_run_ids.length);
             console.debug(wf_run_ids);
