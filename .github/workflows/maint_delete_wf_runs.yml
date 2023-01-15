@@ -21,7 +21,84 @@ on:
         type: boolean
 
 jobs:
+  sub:
+    permissions:
+      actions: write
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Delete workflow runs
+        uses: actions/github-script@v6
+        with:
+          script: |
+            let deleteWorkflowRun;
+            if (${{ inputs.dry-run }} == true) {
+              console.warn('Running in dry-run mode.');
+              deleteWorkflowRun = (owner, repo, run_id) => undefined;
+            } else {
+              deleteWorkflowRun = github.rest.actions.deleteWorkflowRun;
+            }
+
+            const validity_days = parseInt('${{ inputs.validity-days }}', 10);
+            const re = new RegExp('${{ inputs.name-pattern }}');
+            const current_date = new Date();
+            const per_page = 30;
+
+            async function numWorkflowRuns(workflow_id) {
+              let total_count = 0
+              try {
+                const wf_runs = await github.rest.actions.listWorkflowRuns({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  workflow_id: workflow_id,
+                  per_page: 1,
+                });
+                total_count = wf_runs.data.total_count;
+              } catch (e) {
+              }
+              return total_count;
+            }
+
+            async function validWorkflowRunIds(workflow_id, num_wf_runs) {
+              const max_pages = Math.ceil(num_wf_runs / per_page);
+              let ids = []
+              try {
+                do {
+                 const wf_runs = await github.rest.actions.listWorkflowRuns({
+                    owner: context.repo.owner,
+                    repo: context.repo.repo,
+                    workflow_id: workflow_id,
+                    per_page: per_page,
+                    page: num_pages,
+                  });
+                  for (const wf_run of wf_runs.data.workflow_runs) {
+                    if (wf_run.status != 'completed') {
+                      continue;
+                    }
+
+                    const expiry_date = new Date(wf_run.updated_at);
+                    expiry_date.setDate(expiry_date.getDate() + validity_days);
+                    const has_expired = current_date.getTime() > expiry_date.getTime();
+                    if (!has_expired) {
+                      continue;
+                    }
+
+                    //
+                    ids.push(wf_run.id)
+                  }
+                } while(num_pages++ < max_pages);
+              } catch (e) {
+              }
+              return ids;
+            }
+            const basename = 'lint.yml'
+            const num_wf_runs = await numWorkflowRuns(basename);
+            const wf_run_ids = await validWorkflowRunIds(basename, num_wf_runs);
+            console.debug(wf_run_ids.length);
+            console.debug(wf_run_ids);
+
   main:
+    if: false
     permissions:
       actions: write
 
