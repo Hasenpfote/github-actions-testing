@@ -1,4 +1,4 @@
-name: 🚧🧰 Maint - Delete workflow runs
+name: 🧰 Maint - Delete workflow runs
 
 on:
   workflow_dispatch:
