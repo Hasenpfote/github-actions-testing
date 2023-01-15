@@ -14,5 +14,5 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const rate_limit = await octokit.request('GET /rate_limit', {});
+            const rate_limit = await github.request('GET /rate_limit', {});
             console.debug(rate_limit);
