@@ -22,20 +22,10 @@ jobs:
             core.notice(typeof rate_limit.data.resources);
             core.notice(typeof rate_limit.data.resources.core);
             
-            let json_after = rate_limit.data.resources.core.map(row => {
-              return {
-                "limit": row.limit,
-                "used": row.used
-              }
-            });
-            core.notice(json_after);
-            
+           
             await core.summary
               .addHeading('Test')
               .addTable([
-                [{data: 'File', header: true}, {data: 'Result', header: true}],
-                ['foo.js', 'Pass ✅'],
-                ['bar.js', 'Fail ❌'],
-                ['test.js', 'Pass ✅']
+                [rate_limit.data.resources.core],
               ])
               .write()
