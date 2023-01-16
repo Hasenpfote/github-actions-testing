@@ -18,7 +18,7 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const table = ['a', 'b', 'c']
+            const rate_limit = await github.request('GET /rate_limit', {});
             await core.summary
               .addHeading('Test')
               .addTable(rate_limit.data.resources)
