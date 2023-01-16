@@ -36,10 +36,7 @@ jobs:
             await core.summary
               .addHeading('Test')
               .addTable([
-                [{data: 'limit', header: true},
-                 {data: 'used', header: true},
-                 {data: 'remaining', header: true},
-                 {data: 'reset', header: true}],
+                header,
                 Object.values(rate_limit.data.resources.core).map(v => v.toString()),
                 ['1','2','3','4'],
               ])
