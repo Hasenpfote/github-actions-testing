@@ -21,5 +21,8 @@ jobs:
             const rate_limit = await github.request('GET /rate_limit', {});
             await core.summary
               .addHeading('Test')
-              .addTable([rate_limit.data.resources.core])
+              .addTable([
+                { data: 'Name', header: true },
+                { data: 'Value', header: true },
+              ],)
               .write()
