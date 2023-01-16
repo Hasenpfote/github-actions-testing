@@ -29,6 +29,6 @@ jobs:
 
             await core.summary
               .addHeading('rate_limit')
-              .addTable(table)
               .addRaw('Created at ' + new Date().toString())
+              .addTable(table)
               .write()
