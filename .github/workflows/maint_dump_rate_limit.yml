@@ -21,7 +21,8 @@ jobs:
             const rate_limit = await github.request('GET /rate_limit', {});
             core.notice(rate_limit.data.resources.core);
             
-            core.notice(rate_limit.data.resources.core.values());
+            core.notice(rate_limit.data.resources.core instanceof Map);
+            //core.notice(rate_limit.data.resources.core.values());
            
             await core.summary
               .addHeading('Test')
