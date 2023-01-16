@@ -25,7 +25,7 @@ jobs:
               const reset = new Date(value.reset * 1000);
               const time_left = Math.floor((reset - current_date) / 60000);
               resource.push(value.used > 0 ? time_left.toString() : '');
-              const prefix = value.remaining < value.limit * 0.5 ? ⚠️ : '';
+              const prefix = value.remaining < value.limit * 0.5 ? '⚠️' : '';
               resource.unshift(`${prefix} ${key}`);
               table.push(resource);
             }
