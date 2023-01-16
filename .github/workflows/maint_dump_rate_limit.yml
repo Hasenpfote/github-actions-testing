@@ -25,7 +25,10 @@ jobs:
             await core.summary
               .addHeading('Test')
               .addTable([
-                [{data: 'limit', header: true}, {'used', header: true}, {'remaining', header: true}, {'reset', header: true}],
+                [{data: 'limit', header: true},
+                 {data: 'used', header: true},
+                 {data: 'remaining', header: true},
+                 {data: 'reset', header: true}],
                 [rate_limit.data.resources.core],
               ])
               .write()
