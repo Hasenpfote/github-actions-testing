@@ -30,7 +30,7 @@ jobs:
               table.push(
                 Object.values(value)
                 .map(v => v.toString())
-                .unshift({data: key, header: true})
+                .unshift(key)
               );
             }
 
