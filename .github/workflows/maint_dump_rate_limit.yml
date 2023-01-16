@@ -27,6 +27,9 @@ jobs:
               resource.push(value.used > 0 ? time_left.toString() : '');
               resource.unshift(key);
               table.push(resource);
+              //
+              //⚠️
+              core.info(value.limit * 0.33);
             }
 
             await core.summary
