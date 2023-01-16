@@ -12,6 +12,7 @@ jobs:
         with:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
+            core.info(rate_limit)
 
             const table = [];
             const header = Object.keys(rate_limit.data.rate).map(v => ({data: v, header: true}));
