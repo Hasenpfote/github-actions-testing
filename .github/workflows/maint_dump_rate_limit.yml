@@ -20,7 +20,7 @@ jobs:
             header.unshift({data: 'resource', header: true});
             table.push(header);
 
-            for (let [key, value] of Object.entries(rate_limit.data.resources)) {
+            for (let [key, value] of Object.entries(rate_limit.data.resources).sort()) {
               const resource = Object.values(value).map(v => v.toString());
               const reset = new Date(value.reset * 1000);
               const time_left = Math.floor((reset - current_date) / 60000);
