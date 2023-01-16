@@ -28,7 +28,7 @@ jobs:
 
             for (let [key, value] of Object.entries(rate_limit.data.resources)) {
               const resource = Object.values(value).map(v => v.toString());
-              resource.push(new Date(value.reset * 1000));
+              resource.push(new Date(value.reset * 1000).toString());
               resource.unshift(key);
               table.push(resource);
             }
