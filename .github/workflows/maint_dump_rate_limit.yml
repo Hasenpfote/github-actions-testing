@@ -31,7 +31,7 @@ jobs:
                  {data: 'used', header: true},
                  {data: 'remaining', header: true},
                  {data: 'reset', header: true}],
-                Object.values(rate_limit.data.resources.core).map(v => v.toString())),
+                Object.values(rate_limit.data.resources.core).map(v => v.toString()),
                 ['1','2','3','4'],
               ])
               .write()
