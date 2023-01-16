@@ -47,7 +47,7 @@ jobs:
               const reset = new Date(value.reset * 1000);
               const time_left = Math.floor((reset - current_date) / 60000);
               resource.push(value.used > 0 ? time_left.toString() : '');
-              resource.push(indicator(Math.floor((value.remaining / value.limit) * 100)));
+              resource.push(indicator((value.remaining / value.limit) * 100));
               resource.unshift(key);
               table.push(resource);
             }
