@@ -19,25 +19,14 @@ jobs:
         with:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
-            core.notice(rate_limit.data.resources.core);
-            
-            core.notice(rate_limit.data.resources.core instanceof Map);
-            //core.notice(rate_limit.data.resources.core.values());
-            
-            let header = []
-            for (key of Object.keys(rate_limit.data.rate)) {
-              header.push({data: key, header: true});
+
+            let table = [];
+            table.push(Object.keys(rate_limit.data.rate).map(v => ({data: v, header: true})));
+            for (resource of rate_limit.data.resources) {
+              table.push(Object.values(resource).map(v => v.toString()));
             }
-            core.notice(header);
-            
-            ///rate_limit.data.rate
-            
-           
+
             await core.summary
               .addHeading('Test')
-              .addTable([
-                header,
-                Object.values(rate_limit.data.resources.core).map(v => v.toString()),
-                ['1','2','3','4'],
-              ])
+              .addTable(table)
               .write()
