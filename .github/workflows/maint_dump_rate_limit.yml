@@ -22,10 +22,8 @@ jobs:
 
             let table = [];
             table.push(Object.keys(rate_limit.data.rate).map(v => ({data: v, header: true})));
-            for (let resource in rate_limit.data.resources) {
-              console.log(typeof resource)
-              console.log(resource)
-              //table.push(Object.values(resource.value).map(v => v.toString()));
+            for (let value of Object.values(rate_limit.data.resources)) {
+              table.push(Object.values(value).map(v => v.toString()));
             }
 
             await core.summary
