@@ -32,6 +32,6 @@ jobs:
                  {data: 'remaining', header: true},
                  {data: 'reset', header: true}],
                 Object.values(rate_limit.data.resources.core),
-                [1,2,3,4],
+                ['1','2','3','4'],
               ])
               .write()
