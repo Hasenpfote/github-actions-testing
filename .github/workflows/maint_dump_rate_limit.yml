@@ -22,7 +22,9 @@ jobs:
             await core.summary
               .addHeading('Test')
               .addTable([
-                { data: 'Name', header: true },
-                { data: 'Value', header: true },
-              ],)
+                [
+                  { data: 'Name', header: true },
+                  { data: 'Value', header: true },
+                ],
+              ])
               .write()
