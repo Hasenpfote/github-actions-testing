@@ -23,6 +23,15 @@ jobs:
             
             core.notice(rate_limit.data.resources.core instanceof Map);
             //core.notice(rate_limit.data.resources.core.values());
+            
+            let header = []
+            for (key of Object.keys(rate_limit.data.rate)) {
+              header.push({data: key, header: true});
+            }
+            core.notice(header);
+            
+            ///rate_limit.data.rate
+            
            
             await core.summary
               .addHeading('Test')
