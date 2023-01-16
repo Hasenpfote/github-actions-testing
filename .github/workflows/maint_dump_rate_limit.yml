@@ -22,11 +22,13 @@ jobs:
 
             const table = [];
             const header = Object.keys(rate_limit.data.rate).map(v => ({data: v, header: true}));
+            header.push({data: 'date', header: true});
             header.unshift({data: 'resource', header: true});
             table.push(header);
 
             for (let [key, value] of Object.entries(rate_limit.data.resources)) {
               const resource = Object.values(value).map(v => v.toString());
+              resource.push(new Date(value.reset * 1000));
               resource.unshift(key);
               table.push(resource);
             }
