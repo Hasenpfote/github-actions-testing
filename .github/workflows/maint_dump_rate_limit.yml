@@ -13,3 +13,12 @@ jobs:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
             core.notice(JSON.stringify(rate_limit.data.resources, undefined, 2));
+
+      - name: Debug
+        uses: actions/github-script@v6
+        with:
+          script: |
+            await core.summary
+              .addHeading('Test')
+              .addRaw('# abcde')
+              .write()
