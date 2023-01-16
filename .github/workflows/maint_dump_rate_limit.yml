@@ -19,8 +19,10 @@ jobs:
         with:
           script: |
             const rate_limit = await github.request('GET /rate_limit', {});
+            core.notice(typeof rate_limit.rate_limit.data.resources);
+            core.notice(typeof rate_limit.rate_limit.data.resources.core);
             
-            let json_after = rate_limit.core.map(row => {
+            let json_after = rate_limit.rate_limit.data.resources.core.map(row => {
               return {
                 "limit": row.limit,
                 "used": row.used
