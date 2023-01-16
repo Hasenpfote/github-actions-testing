@@ -31,6 +31,6 @@ jobs:
                  {data: 'used', header: true},
                  {data: 'remaining', header: true},
                  {data: 'reset', header: true}],
-                [rate_limit.data.resources.core],
+                [new Map(rate_limit.data.resources.core)],
               ])
               .write()
