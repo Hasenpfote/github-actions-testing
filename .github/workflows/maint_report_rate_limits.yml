@@ -53,7 +53,7 @@ jobs:
             }
 
             await core.summary
-              .addHeading('rate_limit')
+              .addHeading('Current rate limit status')
               .addTable(table)
               .addEOL()
               .addRaw('Created at ' + new Date().toString())
