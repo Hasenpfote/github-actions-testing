@@ -13,8 +13,11 @@ jobs:
           script: |
             const indicator = (function () {
               const max_steps = 5;
-              const threshold_to_emoji = {25: '🟥', 50: '🟨', 100: '🟩'};
-              const keys = Object.keys(threshold_to_emoji);
+              //const threshold_to_emoji = {25: '🟥', 50: '🟨', 100: '🟩'};
+              const threshold_to_emoji = new Map([
+                [25: '🟥'], [50: '🟨'], [100: '🟩'],
+              ]);
+              //const keys = Object.keys(threshold_to_emoji);
               const scale = max_steps / 100;
 
               return function (value) {
@@ -22,9 +25,9 @@ jobs:
                 if (value <= 0) return arr.join('');
 
                 let emoji;
-                for (let key of keys) {
-                  if (value <= key) {
-                      emoji = threshold_to_emoji[key];
+                for (let entry of threshold_to_emoji) {
+                  if (value <= entry[0]) {
+                      emoji = entry[1]; //threshold_to_emoji[key];
                       break;
                   }
                 }
