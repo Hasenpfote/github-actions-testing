@@ -1,9 +1,12 @@
 name: '📦 Publish the package to TestPyPI'
 
 on:
-  workflow_dispatch:
-  release:
-    types: [published]
+  workflow_call:
+    inputs:
+      dry-run:
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   env_prep:
@@ -63,11 +66,12 @@ jobs:
         run: |
           poetry build
 
+      - name: Publish --dry-run
+        if: inputs.dry-run == true
+        run: |
+          poetry publish -r test-pypi --dry-run
+
       - name: Publish
+        if: inputs.dry-run != true
         run: |
           poetry publish -r test-pypi
-
-  docs:
-    if: false # true if documentation is needed.
-    needs: deploy
-    uses: ./.github/workflows/docs.yml
