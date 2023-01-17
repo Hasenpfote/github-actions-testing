@@ -24,7 +24,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "${{ github.event }}"
+          echo "${{ toJSON(github.event) }}"
 
   publish-package:
     uses: ./.github/workflows/testpypi.yml
