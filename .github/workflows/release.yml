@@ -22,18 +22,9 @@ jobs:
           filter: '.env'
 
   publish-package:
-    needs: env_prep
-    #uses: ./.github/workflows/testpypi.yml
-    env: ${{ fromJson(needs.env_prep.outputs.env) }}
-
-    runs-on: ubuntu-latest
-    outputs:
-      enable-docs: ${{ env.enable-docs }}
-    steps:
-    - name: Debug
-      shell: bash
-      run: |
-        echo 'publish-package'
+    uses: ./.github/workflows/testpypi.yml
+    with:
+      dry-run: true
 
   publish-docs:
     needs: publish-package
