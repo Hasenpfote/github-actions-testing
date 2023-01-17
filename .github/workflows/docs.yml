@@ -76,7 +76,7 @@ jobs:
   # This is a separate job so that only actions/deploy-pages has the necessary permissions.
   deploy:
     needs: build
-    if: ! inputs.dry-run
+    if: ${{ !inputs.dry-run }}
     permissions:
       pages: write
       id-token: write
