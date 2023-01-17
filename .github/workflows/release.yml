@@ -1,7 +1,6 @@
 name: '🚧🎁 Release'
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       dry-run:
@@ -16,6 +15,7 @@ jobs:
   config-prep:
     runs-on: ubuntu-latest
     outputs:
+      dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
       enable-docs: ${{ steps.read-file.outputs.content }}
     steps:
       - name: Checkout
@@ -29,10 +29,11 @@ jobs:
           filter: '.default.enable-docs'
 
   publish-package:
+    needs: config-prep
     uses: ./.github/workflows/testpypi.yml
     with:
+      dry-run: ${{ needs.config-prep.outputs.dry-run }}
       #dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
-      dry-run: true
     secrets: inherit
 
   publish-docs:
