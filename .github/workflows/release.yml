@@ -1,7 +1,6 @@
 name: '🚧🎁 Release'
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       dry-run:
@@ -9,8 +8,8 @@ on:
         default: true
         type: boolean
 
-  #release:
-  #  types: [published]
+  release:
+    types: [published]
 
 jobs:
   config-prep:
