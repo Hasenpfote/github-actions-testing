@@ -25,14 +25,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          list-files: shell
           filters: .github/settings/lint_filters.yml
-
-      - name: Debug
-        shell: bash
-        run: |
-          echo "${{ steps.filter.outputs.py_files }}"
-          echo "${{ steps.filter.outputs.md_files }}"
 
   py-lint:
     needs: determine-changes
