@@ -25,6 +25,7 @@ jobs:
     uses: ./.github/workflows/testpypi.yml
     with:
       dry-run: true
+    secrets: inherit
 
   publish-docs:
     needs: publish-package
