@@ -1,2 +1,2 @@
-env:
+default:
   enable-docs: true
