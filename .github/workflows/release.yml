@@ -1,6 +1,7 @@
 name: '🚧🎁 Release'
 
 on:
+  push:
   workflow_dispatch:
   #release:
   #  types: [published]
@@ -29,7 +30,7 @@ jobs:
   publish-package:
     uses: ./.github/workflows/testpypi.yml
     with:
-      dry-run: true
+      dry-run: ${{ github.event_name == 'workflow_dispatch' }}
     secrets: inherit
 
   publish-docs:
