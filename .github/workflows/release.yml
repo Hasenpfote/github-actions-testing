@@ -31,7 +31,8 @@ jobs:
   publish-package:
     uses: ./.github/workflows/testpypi.yml
     with:
-      dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+      #dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+      dry-run: true
     secrets: inherit
 
   publish-docs:
