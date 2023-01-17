@@ -21,6 +21,11 @@ jobs:
           path: .github/settings/release_config.yml
           filter: '.default.enable-docs'
 
+      - name: Debug
+        shell: bash
+        run: |
+          echo "${{ github.event }}"
+
   publish-package:
     uses: ./.github/workflows/testpypi.yml
     with:
