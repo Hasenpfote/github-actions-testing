@@ -34,12 +34,12 @@ jobs:
   publish-docs:
     needs: [env_prep, publish-package]
     env: ${{ fromJson(needs.env_prep.outputs.env) }}
-    if: env.enable-docs == 'true'
     #uses: ./.github/workflows/docs.yml
 
     runs-on: ubuntu-latest
     steps:
     - name: Debug
+      if: env.enable-docs == 'true'
       shell: bash
       run: |
         echo 'publish-docs'
