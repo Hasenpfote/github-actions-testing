@@ -56,5 +56,5 @@ jobs:
               .addHeading('Current rate limit status')
               .addTable(table)
               .addEOL()
-              .addRaw('Created at ' + new Date().toString())
+              .addRaw('Created at ' + new Date().toISOString())
               .write()
