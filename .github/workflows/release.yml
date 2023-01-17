@@ -32,7 +32,7 @@ jobs:
     needs: config-prep
     uses: ./.github/workflows/testpypi.yml
     with:
-      dry-run: ${{ needs.config-prep.outputs.dry-run }}
+      dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
       #dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
     secrets: inherit
 
