@@ -6,10 +6,10 @@ on:
   #  types: [published]
 
 jobs:
-  env_prep:
+  config-prep:
     runs-on: ubuntu-latest
     outputs:
-      env: ${{ steps.read-file.outputs.content }}
+      enable-docs: ${{ steps.read-file.outputs.content }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -18,8 +18,8 @@ jobs:
         id: read-file
         uses: ./.github/actions/read-yaml
         with:
-          path: .github/settings/release_env.yml
-          filter: '.env'
+          path: .github/settings/release_config.yml
+          filter: '.default.enable-docs'
 
   publish-package:
     uses: ./.github/workflows/testpypi.yml
@@ -28,6 +28,6 @@ jobs:
     secrets: inherit
 
   publish-docs:
-    needs: publish-package
-    if: needs.publish-package.outputs.enable-docs == 'true'
+    needs: [config-prep, publish-package]
+    if: needs.config-prep.outputs.enable-docs == 'true'
     uses: ./.github/workflows/docs.yml
