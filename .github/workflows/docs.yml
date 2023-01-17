@@ -4,7 +4,18 @@ name: '📚 Publish docs via GitHub Pages'
 # build the documentation whenever there are new commits on main
 on:
   workflow_dispatch:
+    inputs:
+      dry-run:
+        required: false
+        default: true
+        type: boolean
+
   workflow_call:
+    inputs:
+      dry-run:
+        required: false
+        default: true
+        type: boolean
 
 jobs:
   env_prep:
@@ -65,13 +76,15 @@ jobs:
   # This is a separate job so that only actions/deploy-pages has the necessary permissions.
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    if: ! inputs.dry-run
     permissions:
       pages: write
       id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+
+    runs-on: ubuntu-latest
     steps:
       - id: deployment
         uses: actions/deploy-pages@v1
