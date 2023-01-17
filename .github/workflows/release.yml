@@ -1,0 +1,20 @@
+name: '🎁 Release'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  publish-package:
+    #uses: ./.github/workflows/testpypi.yml
+    - name: Debug
+      shell: bash
+      run: |
+        echo 'publish-package'
+
+  publish-docs:
+    needs: package
+    #uses: ./.github/workflows/docs.yml
+    - name: Debug
+      shell: bash
+      run: |
+        echo 'publish-docs'
