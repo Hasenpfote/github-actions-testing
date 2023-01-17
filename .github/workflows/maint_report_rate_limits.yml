@@ -37,6 +37,7 @@ jobs:
 
             const table = [];
             const header = Object.keys(rate_limit.data.rate).map(v => ({data: v, header: true}));
+            header.push({data: 'date', header: true});
             header.push({data: 'Time until reset<br>in minutes', header: true});
             header.push({data: '', header: true});
             header.unshift({data: 'resource', header: true});
@@ -46,6 +47,7 @@ jobs:
               const resource = Object.values(value).map(v => v.toString());
               const reset = new Date(value.reset * 1000);
               const time_left = Math.floor((reset - current_date) / 60000);
+              resource.push(reset.toISOString());
               resource.push(value.used > 0 ? time_left.toString() : '');
               resource.push(indicator((value.remaining / value.limit) * 100));
               resource.unshift(key);
