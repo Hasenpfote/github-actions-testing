@@ -18,7 +18,7 @@ jobs:
               const scale = max_steps / 100;
 
               return function (value) {
-                let arr = new Array(max_steps).fill('🟫');
+                const arr = new Array(max_steps).fill('🟫');
                 if (value <= 0) return arr.join('');
 
                 let emoji;
