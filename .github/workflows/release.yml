@@ -4,16 +4,41 @@ on:
   workflow_dispatch:
 
 jobs:
+  env_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.read-file.outputs.content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read YAML file
+        id: read-file
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/settings/release_env.yml
+          filter: '.env'
+
   publish-package:
+    needs: env_prep
     #uses: ./.github/workflows/testpypi.yml
+    env: ${{ fromJson(needs.env_prep.outputs.env) }}
+
+    runs-on: ubuntu-latest
+    steps:
     - name: Debug
       shell: bash
       run: |
         echo 'publish-package'
 
   publish-docs:
-    needs: package
+    needs: [env_prep, publish-package]
+    if: enable-docs == 'true'
     #uses: ./.github/workflows/docs.yml
+    env: ${{ fromJson(needs.env_prep.outputs.env) }}
+
+    runs-on: ubuntu-latest
+    steps:
     - name: Debug
       shell: bash
       run: |
