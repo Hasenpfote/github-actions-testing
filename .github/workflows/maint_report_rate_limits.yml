@@ -37,7 +37,7 @@ jobs:
 
             const table = [];
             const header = Object.keys(rate_limit.data.rate).map(v => ({data: v, header: true}));
-            header.push({data: 'date', header: true});
+            header.push({data: '', header: true});
             header.push({data: 'Time until reset<br>in minutes', header: true});
             header.push({data: '', header: true});
             header.unshift({data: 'resource', header: true});
