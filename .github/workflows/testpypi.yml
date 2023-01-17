@@ -68,6 +68,6 @@ jobs:
           poetry publish -r test-pypi
 
   docs:
-    if: true # true if documentation is needed.
+    if: false # true if documentation is needed.
     needs: deploy
     uses: ./.github/workflows/docs.yml
