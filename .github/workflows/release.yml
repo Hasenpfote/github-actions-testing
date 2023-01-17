@@ -1,6 +1,7 @@
 name: '🚧🎁 Release'
 
 on:
+  push:
   workflow_dispatch:
     inputs:
       dry-run:
@@ -33,7 +34,6 @@ jobs:
     uses: ./.github/workflows/testpypi.yml
     with:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
-      #dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
     secrets: inherit
 
   publish-docs:
@@ -41,4 +41,4 @@ jobs:
     if: needs.config-prep.outputs.enable-docs == 'true'
     uses: ./.github/workflows/docs.yml
     with:
-      dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
+      dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
