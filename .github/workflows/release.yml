@@ -1,7 +1,6 @@
 name: '🚧🎁 Release'
 
 on:
-  push:
   workflow_dispatch:
     inputs:
       dry-run:
