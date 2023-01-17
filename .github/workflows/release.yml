@@ -2,6 +2,8 @@ name: '🚧🎁 Release'
 
 on:
   workflow_dispatch:
+  #release:
+  #  types: [published]
 
 jobs:
   env_prep:
@@ -36,11 +38,4 @@ jobs:
   publish-docs:
     needs: publish-package
     if: needs.publish-package.outputs.enable-docs == 'true'
-    #uses: ./.github/workflows/docs.yml
-
-    runs-on: ubuntu-latest
-    steps:
-    - name: Debug
-      shell: bash
-      run: |
-        echo 'publish-docs'
+    uses: ./.github/workflows/docs.yml
