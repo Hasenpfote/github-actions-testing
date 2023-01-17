@@ -37,3 +37,5 @@ jobs:
     needs: [config-prep, publish-package]
     if: needs.config-prep.outputs.enable-docs == 'true'
     uses: ./.github/workflows/docs.yml
+    with:
+      dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
