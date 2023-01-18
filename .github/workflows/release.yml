@@ -41,3 +41,14 @@ jobs:
     uses: ./.github/workflows/docs.yml
     with:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
+
+  debug:
+    needs: [publish-package, publish-docs]
+    runs-on: ubuntu-latest
+    steps:
+      - name: debug
+        shell: bash
+        run: |
+          echo '${{ needs.publish-package.outputs.page-url }}'
+          echo '${{ needs.publish-docs.outputs.page-url }}'
+    
