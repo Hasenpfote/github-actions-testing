@@ -69,7 +69,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url')
+          url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
           value1="aaaaaaa"
           echo "${value1}"
           value2='aaaaaaa'
