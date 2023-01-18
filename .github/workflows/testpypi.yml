@@ -94,6 +94,10 @@ jobs:
         id: make-url
         shell: bash
         run: |
-          url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
+          api_end_point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
+          url=$(echo ${api_end_point} | grep -Eo '^http[s]?://[^/]+')
+          echo "api_end_point: ${api_end_point}"
+          echo "url: ${url}"
+          #url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
           echo "url=${url}${{ steps.read-toml.outputs.value }}" >> $GITHUB_OUTPUT          
           echo $(poetry config repositories.pypi)
