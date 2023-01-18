@@ -69,11 +69,14 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo '{"key": "value"}' | jq '.key'
-          json=$(poetry config repositories.test-pypi)
-          echo "${json}"
-          echo $json | jq '.url'
-          pwd | grep -o '[^/]*$'
+          #echo ${value} | sed 's/\x27/"/g' | jq '.url'
+          poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url'
+        
+          #echo '{"key": "value"}' | jq '.key'
+          #json=$(poetry config repositories.test-pypi)
+          #echo "${json}"
+          #echo $json | jq '.url'
+          #pwd | grep -o '[^/]*$'
 
       - name: Publish --dry-run
         if: inputs.dry-run == true
