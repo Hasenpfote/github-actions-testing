@@ -17,6 +17,11 @@ on:
         default: true
         type: boolean
 
+    outputs:
+      page-url:
+        description: 'URL to the docs published on GitHub Pages'
+        value: ${{ jobs.deploy.steps.deployment.outputs.page_url }}
+
 jobs:
   config-prep:
     runs-on: ubuntu-latest
