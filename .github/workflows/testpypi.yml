@@ -35,7 +35,7 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      api_end_point: ${{ steps.configure-poetry.outputs.api_end_point }}
+      api-end-point: ${{ steps.configure-poetry.outputs.api-end-point }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -66,7 +66,7 @@ jobs:
         run: |
           poetry config repositories.test-pypi https://test.pypi.org/legacy/
           poetry config pypi-token.test-pypi $TESTPYPI_API_TOKEN
-          echo "api_end_point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')" >> $GITHUB_OUTPUT
+          echo "api-end-point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
         run: |
@@ -106,6 +106,6 @@ jobs:
         id: make-url
         shell: bash
         run: |
-          api_end_point='${{ needs.deploy.outputs.api_end_point }}'
+          api_end_point='${{ needs.deploy.outputs.api-end-point }}'
           protocol_domain="$(echo "${api_end_point}" | grep -Eo '^http[s]?://[^/]+')/"
           echo "url=${protocol_domain}project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
