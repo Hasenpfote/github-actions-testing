@@ -69,9 +69,8 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          #echo ${value} | sed 's/\x27/"/g' | jq '.url'
-          poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url'
-        
+          url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url')
+          echo "${url}/foo-bar-baz"
           #echo '{"key": "value"}' | jq '.key'
           #json=$(poetry config repositories.test-pypi)
           #echo "${json}"
