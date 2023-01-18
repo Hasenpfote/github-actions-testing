@@ -20,7 +20,7 @@ on:
     outputs:
       page-url:
         description: 'URL to the docs published on GitHub Pages'
-        value: ${{ jobs.deploy.steps.deployment.outputs.page_url }}
+        value: ${{ jobs.deploy.outputs.page-url }}
 
 jobs:
   config-prep:
@@ -90,6 +90,8 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
 
     runs-on: ubuntu-latest
+    outputs:
+      page-url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
         uses: actions/deploy-pages@v1
