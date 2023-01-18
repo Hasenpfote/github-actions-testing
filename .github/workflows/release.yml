@@ -25,7 +25,7 @@ jobs:
         id: read-file
         uses: ./.github/actions/read-yaml
         with:
-          path: .github/settings/release_config.yml
+          path: .github/settings/release-config.yml
           filter: '.default.enable-docs'
 
   publish-package:
