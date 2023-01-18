@@ -21,8 +21,8 @@ jobs:
         id: read-file
         uses: ./.github/actions/read-yaml
         with:
-          path: .github/settings/env.yml
-          filter: '.env'
+          path: .github/settings/config.yml
+          filter: '.default.env'
 
   deploy:
     needs: env_prep
