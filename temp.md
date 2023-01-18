@@ -4,8 +4,6 @@
 
 # pyenv + poetry + tox + pytest 環境構築例
 
-## aaa
-
 ## 要約
 
 python で pyenv + poetry + tox + pytest に optional で
