@@ -95,6 +95,5 @@ jobs:
         shell: bash
         run: |
           api_end_point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
-          url="$(echo ${api_end_point} | grep -Eo '^http[s]?://[^/]+')/${{ steps.read-toml.outputs.value }}"
-          echo "url: ${url}"
-          echo "url=${url}" >> $GITHUB_OUTPUT
+          protocol_domain=$(echo ${api_end_point} | grep -Eo '^http[s]?://[^/]+')
+          echo "url=${protocol_domain}/${{ steps.read-toml.outputs.value }}" >> $GITHUB_OUTPUT
