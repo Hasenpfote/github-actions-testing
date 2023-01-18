@@ -18,7 +18,7 @@ on:
         type: boolean
 
 jobs:
-  env_prep:
+  config-prep:
     runs-on: ubuntu-latest
     outputs:
       env: ${{ steps.read-file.outputs.content }}
@@ -35,8 +35,8 @@ jobs:
 
   # Build the documentation and upload the static HTML files as an artifact.
   build:
-    needs: env_prep
-    env: ${{ fromJson(needs.env_prep.outputs.env) }}
+    needs: config-prep
+    env: ${{ fromJson(needs.config-prep.outputs.env) }}
 
     runs-on: ubuntu-latest
     steps:
