@@ -81,6 +81,8 @@ jobs:
           #echo "${json}"
           #echo $json | jq '.url'
           #pwd | grep -o '[^/]*$'
+          which dasel
+          echo "Hello"
 
       - name: Publish --dry-run
         if: inputs.dry-run == true
