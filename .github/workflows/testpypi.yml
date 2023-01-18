@@ -69,8 +69,9 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          url=$(poetry config repositories.test-pypi)
-          echo $url | jq '.url'
+          json=$(poetry config repositories.test-pypi)
+          echo "${json}"
+          echo $json | jq url
           pwd | grep -o '[^/]*$'
 
       - name: Publish --dry-run
