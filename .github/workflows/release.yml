@@ -51,10 +51,8 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const table = [];
-            table.push(['package', '<a href="${{ needs.publish-package.outputs.page-url }}">']);
-            table.push(['docs', '${{ needs.publish-docs.outputs.page-url }}']);
             await core.summary
               .addHeading('')
-              .addTable(table)
+              .addLink('package', '${{ needs.publish-package.outputs.page-url }}')
+              .addLink('docs', '${{ needs.publish-docs.outputs.page-url }}')
               .write()
