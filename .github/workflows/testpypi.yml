@@ -71,6 +71,8 @@ jobs:
         run: |
           ls -la
           which basename
+          basename $(pwd)
+          pwd | grep -o "[^/]*$"
 
       - name: Publish --dry-run
         if: inputs.dry-run == true
