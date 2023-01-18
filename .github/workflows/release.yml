@@ -32,7 +32,8 @@ jobs:
     needs: config-prep
     uses: ./.github/workflows/testpypi.yml
     with:
-      dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
+      #dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
+      dry-run: true
     secrets: inherit
 
   publish-docs:
