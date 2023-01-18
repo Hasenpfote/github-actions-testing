@@ -25,7 +25,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: .github/settings/lint_filters.yml
+          filters: .github/settings/lint-filters.yml
 
   py-lint:
     needs: determine-changes
