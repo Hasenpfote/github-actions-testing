@@ -69,7 +69,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo '{"key": "value"}' | jq key
+          echo '{"key": "value"}' | jq '.key'
           json=$(poetry config repositories.test-pypi)
           echo "${json}"
           echo $json | jq url
