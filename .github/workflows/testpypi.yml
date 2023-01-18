@@ -70,6 +70,7 @@ jobs:
         shell: bash
         run: |
           ls -la
+          which basename
 
       - name: Publish --dry-run
         if: inputs.dry-run == true
