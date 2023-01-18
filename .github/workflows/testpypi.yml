@@ -72,7 +72,7 @@ jobs:
           echo '{"key": "value"}' | jq '.key'
           json=$(poetry config repositories.test-pypi)
           echo "${json}"
-          echo $json | jq url
+          echo $json | jq '.url'
           pwd | grep -o '[^/]*$'
 
       - name: Publish --dry-run
