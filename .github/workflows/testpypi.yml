@@ -72,7 +72,7 @@ jobs:
           ls -la
           which basename
           basename $(pwd)
-          pwd | grep -o "[^/]*$"
+          pwd | grep -o '[^/]*$'
 
       - name: Publish --dry-run
         if: inputs.dry-run == true
