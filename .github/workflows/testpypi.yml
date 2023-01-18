@@ -8,6 +8,11 @@ on:
         default: true
         type: boolean
 
+    outputs:
+      page-url:
+        description: 'URL to the package published on TestPyPI'
+        value: ${{ jobs.deploy.outputs.page-url }}
+
 jobs:
   config-prep:
     runs-on: ubuntu-latest
@@ -29,6 +34,8 @@ jobs:
     env: ${{ fromJson(needs.config-prep.outputs.env) }}
 
     runs-on: ubuntu-latest
+    outputs:
+      page-url: ${{ steps.make-url.outputs.url }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -76,19 +83,16 @@ jobs:
         run: |
           poetry publish -r test-pypi
 
-      ##########
-      - name: Debug
+      - name: Make URL 1/2
         uses: SebRollen/toml-action@v1.0.1
         id: read-toml
         with:
           file: pyproject.toml
           field: 'tool.poetry.name'
 
-      - name: Debug
+      - name: Make URL 2/2
+        id: make-url
         shell: bash
         run: |
           url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
-          name='${{ steps.read-toml.outputs.value }}'
-          echo "url: ${url}"
-          echo "name: ${name}"
-
+          echo "url=${url}${{ steps.read-toml.outputs.value }}" >> $GITHUB_OUTPUT
