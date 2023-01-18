@@ -11,7 +11,7 @@ on:
     outputs:
       page-url:
         description: 'URL to the package published on TestPyPI'
-        value: ${{ jobs.deploy.outputs.page-url }}
+        value: ${{ jobs.make-url.outputs.page-url }}
 
 jobs:
   config-prep:
@@ -35,7 +35,7 @@ jobs:
 
     runs-on: ubuntu-latest
     outputs:
-      page-url: ${{ steps.make-url.outputs.url }}
+      api_end_point: ${{ steps.configure-poetry.outputs.api_end_point }}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -59,11 +59,14 @@ jobs:
           poetry-path: ${{ env.poetry-path }}
 
       - name: Configure Poetry
+        id: configure-poetry
         env:
           TESTPYPI_API_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
+        shell: bash
         run: |
           poetry config repositories.test-pypi https://test.pypi.org/legacy/
           poetry config pypi-token.test-pypi $TESTPYPI_API_TOKEN
+          echo "api_end_point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')" >> $GITHUB_OUTPUT
 
       - name: Install dependencies
         run: |
@@ -83,17 +86,26 @@ jobs:
         run: |
           poetry publish -r test-pypi
 
-      - name: Make URL 1/2
+  make-url:
+    needs: deploy
+    runs-on: ubuntu-latest
+    outputs:
+      page-url: ${{ steps.make-url.outputs.url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read TOML file
         uses: SebRollen/toml-action@v1.0.2
         id: read-toml
         with:
           file: pyproject.toml
           field: 'tool.poetry.name'
 
-      - name: Make URL 2/2
+      - name: Make URL
         id: make-url
         shell: bash
         run: |
-          api_end_point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
-          protocol_domain="$(echo ${api_end_point} | grep -Eo '^http[s]?://[^/]+')/"
+          api_end_point='${{ needs.deploy.outputs.api_end_point }}'
+          protocol_domain="$(echo \"${api_end_point}\" | grep -Eo '^http[s]?://[^/]+')/"
           echo "url=${protocol_domain}project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
