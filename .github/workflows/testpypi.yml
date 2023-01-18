@@ -70,7 +70,7 @@ jobs:
         shell: bash
         run: |
           url=$(poetry config repositories.test-pypi)
-          echo "$($url | jq '.url')"
+          echo $url | jq '.url'
           pwd | grep -o '[^/]*$'
 
       - name: Publish --dry-run
