@@ -69,9 +69,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          ls -la
-          which basename
-          basename $(pwd)
+          poetry config repositories.test-pypi
           pwd | grep -o '[^/]*$'
 
       - name: Publish --dry-run
