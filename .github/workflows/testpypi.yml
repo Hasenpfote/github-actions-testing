@@ -66,25 +66,6 @@ jobs:
         run: |
           poetry build
 
-      - name: Debug
-        shell: bash
-        run: |
-          url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
-          value1="aaaaaaa"
-          echo "${value1}"
-          value2='aaaaaaa'
-          echo "${value2}"
-          echo "${url}"
-          echo "${url}foo-bar-baz"
-          #echo '{"key": "value"}' | jq '.key'
-          #json=$(poetry config repositories.test-pypi)
-          #echo "${json}"
-          #echo $json | jq '.url'
-          #pwd | grep -o '[^/]*$'
-          echo "Hello"
-          dasel --help
-          echo "Hello"
-
       - name: Publish --dry-run
         if: inputs.dry-run == true
         run: |
@@ -94,3 +75,20 @@ jobs:
         if: inputs.dry-run != true
         run: |
           poetry publish -r test-pypi
+
+      ##########
+      - name: Debug
+        uses: SebRollen/toml-action@v1.0.1
+        id: read-toml
+        with:
+          file: pyproject.toml
+          field: 'tool.poetry.name'
+
+      - name: Debug
+        shell: bash
+        run: |
+          url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')
+          name='${{ steps.read-toml.outputs.value }}'
+          echo "url: ${url}"
+          echo "name: ${name}"
+
