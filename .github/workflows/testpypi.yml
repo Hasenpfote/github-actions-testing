@@ -70,8 +70,10 @@ jobs:
         shell: bash
         run: |
           url=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url')
-          value="aaaaaaa"
-          echo "${value}"
+          value1="aaaaaaa"
+          echo "${value1}"
+          value2='aaaaaaa'
+          echo "${value2}"
           echo "${url}"
           echo "${url}foo-bar-baz"
           #echo '{"key": "value"}' | jq '.key'
