@@ -84,7 +84,7 @@ jobs:
           poetry publish -r test-pypi
 
       - name: Make URL 1/2
-        uses: SebRollen/toml-action@v1.0.1
+        uses: SebRollen/toml-action@v1.0.2
         id: read-toml
         with:
           file: pyproject.toml
