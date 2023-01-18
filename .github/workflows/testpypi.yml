@@ -66,6 +66,11 @@ jobs:
         run: |
           poetry build
 
+      - name: Debug
+        shell: bash
+        run: |
+          ls -la
+
       - name: Publish --dry-run
         if: inputs.dry-run == true
         run: |
