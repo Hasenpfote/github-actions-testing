@@ -52,7 +52,7 @@ jobs:
         with:
           script: |
             const table = [];
-            table.push(['package', '[${{ needs.publish-package.outputs.page-url }})](#${{ needs.publish-package.outputs.page-url }})']);
+            table.push(['package', '<a href="${{ needs.publish-package.outputs.page-url }}">']);
             table.push(['docs', '${{ needs.publish-docs.outputs.page-url }}']);
             await core.summary
               .addHeading('')
