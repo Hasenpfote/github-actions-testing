@@ -23,7 +23,7 @@ jobs:
         uses: dorny/paths-filter@v2
         id: filter
         with:
-          filters: .github/settings/test_filters.yml
+          filters: .github/settings/test-filters.yml
 
   py-test:
     needs: determine-changes
