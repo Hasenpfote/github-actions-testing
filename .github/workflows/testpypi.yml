@@ -107,5 +107,5 @@ jobs:
         shell: bash
         run: |
           api_end_point='${{ needs.deploy.outputs.api_end_point }}'
-          protocol_domain=$(echo "${api_end_point}" | grep -Eo '^http[s]?://[^/]+')
-          echo "url=${protocol_domain}/project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
+          protocol_domain="$(echo "${api_end_point}" | grep -Eo '^http[s]?://[^/]+')/"
+          echo "url=${protocol_domain}project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
