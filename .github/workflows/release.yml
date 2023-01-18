@@ -43,13 +43,18 @@ jobs:
     with:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
 
-  debug:
+  report:
     needs: [publish-package, publish-docs]
     runs-on: ubuntu-latest
     steps:
-      - name: debug
-        shell: bash
-        run: |
-          echo '${{ needs.publish-package.outputs.page-url }}'
-          echo '${{ needs.publish-docs.outputs.page-url }}'
-    
+      - name: Generate a summary
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const table = [];
+            table.push(['package', '${{ needs.publish-package.outputs.page-url }}']);
+            table.push(['docs', '${{ needs.publish-docs.outputs.page-url }}']);
+            await core.summary
+              .addHeading('')
+              .addTable(table)
+              .write()
