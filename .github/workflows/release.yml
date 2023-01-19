@@ -47,14 +47,22 @@ jobs:
     needs: [publish-package, publish-docs]
     runs-on: ubuntu-latest
     steps:
+      - name: Debug
+        shell: bash
+        run: |
+          echo ${{ needs.publish-package.result }}
+          echo ${{ needs.publish-docs.result }}
+
       - name: Generate a summary
         uses: actions/github-script@v6
         with:
           script: |
             const name_to_url = new Map([
               ['TestPyPI', '${{ needs.publish-package.outputs.page-url }}'],
-              ['GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}'],
             ]);
+            
+            name_to_url.set('GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}');
+            
             const list = [...name_to_url].map(([name, url]) =>
               `<a href="${url}">${name}</a>`
             );
