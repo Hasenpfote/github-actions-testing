@@ -52,8 +52,8 @@ jobs:
         with:
           script: |
             const list = [];
-            list.push('<a href="${{ needs.publish-package.outputs.page-url }}">TestPyPI</a>');
-            list.push('<a href="${{ needs.publish-docs.outputs.page-url }}">GitHub Pages</a>');            
+            list.push('<a href="${{ needs.publish-package.outputs.page-url }}" target=”_new”>TestPyPI</a>');
+            list.push('<a href="${{ needs.publish-docs.outputs.page-url }}" target=”_new”>GitHub Pages</a>');            
             await core.summary
               .addHeading('')
               .addList(list)
