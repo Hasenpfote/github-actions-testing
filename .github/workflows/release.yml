@@ -60,12 +60,14 @@ jobs:
             const name_to_url = new Map([
               ['TestPyPI', '${{ needs.publish-package.outputs.page-url }}'],
             ]);
-            
-            name_to_url.set('GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}');
-            
+            if ('${{ needs.publish-docs.outputs.page-url }}' != '') {
+              name_to_url.set('GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}');
+            }
+
             const list = [...name_to_url].map(([name, url]) =>
               `<a href="${url}">${name}</a>`
             );
+
             await core.summary
               .addHeading('')
               .addList(list)
