@@ -69,6 +69,6 @@ jobs:
             );
 
             await core.summary
-              .addHeading('')
+              .addHeading('Links to published content')
               .addList(list)
               .write()
