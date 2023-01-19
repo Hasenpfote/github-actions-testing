@@ -52,8 +52,8 @@ jobs:
         with:
           script: |
             const name_to_url = new Map([
-              {'TestPyPI', '${{ needs.publish-package.outputs.page-url }}'},
-              {'GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}'}
+              ['TestPyPI', '${{ needs.publish-package.outputs.page-url }}'],
+              ['GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}'],
             ]);
             const list = [...name_to_url].map(([name, url]) =>
               `<a href="${url}" target=”_new”>${name}</a>`
