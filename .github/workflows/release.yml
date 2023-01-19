@@ -56,7 +56,7 @@ jobs:
               ['GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}'],
             ]);
             const list = [...name_to_url].map(([name, url]) =>
-              `<a href="${url}" target=”_new”>${name}</a>`
+              `<a href="${url}" target=”_blank”>${name}</a>`
             );
             await core.summary
               .addHeading('')
