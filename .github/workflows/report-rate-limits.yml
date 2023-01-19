@@ -7,7 +7,7 @@ jobs:
   main:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump rate limit 
+      - name: Dump rate limit
         uses: actions/github-script@v6
         with:
           script: |
