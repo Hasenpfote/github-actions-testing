@@ -51,9 +51,13 @@ jobs:
         uses: actions/github-script@v6
         with:
           script: |
-            const list = [];
-            list.push('<a href="${{ needs.publish-package.outputs.page-url }}" target=”_new”>TestPyPI</a>');
-            list.push('<a href="${{ needs.publish-docs.outputs.page-url }}" target=”_new”>GitHub Pages</a>');            
+            const name_to_url = new Map([
+              {'TestPyPI', '${{ needs.publish-package.outputs.page-url }}'},
+              {'GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}'},
+            ]);
+            const list = [...name_to_url].map(([name, url]) =>
+              `<a href="${url}" target=”_new”>${name}</a>`
+            );
             await core.summary
               .addHeading('')
               .addList(list)
