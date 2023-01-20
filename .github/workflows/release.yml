@@ -23,7 +23,7 @@ jobs:
       - name: Debug
         shell: bash
         run: |
-          echo "${{ fromJson(jobs) }}"
+          echo "${{ github.job }}"
 
   config-prep:
     runs-on: ubuntu-latest
