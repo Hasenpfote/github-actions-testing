@@ -18,13 +18,14 @@ on:
 
 jobs:
   debug:
-    if: contains(fromJson('["all", "debug"]'), inputs.job-name)
     runs-on: ubuntu-latest
     steps:
       - name: Debug
         shell: bash
         run: |
-          echo "${{ github.job }}"
+          echo "${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "debug"]'), inputs.job-name) }}"
+          echo "${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-name) }}"
+          echo "${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-name) }}"
 
   config-prep:
     runs-on: ubuntu-latest
