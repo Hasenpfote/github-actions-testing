@@ -44,18 +44,9 @@ jobs:
           path: .github/settings/release-config.yml
           filter: '.default.enable-docs'
 
-  debug:
-    needs: config-prep
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo "publish-package: ${{ needs.config-prep.outputs.publish-package }}"
-          echo "publish-docs: ${{ needs.config-prep.outputs.publish-docs }}"
-
   publish-package:
     needs: config-prep
+    if: needs.config-prep.outputs.publish-package == 'true'
     uses: ./.github/workflows/testpypi.yml
     with:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
@@ -63,7 +54,8 @@ jobs:
 
   publish-docs:
     needs: [config-prep, publish-package]
-    if: needs.config-prep.outputs.enable-docs == 'true'
+    if: needs.config-prep.outputs.publish-docs == 'true' &&
+        needs.config-prep.outputs.enable-docs == 'true'
     uses: ./.github/workflows/docs.yml
     with:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
@@ -72,12 +64,6 @@ jobs:
     needs: [publish-package, publish-docs]
     runs-on: ubuntu-latest
     steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo ${{ needs.publish-package.result }}
-          echo ${{ needs.publish-docs.result }}
-
       - name: Generate a summary
         uses: actions/github-script@v6
         with:
