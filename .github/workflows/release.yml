@@ -8,10 +8,23 @@ on:
         default: true
         type: boolean
 
+      job-name:
+        default: 'all'
+        type: choice
+        options: ['all', 'publish-package', 'publish-docs']
+
   release:
     types: [published]
 
 jobs:
+  debug:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        shell: bash
+        run: |
+          echo "${{ fromJson(jobs) }}"
+
   config-prep:
     runs-on: ubuntu-latest
     outputs:
