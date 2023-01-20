@@ -80,6 +80,7 @@ jobs:
             const list = [...name_to_url].map(([name, url]) =>
               `<a href="${url}">${name}</a>`
             );
+            core.info(list.length)
             const title = list ? 'Links to published content' : 'Nothing has been published';
 
             await core.summary
