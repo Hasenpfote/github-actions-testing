@@ -61,6 +61,7 @@ jobs:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
 
   report:
+    if: ${{ ! failure() }}
     needs: [publish-package, publish-docs]
     runs-on: ubuntu-latest
     steps:
