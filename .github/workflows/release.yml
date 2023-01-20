@@ -18,7 +18,7 @@ on:
 
 jobs:
   debug:
-    if: contains(['all', 'debug'], inputs.job-name)
+    if: contains(fromJson('["all", "debug"]'), inputs.job-name)
     runs-on: ubuntu-latest
     steps:
       - name: Debug
