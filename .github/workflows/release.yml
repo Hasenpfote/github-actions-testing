@@ -18,6 +18,7 @@ on:
 
 jobs:
   debug:
+    if: ${{ github.job == 'debug' }}
     runs-on: ubuntu-latest
     steps:
       - name: Debug
