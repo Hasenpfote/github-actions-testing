@@ -53,7 +53,7 @@ jobs:
     secrets: inherit
 
   publish-docs:
-    needs: [config-prep, publish-package]
+    needs: config-prep
     if: needs.config-prep.outputs.publish-docs == 'true' &&
         needs.config-prep.outputs.enable-docs == 'true'
     uses: ./.github/workflows/docs.yml
