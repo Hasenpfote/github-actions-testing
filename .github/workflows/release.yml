@@ -3,7 +3,7 @@ name: '🎁 Release'
 on:
   workflow_dispatch:
     inputs:
-      job-name:
+      job-id:
         default: 'all'
         type: choice
         options: ['all', 'publish-package', 'publish-docs']
@@ -29,9 +29,9 @@ jobs:
         id: debug
         shell: bash
         run: |
-          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-name) }}
+          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-id) }}
           echo "publish-package=${value}" >> $GITHUB_OUTPUT
-          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-name) }}
+          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-id) }}
           echo "publish-docs=${value}" >> $GITHUB_OUTPUT
 
       - name: Checkout
