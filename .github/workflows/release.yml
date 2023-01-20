@@ -80,8 +80,9 @@ jobs:
             const list = [...name_to_url].map(([name, url]) =>
               `<a href="${url}">${name}</a>`
             );
+            const title = list ? 'Links to published content' : 'Nothing has been published';
 
             await core.summary
-              .addHeading('Links to published content')
+              .addHeading(title)
               .addList(list)
               .write()
