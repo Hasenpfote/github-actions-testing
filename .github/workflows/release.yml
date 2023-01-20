@@ -3,36 +3,37 @@ name: '🎁 Release'
 on:
   workflow_dispatch:
     inputs:
-      dry-run:
-        required: false
-        default: true
-        type: boolean
-
       job-name:
         default: 'all'
         type: choice
         options: ['all', 'publish-package', 'publish-docs']
 
+      dry-run:
+        required: false
+        default: true
+        type: boolean
+
   release:
     types: [published]
 
 jobs:
-  debug:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Debug
-        shell: bash
-        run: |
-          echo "${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "debug"]'), inputs.job-name) }}"
-          echo "${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-name) }}"
-          echo "${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-name) }}"
-
   config-prep:
     runs-on: ubuntu-latest
     outputs:
+      publish-package: ${{ steps.debug.outputs.publish-package }}
+      publish-docs: ${{ steps.debug.outputs.publish-docs }}
       dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
       enable-docs: ${{ steps.read-file.outputs.content }}
     steps:
+      - name: Debug
+        id: debug
+        shell: bash
+        run: |
+          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-name) }}
+          echo "publish-package=${value}" >> $GITHUB_OUTPUT
+          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-name) }}
+          echo "publish-docs=${value}" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -42,6 +43,16 @@ jobs:
         with:
           path: .github/settings/release-config.yml
           filter: '.default.enable-docs'
+
+  debug:
+    needs: config-prep
+    runs-on: ubuntu-latest
+    steps:
+      - name: Debug
+        shell: bash
+        run: |
+          echo "publish-package: ${{ needs.config-prep.outputs.publish-package }}"
+          echo "publish-docs: ${{ needs.config-prep.outputs.publish-docs }}"
 
   publish-package:
     needs: config-prep
