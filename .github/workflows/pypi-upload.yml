@@ -67,16 +67,24 @@ jobs:
           poetry-home: ${{ env.poetry-home }}
           poetry-path: ${{ env.poetry-path }}
 
-      - name: Configure Poetry
+      - name: Configure Poetry for TestPyPI
+        if: inputs.use-testpypi
         id: configure-poetry
         env:
-          #TESTPYPI_API_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
-          TESTPYPI_API_TOKEN: ${{ secrets.pypi-api-token }}
+          PYPI_API_TOKEN: ${{ secrets.pypi-api-token }}
         shell: bash
         run: |
           poetry config repositories.test-pypi https://test.pypi.org/legacy/
-          poetry config pypi-token.test-pypi $TESTPYPI_API_TOKEN
+          poetry config pypi-token.test-pypi $PYPI_API_TOKEN
           echo "api-end-point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')" >> $GITHUB_OUTPUT
+
+      - name: Configure Poetry for PyPI
+        if: ${{ ! inputs.use-testpypi }}
+        env:
+          PYPI_API_TOKEN: ${{ secrets.pypi-api-token }}
+        shell: bash
+        run: |
+          poetry config pypi-token.pypi $PYPI_API_TOKEN
 
       - name: Install dependencies
         run: |
