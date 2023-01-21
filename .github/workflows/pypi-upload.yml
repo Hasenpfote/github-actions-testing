@@ -85,10 +85,10 @@ jobs:
         shell: bash
         run: |
           options=''
-          if [[ ${{ inputs.use-testpypi }} == true ]]
+          if [[ ${{ inputs.use-testpypi }} == true ]]; then
             options='-r test-pypi'
           fi
-          if [[ ${{ inputs.dry-run }} == true ]]
+          if [[ ${{ inputs.dry-run }} == true ]]; then
             options="${options} --dry-run"
           fi
           options=$(echo "${options}" | sed 's/^ *\| *$//g')
