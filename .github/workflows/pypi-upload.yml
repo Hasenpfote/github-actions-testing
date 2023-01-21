@@ -82,6 +82,7 @@ jobs:
           poetry build
 
       - name: Make options
+        id: make-options
         shell: bash
         run: |
           options=''
@@ -91,18 +92,21 @@ jobs:
           if [[ ${{ inputs.dry-run }} == true ]]; then
             options="${options} --dry-run"
           fi
-          options=$(echo "${options}" | sed 's/^ *\| *$//g')
-          echo "options=${options}"
-
-      - name: Publish --dry-run
-        if: inputs.dry-run == true
-        run: |
-          poetry publish -r test-pypi --dry-run
+          echo "options=$(echo "${options}" | sed 's/^ *\| *$//g')" >> $GITHUB_OUTPUT
 
       - name: Publish
-        if: inputs.dry-run != true
         run: |
-          poetry publish -r test-pypi
+          poetry publish ${{ steps.make-options.outputs.options }}
+
+      #- name: Publish --dry-run
+      #  if: inputs.dry-run == true
+      #  run: |
+      #    poetry publish -r test-pypi --dry-run
+
+      #- name: Publish
+      #  if: inputs.dry-run != true
+      #  run: |
+      #    poetry publish -r test-pypi
 
   make-url:
     needs: deploy
