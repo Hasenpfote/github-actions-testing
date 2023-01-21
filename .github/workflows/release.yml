@@ -81,8 +81,8 @@ jobs:
           script: |
             const name_to_url = new Map();
             if ('${{ needs.publish-package.outputs.page-url }}' != '') {
-              name=$([[ ${{ fromJson(needs.config-prep.outputs.use-testpypi) }} == true ]] && echo 'TestPyPI' || echo 'PyPI')
-              name_to_url.set('TestPyPI', '${{ needs.publish-package.outputs.page-url }}');
+              const name = ${{ fromJson(needs.config-prep.outputs.use-testpypi) }} ? 'TestPyPI' : 'PyPI';
+              name_to_url.set(name, '${{ needs.publish-package.outputs.page-url }}');
             }
             if ('${{ needs.publish-docs.outputs.page-url }}' != '') {
               name_to_url.set('GitHub Pages', '${{ needs.publish-docs.outputs.page-url }}');
