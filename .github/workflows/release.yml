@@ -55,7 +55,7 @@ jobs:
     secrets:
       #pypi-api-token: ${{ secrets.TESTPYPI_API_TOKEN }}
       #pypi-api-token: ${{ true && '' || secrets.TESTPYPI_API_TOKEN }}
-      pypi-api-token: ${{ fromJSON('[secrets.TESTPYPI_API_TOKEN, secrets.TESTPYPI_API_TOKEN]')[true] }}
+      pypi-api-token: ${{ fromJSON('[${{ secrets.TESTPYPI_API_TOKEN }}, ${{ secrets.TESTPYPI_API_TOKEN }}]')[true] }}
       #${{ fromJSON('["no", "yes"]')[github.ref != 'refs/heads/master'] }}
     #secrets: inherit
 
