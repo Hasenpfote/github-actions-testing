@@ -50,10 +50,10 @@ jobs:
     #uses: ./.github/workflows/testpypi.yml
     uses: ./.github/workflows/pypi-upload.yml
     with:
-      use-testpypi: true
+      use-testpypi: false
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
     secrets:
-      pypi-api-token: ${{ true && secrets.TESTPYPI_API_TOKEN || secrets.PYPI_API_TOKEN }}
+      pypi-api-token: ${{ false && secrets.TESTPYPI_API_TOKEN || secrets.PYPI_API_TOKEN }}
     #secrets: inherit
 
   publish-docs:
