@@ -13,6 +13,10 @@ on:
         default: true
         type: boolean
 
+    secrets:
+      pypi-api-token:
+        required: true
+
     outputs:
       page-url:
         description: 'URL to the package published on PyPI'
