@@ -54,7 +54,7 @@ jobs:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
     secrets:
       #pypi-api-token: ${{ secrets.TESTPYPI_API_TOKEN }}
-      pypi-api-token: ${{ fromJson('[secrets.TESTPYPI_API_TOKEN, secrets.TESTPYPI_API_TOKEN]')[true] }}
+      pypi-api-token: ${{ fromJson('["${{ secrets.TESTPYPI_API_TOKEN }}", "${{ secrets.TESTPYPI_API_TOKEN }}"]')[true] }}
       #${{ fromJSON('["no", "yes"]')[github.ref != 'refs/heads/master'] }}
     #secrets: inherit
 
