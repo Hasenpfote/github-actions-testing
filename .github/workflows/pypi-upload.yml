@@ -96,7 +96,7 @@ jobs:
         run: |
           options='--build'
           if [[ ${{ inputs.use-testpypi }} == true ]]; then
-            options='${options} -r test-pypi'
+            options="${options} -r test-pypi"
           fi
           if [[ ${{ inputs.dry-run }} == true ]]; then
             options="${options} --dry-run"
