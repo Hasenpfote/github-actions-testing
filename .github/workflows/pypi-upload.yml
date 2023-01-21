@@ -84,15 +84,15 @@ jobs:
       - name: Make options
         shell: bash
         run: |
-          if [[ true == true ]]; then
-            echo 'true == true'
+          options=''
+          if [[ ${{ inputs.use-testpypi }} == true ]]
+            options='-r test-pypi'
           fi
-          if [[ false == false ]]; then
-            echo 'false == false'
+          if [[ ${{ inputs.dry-run }} == true ]]
+            options="${options} --dry-run"
           fi
-          if [[ true == false ]]; then
-            echo 'true == false'
-          fi
+          options=$(echo "${options}" | sed 's/^ *\| *$//g')
+          echo "options=${options}"
 
       - name: Publish --dry-run
         if: inputs.dry-run == true
