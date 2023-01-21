@@ -90,10 +90,6 @@ jobs:
         run: |
           poetry self add 'poetry-dynamic-versioning[plugin]'
 
-      #- name: Build
-      #  run: |
-      #    poetry build
-
       - name: Make options
         id: make-options
         shell: bash
