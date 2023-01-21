@@ -1,0 +1,129 @@
+name: '📦 Publish the package to PyPI'
+
+on:
+  workflow_call:
+    inputs:
+      use-testpypi:
+        required: false
+        default: true
+        type: boolean
+
+      dry-run:
+        required: false
+        default: true
+        type: boolean
+
+    outputs:
+      page-url:
+        description: 'URL to the package published on PyPI'
+        value: ${{ jobs.make-url.outputs.page-url }}
+
+jobs:
+  config-prep:
+    runs-on: ubuntu-latest
+    outputs:
+      env: ${{ steps.read-file.outputs.content }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read YAML file
+        id: read-file
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/settings/config.yml
+          filter: '.default.env'
+
+  deploy:
+    needs: config-prep
+    env: ${{ fromJson(needs.config-prep.outputs.env) }}
+
+    runs-on: ubuntu-latest
+    outputs:
+      api-end-point: ${{ steps.configure-poetry.outputs.api-end-point }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python ${{ env.python-version }}
+        id: setup-python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.python-version }}
+
+      - name: Set up Poetry ${{ env.poetry-version }}
+        id: setup-poetry
+        uses: ./.github/actions/setup-poetry
+        with:
+          cache-path: ${{ env.poetry-cache-paths }}
+          cache-key: ${{ format(env.poetry-cache-key-fmt, env.poetry-version, runner.os, steps.setup-python.outputs.python-version) }}
+          poetry-version: ${{ env.poetry-version }}
+          poetry-home: ${{ env.poetry-home }}
+          poetry-path: ${{ env.poetry-path }}
+
+      - name: Configure Poetry
+        id: configure-poetry
+        env:
+          TESTPYPI_API_TOKEN: ${{ secrets.TESTPYPI_API_TOKEN }}
+        shell: bash
+        run: |
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry config pypi-token.test-pypi $TESTPYPI_API_TOKEN
+          echo "api-end-point=$(poetry config repositories.test-pypi | sed 's/\x27/"/g' | jq '.url' | sed 's/"//g')" >> $GITHUB_OUTPUT
+
+      - name: Install dependencies
+        run: |
+          poetry self add 'poetry-dynamic-versioning[plugin]'
+
+      - name: Build
+        run: |
+          poetry build
+
+      - name: Make options
+        shell: bash
+        run: |
+          if [[ true == true ]]; then
+            echo 'true == true'
+          fi
+          if [[ false == false ]]; then
+            echo 'false == false'
+          fi
+          if [[ true == false ]]; then
+            echo 'true == false'
+          fi
+
+      - name: Publish --dry-run
+        if: inputs.dry-run == true
+        run: |
+          poetry publish -r test-pypi --dry-run
+
+      - name: Publish
+        if: inputs.dry-run != true
+        run: |
+          poetry publish -r test-pypi
+
+  make-url:
+    needs: deploy
+    runs-on: ubuntu-latest
+    outputs:
+      page-url: ${{ steps.make-url.outputs.url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Read TOML file
+        uses: SebRollen/toml-action@v1.0.2
+        id: read-toml
+        with:
+          file: pyproject.toml
+          field: 'tool.poetry.name'
+
+      - name: Make URL
+        id: make-url
+        shell: bash
+        run: |
+          api_end_point='${{ needs.deploy.outputs.api-end-point }}'
+          protocol_domain="$(echo "${api_end_point}" | grep -Eo '^http[s]?://[^/]+')/"
+          echo "url=${protocol_domain}project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
