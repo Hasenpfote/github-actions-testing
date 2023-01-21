@@ -1,4 +1,4 @@
-name: '📦 Publish the package to PyPI'
+name: '🚧📦 Publish the package to PyPI'
 
 on:
   workflow_call:
@@ -98,16 +98,6 @@ jobs:
         run: |
           poetry publish ${{ steps.make-options.outputs.options }}
 
-      #- name: Publish --dry-run
-      #  if: inputs.dry-run == true
-      #  run: |
-      #    poetry publish -r test-pypi --dry-run
-
-      #- name: Publish
-      #  if: inputs.dry-run != true
-      #  run: |
-      #    poetry publish -r test-pypi
-
   make-url:
     needs: deploy
     runs-on: ubuntu-latest
@@ -128,6 +118,10 @@ jobs:
         id: make-url
         shell: bash
         run: |
-          api_end_point='${{ needs.deploy.outputs.api-end-point }}'
-          protocol_domain="$(echo "${api_end_point}" | grep -Eo '^http[s]?://[^/]+')/"
-          echo "url=${protocol_domain}project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
+          if [[ ${{ inputs.use-testpypi }} == true ]]; then
+            api_end_point='${{ needs.deploy.outputs.api-end-point }}'
+            protocol_domain="$(echo "${api_end_point}" | grep -Eo '^http[s]?://[^/]+')/"
+            echo "url=${protocol_domain}project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
+          else
+            echo "url=https://pypi.org/project/${{ steps.read-toml.outputs.value }}/" >> $GITHUB_OUTPUT
+          fi
