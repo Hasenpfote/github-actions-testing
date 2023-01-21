@@ -28,7 +28,7 @@ jobs:
       publish-package: ${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-id) }}
       publish-docs: ${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-id) }}
       dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
-      use-testpypi: ${{ steps.debug.outputs.use-testpypi }}
+      use-testpypi: ${{ steps.post-process.outputs.use-testpypi }}
       enable-docs: ${{ fromJson(steps.read-file.outputs.content).enable-docs }}
     steps:
       - name: Checkout
@@ -41,8 +41,8 @@ jobs:
           path: .github/settings/release-config.yml
           filter: '.default'
 
-      - name: Debug
-        id: debug
+      - name: Post process
+        id: post-process
         shell: bash
         run: |
           if [[ ${{ github.event_name == 'workflow_dispatch' }} == true ]]; then
