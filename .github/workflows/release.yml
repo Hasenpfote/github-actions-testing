@@ -43,6 +43,19 @@ jobs:
         with:
           path: .github/settings/release-config.yml
           filter: '.default.enable-docs'
+      ###
+      - name: Read YAML file 2
+        id: read-file2
+        uses: ./.github/actions/read-yaml
+        with:
+          path: .github/settings/release-config.yml
+          filter: '.default'
+      
+      - name: Debug2
+        shell: bash
+        run: |
+          echo ${{ fromJson(steps.read-file2.outputs.content).use-testpypi }}
+          echo ${{ fromJson(steps.read-file2.outputs.content).enable-docs }}
 
   publish-package:
     needs: config-prep
