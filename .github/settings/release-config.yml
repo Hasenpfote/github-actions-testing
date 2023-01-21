@@ -1,2 +1,3 @@
 default:
-  enable-docs: true
+  use-testpypi: true
+  enable-docs: true 
