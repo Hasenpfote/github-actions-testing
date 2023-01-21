@@ -72,7 +72,7 @@ jobs:
 
   report:
     if: ${{ ! failure() }}
-    needs: [publish-package, publish-docs]
+    needs: [config-prep, publish-package, publish-docs]
     runs-on: ubuntu-latest
     steps:
       - name: Generate a summary
@@ -81,6 +81,7 @@ jobs:
           script: |
             const name_to_url = new Map();
             if ('${{ needs.publish-package.outputs.page-url }}' != '') {
+              name=$([[ ${{ fromJson(needs.config-prep.outputs.use-testpypi) }} == true ]] && echo 'TestPyPI' || echo 'PyPI')
               name_to_url.set('TestPyPI', '${{ needs.publish-package.outputs.page-url }}');
             }
             if ('${{ needs.publish-docs.outputs.page-url }}' != '') {
