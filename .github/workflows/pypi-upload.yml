@@ -90,17 +90,17 @@ jobs:
         run: |
           poetry self add 'poetry-dynamic-versioning[plugin]'
 
-      - name: Build
-        run: |
-          poetry build
+      #- name: Build
+      #  run: |
+      #    poetry build
 
       - name: Make options
         id: make-options
         shell: bash
         run: |
-          options=''
+          options='--build'
           if [[ ${{ inputs.use-testpypi }} == true ]]; then
-            options='-r test-pypi'
+            options='${options} -r test-pypi'
           fi
           if [[ ${{ inputs.dry-run }} == true ]]; then
             options="${options} --dry-run"
