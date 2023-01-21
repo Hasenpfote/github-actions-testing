@@ -47,7 +47,8 @@ jobs:
   publish-package:
     needs: config-prep
     if: needs.config-prep.outputs.publish-package == 'true'
-    uses: ./.github/workflows/testpypi.yml
+    #uses: ./.github/workflows/testpypi.yml
+    uses: ./.github/workflows/pypi-upload.yml
     with:
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
     secrets: inherit
