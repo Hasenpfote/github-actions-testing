@@ -3,6 +3,11 @@ name: '🎁 Release'
 on:
   workflow_dispatch:
     inputs:
+      use-testpypi:
+        required: false
+        default: true
+        type: boolean
+
       job-id:
         default: 'all'
         type: choice
@@ -20,20 +25,12 @@ jobs:
   config-prep:
     runs-on: ubuntu-latest
     outputs:
-      publish-package: ${{ steps.debug.outputs.publish-package }}
-      publish-docs: ${{ steps.debug.outputs.publish-docs }}
+      publish-package: ${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-id) }}
+      publish-docs: ${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-id) }}
       dry-run: ${{ github.event_name == 'workflow_dispatch' && inputs.dry-run }}
-      enable-docs: ${{ steps.read-file.outputs.content }}
+      use-testpypi: ${{ steps.debug.outputs.use-testpypi }}
+      enable-docs: ${{ fromJson(steps.read-file.outputs.content).enable-docs }}
     steps:
-      - name: Debug
-        id: debug
-        shell: bash
-        run: |
-          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-package"]'), inputs.job-id) }}
-          echo "publish-package=${value}" >> $GITHUB_OUTPUT
-          value=${{ github.event_name != 'workflow_dispatch' || contains(fromJson('["all", "publish-docs"]'), inputs.job-id) }}
-          echo "publish-docs=${value}" >> $GITHUB_OUTPUT
-
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -42,32 +39,28 @@ jobs:
         uses: ./.github/actions/read-yaml
         with:
           path: .github/settings/release-config.yml
-          filter: '.default.enable-docs'
-      ###
-      - name: Read YAML file 2
-        id: read-file2
-        uses: ./.github/actions/read-yaml
-        with:
-          path: .github/settings/release-config.yml
           filter: '.default'
-      
-      - name: Debug2
+
+      - name: Debug
+        id: debug
         shell: bash
         run: |
-          echo ${{ fromJson(steps.read-file2.outputs.content).use-testpypi }}
-          echo ${{ fromJson(steps.read-file2.outputs.content).enable-docs }}
+          if [[ ${{ github.event_name == 'workflow_dispatch' }} == true ]]; then
+            echo "use-testpypi=${{ inputs.use-testpypi }}" >> $GITHUB_OUTPUT
+          else
+            echo "use-testpypi=${{ fromJson(steps.read-file.outputs.content).use-testpypi }}" >> $GITHUB_OUTPUT
+          fi
 
   publish-package:
     needs: config-prep
     if: needs.config-prep.outputs.publish-package == 'true'
-    #uses: ./.github/workflows/testpypi.yml
     uses: ./.github/workflows/pypi-upload.yml
     with:
-      use-testpypi: false
+      use-testpypi: ${{ fromJson(needs.config-prep.outputs.use-testpypi) }}
       dry-run: ${{ fromJson(needs.config-prep.outputs.dry-run) }}
     secrets:
-      pypi-api-token: ${{ false && secrets.TESTPYPI_API_TOKEN || secrets.PYPI_API_TOKEN }}
-    #secrets: inherit
+      pypi-api-token: ${{ fromJson(needs.config-prep.outputs.use-testpypi) &&
+                          secrets.TESTPYPI_API_TOKEN || secrets.PYPI_API_TOKEN }}
 
   publish-docs:
     needs: config-prep
