@@ -1,4 +1,4 @@
-name: '🚧📦 Publish the package to PyPI'
+name: '📦 Publish the package to PyPI'
 
 on:
   workflow_call:
