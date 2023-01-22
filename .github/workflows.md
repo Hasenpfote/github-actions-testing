@@ -4,65 +4,57 @@
 
 ```mermaid
 flowchart LR
-  push[on: push]
-  pr[on: pull_request]
+  push(on: push)
+  pr(on: pull_request)
 
-  subgraph Lint
+  subgraph "🔬 Lint"
     subgraph determine-changes
       cond1{has changes}
     end
 
-    py-lint(py-lint)
-    md-lint(md-lint)
+    py-lint[["🔬 py-lint"]]
+    md-lint[md-lint]
 
-    cond1 --> |yes| py-lint
-    cond1 --> |yes| md-lint
+    cond1 --> |yes| py-lint & md-lint
   end
 
-  End[END]
+  End(END)
 
-  push ==> Lint
-  pr ==> Lint
+  push & pr --> determine-changes
 
+  py-lint & md-lint --> End
   cond1 --> |no| End
-  py-lint --> End
-  md-lint --> End
 ```
 
 ### py-lint
-
-### md-lint
 
 ## Test
 
 ```mermaid
 flowchart LR
-  push[on: push]
-  pr[on: pull_request]
+  push(on: push)
+  pr(on: pull_request)
 
-  subgraph Test
+  subgraph "🧪 Test"
     subgraph determine-changes
       cond1{has changes}
     end
 
-    py-test(py-test)
+    py-test[["🧪 py-test"]]
     cond2{has reports}
-    codecov-upload(codecov-upload)
+    codecov-upload[["📄 codecov-upload"]]
 
     cond1 --> |yes| py-test
     py-test --> cond2
     cond2 --> |yes| codecov-upload
   end
 
-  End[END]
+  End(END)
 
-  push ==> Test
-  pr ==> Test
+  push & pr --> determine-changes
 
-  cond2 --> |no| End
   codecov-upload --> End
-
-  cond1 --> |no| End
+  cond1 & cond2 --> |no| End
 ```
 
 ### py-test
@@ -71,27 +63,28 @@ flowchart LR
 
 ```mermaid
 flowchart LR
-  release[on: release]
+  release(on: release)
 
-  subgraph Release
-    config-prep(config-prep)
-    publish-package(publish-package)
+  subgraph "🎁 Release"
+    config-prep[config-prep]
+    publish-package[["📦 publish-package"]]
     cond{enable docs}
-    publish-docs(publish-docs)
+    publish-docs[["📚 publish-docs"]]
+    report[report]
 
-    config-prep --> publish-package
-    publish-package --> cond
+    config-prep --> publish-package & cond
     cond --> |yes| publish-docs
   end
 
-  End[END]
+  End(END)
 
-  release --> |types: published| Release
-  cond --> |no| End
-  publish-docs --> End
+  release --> |types: published| config-prep
+  publish-package & publish-docs --> report
+  cond --> |no| report
+  report --> End
 ```
 
-### testpypi
+### pypi-upload
 
 ### docs
 
