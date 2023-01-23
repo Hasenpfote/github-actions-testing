@@ -64,7 +64,7 @@ jobs:
       - name: Exec textlint
         run: |
           npx textlint \
-            -v \
+            temp.md \
             --rule no-mix-dearu-desumasu \
             --rule max-ten \
             --rule spellcheck-tech-word
