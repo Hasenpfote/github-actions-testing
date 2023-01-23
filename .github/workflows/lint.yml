@@ -47,3 +47,23 @@ jobs:
         uses: DavidAnson/markdownlint-cli2-action@v9
         with:
           globs: '**/*.md'
+
+  text-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v2
+      - name: Install textlint
+        run: >
+          npm install --save-dev textlint
+            textlint-rule-max-ten
+            textlint-rule-spellcheck-tech-word
+            textlint-rule-no-mix-dearu-desumasu
+      - name: Exec textlint
+        run: >
+          npx textlint
+            --rule no-mix-dearu-desumasu
+            --rule max-ten
+            --rule spellcheck-tech-word
